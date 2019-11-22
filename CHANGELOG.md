@@ -1,3 +1,6 @@
+## 0.1.1 (November 22, 2019)
+  - testing script
+
 ## 0.1.0 (November 22, 2019)
   - Adding bumpversion
   - First commit, testing files
