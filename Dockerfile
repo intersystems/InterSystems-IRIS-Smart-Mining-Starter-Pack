@@ -1,4 +1,4 @@
-FROM intersystemsdc/irisdemo-base-irisdb-community:version-1.4
+FROM intersystemsdc/irisdemo-base-irisint-community:version-1.6
 
 # Name of the project folder ex.: my-atelier-project
 ARG IRIS_PROJECT_FOLDER_NAME=OEE-iris-project
