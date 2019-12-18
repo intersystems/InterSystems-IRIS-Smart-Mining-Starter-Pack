@@ -1,11 +1,12 @@
 Class SampleDispatch.BO.Event.StatusChangeEvent Extends (%Persistent,Ens.Request)
 {
-	Property EquimentId As %String [ Required ];
-	
-	Property EventTime As %TimeStamp [ Required ];
-	
-	Property NewStatusCode As %String [ Required ];
-	
+	/// documentation
+	Property EquipmentId As %String [ Required ];
+	/// documentation
+	Property EventTime As %TimeStamp [ Required];
+	/// documentation
+	Property NewStatusCode As %String [Required];
+
 Storage Default
 {
 <Data name="StatusChangeEventDefaultData">
@@ -13,7 +14,7 @@ Storage Default
 <Value>%%CLASSNAME</Value>
 </Value>
 <Value name="2">
-<Value>EquimentId</Value>
+<Value>EquipmentId</Value>
 </Value>
 <Value name="3">
 <Value>EventTime</Value>
