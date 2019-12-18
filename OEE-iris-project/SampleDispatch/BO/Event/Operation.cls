@@ -3,20 +3,23 @@ Class SampleDispatch.BO.Event.Operation extends Ens.BusinessOperation {
 Parameter INVOCATION = "Queue";
 
 Method StatusChangeEvent(pInput As SampleDispatch.BO.Event.StatusChangeEvent, Output pOutput As Ens.Response) As %Status
-{	
-	Set sc = $$$OK
+{
+	#Dim eventChange As OEE.Data.EventChange
 	
-	#Dim eventChange as OEE.Data.EventChange
-	try{
+	Set sc=$$$OK
 	
-		set eventChange = ##class(OEE.Data.EventChange).%New()
-		set eventChange.EquipmentId = pInput.EquipmentId
-		set eventChange.NewStatusCode = pInput.NewStatusCode
-		set eventChange.StartTime = pInput.EventTime
+	Try
+	{
+		Set eventChange = ##class(OEE.Data.EventChange).%New()
+		Set eventChange.EquimentId = pInput.EquimentId
+		Set eventChange.NewStatusCode = pInput.NewStatusCode
+		Set eventChange.StartTime = pInput.EventTime
 		
-		set sc = eventChange.%Save()
+		Set sc = eventChange.%Save()
 		
-	}Catch(oException){
+	}
+	Catch (oException)
+	{
 		Set sc = oException.AsStatus()
 	}
 	
