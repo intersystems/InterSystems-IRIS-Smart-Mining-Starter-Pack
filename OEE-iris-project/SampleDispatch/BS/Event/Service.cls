@@ -13,7 +13,7 @@ Method OnProcessInput(pInput As EnsLib.SQL.Snapshot, Output pOutput As %Register
 	Try
 	{		
 	
-		Set sc = ..Adapter
+		Set sc = ..Adapter.ExecuteQuery(pRS,pQueryStatement,pParms...)
 		Set oEvent = ##class(SampleDispatch.BO.Event.StatusChangeEvent).%New()
 		Set oEvent.EquimentId = pInput.Get("Eqmt")
 		Set oEvent.EventTime = pInput.Get("EventTime")
