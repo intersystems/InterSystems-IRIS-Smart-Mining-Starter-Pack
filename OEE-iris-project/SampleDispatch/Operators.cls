@@ -8,7 +8,7 @@ Class SampleDispatch.Operators Extends %Persistent
 	Property OperatorId As %String;
 	
 	/// documentation
-	Property Eqmt As %Integer;
+	Property Eqmt As Eqmt;
 	
 	index OperatorIdIndex on OperatorId [unique];
 	

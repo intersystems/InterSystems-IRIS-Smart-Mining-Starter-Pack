@@ -7,7 +7,7 @@ Class SampleDispatch.Events Extends %Persistent
 		Property Code As EventCodes [ Required ];
 		
 		/// documentation
-		Property Eqmt As %Integer;
+		Property Eqmt as Eqmt;
 		
 		
 Storage Default

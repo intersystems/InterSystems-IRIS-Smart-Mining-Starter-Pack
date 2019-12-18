@@ -14,7 +14,7 @@ Method OnProcessInput(pInput As EnsLib.SQL.Snapshot, Output pOutput As %Register
 		set oEvent.EventTime = pInput.Get("EventTime")
 		set oEvent.NewStatusCode = pInput.Get("StatusCode")
 		
-		set sc = ..SendRequestAsync("Dispatch Event Operation", oEvent)
+		set sc = ..SendRequestAsync("Sample Dispatch Event Operation", oEvent)
 		
 	}Catch(oException){
 		Set sc = oException.AsStatus()

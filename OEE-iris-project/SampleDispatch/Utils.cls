@@ -5,13 +5,13 @@ Class SampleDispatch.Utils Extends %Persistent
 	/// documentation
 	ClassMethod LoadEverything() 
 	{
-		Do ..LoadItemMasterEqmt("/tmp/sample_mining_db_eqmt.csv")
-		Do ..LoadItemMasterShifts("/tmp/sample_mining_db_shifts.csv")
+		Do ..LoadEqmt("/tmp/sample_mining_db_eqmt.csv")
+		Do ..LoadShifts("/tmp/sample_mining_db_shifts.csv")
 		Do ..LoadEventCodes("/tmp/sample_mining_db_event_codes.csv")
 		Do ..LoadEvents("/tmp/sample_mining_db_events.csv")
 		Do ..LoadOperators("/tmp/sample_mining_db_operators.csv")
 	}
-	ClassMethod LoadItemMasterEqmt(filename As %String)
+	ClassMethod LoadEqmt(filename As %String)
 	{
 			#Dim objRs As %Library.ResultSet
 			#Dim objPatient As Patient
@@ -23,10 +23,16 @@ Class SampleDispatch.Utils Extends %Persistent
 			
 			While objRs.Next() 
 			{
-				set obj = ##class(SampleDispatch.EventCodes).%New()
+				set obj = ##class(SampleDispatch.Eqmt).%New()
 			
 				Set obj.Eqmt =  objRs.Get("eqmt")
+				if (obj.Eqmt = "")
+				{
+					Quit
+				}
 				Set obj.Name =  objRs.Get("Name")
+				
+				
 				
 				Set tSC = obj.%Save()
 				$$$ThrowStatusExceptionIfError(tSC, "LoadEqmtSaveException")
