@@ -11,7 +11,7 @@ Method StatusChangeEvent(pInput As SampleDispatch.BO.Event.StatusChangeEvent, Ou
 	Try
 	{
 		Set eventChange = ##class(OEE.Data.EventChange).%New()
-		Set eventChange.EquimentId = pInput.EquimentId
+		Set eventChange.EquipmentId = pInput.EquipmentId
 		Set eventChange.NewStatusCode = pInput.NewStatusCode
 		Set eventChange.StartTime = pInput.EventTime
 		
