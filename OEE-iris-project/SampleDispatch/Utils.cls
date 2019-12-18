@@ -5,10 +5,10 @@ Class SampleDispatch.Utils Extends %Persistent
 	/// documentation
 	ClassMethod LoadEverything() 
 	{
-		Do ..LoadItemMasterShifts("/tmp/sample_mining_db_shifts.csv")
+		Do ..LoadShifts("/tmp/sample_mining_db_shifts.csv")
 		Do ..LoadEventCodes("/tmp/sample_mining_db_event_codes.csv")
-		Do ..LoadItemMasterEvents("/tmp/sample_mining_db_events.csv")
-		Do ..LoadItemMasterOperators("/tmp/sample_mining_db_operators.csv")
+		Do ..LoadEvents("/tmp/sample_mining_db_events.csv")
+		Do ..LoadOperators("/tmp/sample_mining_db_operators.csv")
 	}
 
 	ClassMethod LoadEventCodes(filename As %String)
@@ -19,7 +19,7 @@ Class SampleDispatch.Utils Extends %Persistent
 			set objRs = ##class(%Library.ResultSet).%New("IRISDemo.Util.FileReader:CSV")
 	
 			Set tSC = objRs.Execute( filename) 
-			$$$ThrowStatusExceptionIfError(tSC, "LoadItemMasterFileException")
+			$$$ThrowStatusExceptionIfError(tSC, "LoadFileException")
 			
 			While objRs.Next() 
 			{
@@ -32,7 +32,7 @@ Class SampleDispatch.Utils Extends %Persistent
 				$$$ThrowStatusExceptionIfError(tSC, "LoadEventCodesSaveException")
 			}
 	}
-	ClassMethod LoadItemMasterEvents(filename As %String)
+	ClassMethod LoadEvents(filename As %String)
 	{
 			#Dim objRs As %Library.ResultSet
 			#Dim objPatient As Patient
@@ -40,7 +40,7 @@ Class SampleDispatch.Utils Extends %Persistent
 			set objRs = ##class(%Library.ResultSet).%New("IRISDemo.Util.FileReader:CSV")
 	
 			Set tSC = objRs.Execute( filename) 
-			$$$ThrowStatusExceptionIfError(tSC, "LoadItemMasterFileException")
+			$$$ThrowStatusExceptionIfError(tSC, "LoadFileException")
 			
 			While objRs.Next() 
 			{
@@ -51,10 +51,11 @@ Class SampleDispatch.Utils Extends %Persistent
 				Set obj.Eqmt = objRs.Get("eqmt")
 				
 				Set tSC = obj.%Save()
-				$$$ThrowStatusExceptionIfError(tSC, "ItemMasterSaveException")
+				$$$ThrowStatusExceptionIfError(tSC, "LoadEventsSaveException")
 			}
 	}
-		ClassMethod LoadItemMasterOperators(filename As %String)
+	
+	ClassMethod LoadOperators(filename As %String)
 	{
 			#Dim objRs As %Library.ResultSet
 			#Dim objPatient As Patient
@@ -62,7 +63,7 @@ Class SampleDispatch.Utils Extends %Persistent
 			set objRs = ##class(%Library.ResultSet).%New("IRISDemo.Util.FileReader:CSV")
 	
 			Set tSC = objRs.Execute( filename) 
-			$$$ThrowStatusExceptionIfError(tSC, "LoadItemMasterFileException")
+			$$$ThrowStatusExceptionIfError(tSC, "LoadFileException")
 			
 			While objRs.Next() 
 			{				
@@ -73,10 +74,11 @@ Class SampleDispatch.Utils Extends %Persistent
 				Set obj.Eqmt = objRs.Get("eqmt")
 				
 				Set tSC = obj.%Save()
-				$$$ThrowStatusExceptionIfError(tSC, "ItemMasterSaveException")
+				$$$ThrowStatusExceptionIfError(tSC, "LoadOperatorsSaveException")
 			}
 	}
-		ClassMethod LoadItemMasterShifts(filename As %String)
+	
+	ClassMethod LoadShifts(filename As %String)
 	{
 			#Dim objRs As %Library.ResultSet
 			#Dim objPatient As Patient
@@ -84,7 +86,7 @@ Class SampleDispatch.Utils Extends %Persistent
 			set objRs = ##class(%Library.ResultSet).%New("IRISDemo.Util.FileReader:CSV")
 	
 			Set tSC = objRs.Execute( filename) 
-			$$$ThrowStatusExceptionIfError(tSC, "LoadItemMasterFileException")
+			$$$ThrowStatusExceptionIfError(tSC, "LoadFileException")
 			
 			While objRs.Next() 
 			{
@@ -95,7 +97,7 @@ Class SampleDispatch.Utils Extends %Persistent
 				Set obj.EndTime = ..FixTimeStamp(objRs.Get("end_time"))
 				
 				Set tSC = obj.%Save()
-				$$$ThrowStatusExceptionIfError(tSC, "ItemMasterSaveException")
+				$$$ThrowStatusExceptionIfError(tSC, "LoadShiftsSaveException")
 			}
 	}
 	
