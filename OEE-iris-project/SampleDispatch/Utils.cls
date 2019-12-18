@@ -5,12 +5,33 @@ Class SampleDispatch.Utils Extends %Persistent
 	/// documentation
 	ClassMethod LoadEverything() 
 	{
+		Do ..LoadItemMasterEqmt("/tmp/sample_mining_db_eqmt.csv")
 		Do ..LoadItemMasterShifts("/tmp/sample_mining_db_shifts.csv")
 		Do ..LoadEventCodes("/tmp/sample_mining_db_event_codes.csv")
 		Do ..LoadItemMasterEvents("/tmp/sample_mining_db_events.csv")
 		Do ..LoadItemMasterOperators("/tmp/sample_mining_db_operators.csv")
 	}
-
+	ClassMethod LoadItemMasterEqmt(filename As %String)
+	{
+			#Dim objRs As %Library.ResultSet
+			#Dim objPatient As Patient
+			
+			set objRs = ##class(%Library.ResultSet).%New("IRISDemo.Util.FileReader:CSV")
+	
+			Set tSC = objRs.Execute( filename) 
+			$$$ThrowStatusExceptionIfError(tSC, "LoadItemMasterFileException")
+			
+			While objRs.Next() 
+			{
+				set obj = ##class(SampleDispatch.EventCodes).%New()
+			
+				Set obj.Eqmt =  objRs.Get("eqmt")
+				Set obj.Name =  objRs.Get("Name")
+				
+				Set tSC = obj.%Save()
+				$$$ThrowStatusExceptionIfError(tSC, "LoadEqmtSaveException")
+			}
+	}
 	ClassMethod LoadEventCodes(filename As %String)
 	{
 			#Dim objRs As %Library.ResultSet
@@ -48,7 +69,7 @@ Class SampleDispatch.Utils Extends %Persistent
 			
 				Set obj.Time = ..FixTimeStamp(objRs.Get("time"))
 				Set obj.Code =  ##class(SampleDispatch.EventCodes).CodeIndexOpen(objRs.Get("code"))
-				Set obj.Eqmt = objRs.Get("eqmt")
+				Set obj.Eqmt = ##class(SampleDispatch.Eqmt).EqmtIndexOpen(objRs.Get("eqmt"))
 				
 				Set tSC = obj.%Save()
 				$$$ThrowStatusExceptionIfError(tSC, "ItemMasterSaveException")
@@ -70,7 +91,7 @@ Class SampleDispatch.Utils Extends %Persistent
 			
 				Set obj.Shift = ##class(SampleDispatch.Shifts).ShiftIdIndexOpen(objRs.Get("shiftid"))
 				Set obj.OperatorId = objRs.Get("opid")
-				Set obj.Eqmt = objRs.Get("eqmt")
+				Set obj.Eqmt = ##class(SampleDispatch.Eqmt).EqmtIndexOpen(objRs.Get("eqmt"))
 				
 				Set tSC = obj.%Save()
 				$$$ThrowStatusExceptionIfError(tSC, "ItemMasterSaveException")
