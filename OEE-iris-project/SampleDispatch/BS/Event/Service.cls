@@ -20,7 +20,6 @@ Method OnProcessInput(pInput As EnsLib.SQL.Snapshot, Output pOutput As %Register
 		Set sc = oException.AsStatus()
 	}
 	
-	
 	Quit sc
 }
 

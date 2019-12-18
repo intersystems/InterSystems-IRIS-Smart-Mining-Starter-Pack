@@ -3,6 +3,29 @@ Include %occInclude
 Class IRISConfig.Installer Extends IRISConfig.InstallerBase
 {
 
+/// This method will create an Interoperability credential meant to be used on Interoperability Productions.
+/// It will use the standard SuperUser/sys password for demos.
+ClassMethod CreateCredentials(pNamespace As %String) As %Status
+{
+	Set tSC = $$$OK
+	Try
+	{
+		Set tNS=$Namespace
+		ZN pNamespace
+		
+		Set tSC = ##class(Ens.Config.Credentials).SetCredential("SampleDispatch", "SuperUser", "sys", 1)
+		Quit:$System.Status.IsError(tSC)
+	}
+	Catch (oException)
+	{
+		Set tSC = oException.AsStatus()
+	}
+	
+	ZN tNS
+	
+	Quit tSC 
+}
+
 ClassMethod LoadTransactionalData(pNamespace As %String) As %Status
 {
 	Set tSC = $$$OK
@@ -54,6 +77,13 @@ XData Install [ XMLNamespace = INSTALLER ]
 	<Invoke Class="IRISConfig.Installer" Method="LoadTransactionalData" CheckStatus="true">
 		<Arg name="pNamespace" Value="${Namespace}"/>
 	</Invoke>
+	
+	<Log Text="Creating credentials..." Level="0"/>
+	<Invoke Class="IRISConfig.Installer" Method="CreateCredentials" CheckStatus="true">
+		<Arg name="pNamespace" Value="${Namespace}"/>
+	</Invoke>
+	
+	
 </Manifest>
 }
 }

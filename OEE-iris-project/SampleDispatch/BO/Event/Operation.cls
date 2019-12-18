@@ -20,7 +20,6 @@ Method StatusChangeEvent(pInput As SampleDispatch.BO.Event.StatusChangeEvent, Ou
 		Set sc = oException.AsStatus()
 	}
 	
-	
 	Quit sc
 }
 
