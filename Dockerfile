@@ -8,6 +8,8 @@ ADD --chown=irisowner:irisuser ./${IRIS_PROJECT_FOLDER_NAME}/ $IRIS_APP_SOURCEDI
 
 ADD --chown=irisowner:irisuser ./production_data.tar.gz /tmp/
 
+ADD --chown=irisowner:irisuser ./csv /tmp/
+
 # Running the installer. This will load the source from our project.
 RUN /usr/irissys/demo/irisdemoinstaller.sh 
     #rm -f /tmp/export_to_hisdb.csv
