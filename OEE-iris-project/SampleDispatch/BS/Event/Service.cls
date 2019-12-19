@@ -78,7 +78,7 @@ Method ProcessDumps()
 		set oEvent = ##class(SampleDispatch.BO.Event.DumpEvent).%New()
 		set oEvent.EquipmentId = oRS.Get("Eqmt")
 		set oEvent.EventTime = oRS.Get("EventTime")
-		set oEvent.Tons = oRS.Get("Tons d")
+		set oEvent.Tons = oRS.Get("Tons")
 		
 		Set ..%SessionId=""
 		
