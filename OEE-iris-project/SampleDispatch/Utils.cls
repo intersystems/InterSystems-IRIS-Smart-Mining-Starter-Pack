@@ -165,6 +165,7 @@ Class SampleDispatch.Utils Extends %Persistent
 				set obj = ##class(SampleDispatch.Dumps).%New()
 				Set obj.Eqmt =  ##class(SampleDispatch.Eqmt).EqmtIndexOpen(objRs.Get("eqmt"))
 				Set obj.Time =  ..FixTimeStamp(objRs.Get("time"))
+				Set obj.EndTime =  ..FixTimeStamp(objRs.Get("end_time"))
 				Set obj.Tons =  objRs.Get("tons")
 				
 				

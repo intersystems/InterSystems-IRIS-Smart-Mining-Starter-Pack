@@ -58,14 +58,14 @@ Method ProcessEvents()
 	}	
 }
 
-/// We will only bring dumps that are COMPLETE. So we are querying for all dumps that have a non null EndTime
+/// We will only bring dumps that are COMPLETE. So we are querying for all NEW dumps that have a non null EndTime
 Method ProcessCompletedDumps()
 {
 	#Dim oRS As EnsLib.SQL.GatewayResultSet
 	
 	Set tLastKey = ..Adapter.GetPersistentValue(..%ConfigName, "LastCompletedDumpKey")
 	
-	Set tQueryStatement="SELECT ID, Eqmt, StartTime, EndTime Tons "_
+	Set tQueryStatement="SELECT ID, Eqmt, ""Time"" StartTime, EndTime, Tons "_
 						"FROM SampleDispatch.Dumps where ID>? and EndTime is not null"
 						
 	Set sc = ..Adapter.ExecuteQuery(.oRS, tQueryStatement, tLastKey)

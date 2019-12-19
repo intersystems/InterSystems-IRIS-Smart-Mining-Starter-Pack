@@ -8,7 +8,7 @@ Class OEE.Data.Dump Extends %Persistent
 	
 	Property EndTime As %TimeStamp;
 
-	Property Ton As %Float [ Required ];
+	Property Tons As %Float [ Required ];
 		
 Storage Default
 {
@@ -26,10 +26,7 @@ Storage Default
 <Value>EndTime</Value>
 </Value>
 <Value name="5">
-<Value>Ton</Value>
-</Value>
-<Value name="6">
-<Value>StateEvent</Value>
+<Value>Tons</Value>
 </Value>
 </Data>
 <DataLocation>^OEE.Data.DumpD</DataLocation>
