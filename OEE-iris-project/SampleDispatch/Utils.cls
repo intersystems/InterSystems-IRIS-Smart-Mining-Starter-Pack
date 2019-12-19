@@ -10,6 +10,8 @@ Class SampleDispatch.Utils Extends %Persistent
 		Do ..LoadEventCodes("/tmp/sample_mining_db_event_codes.csv")
 		Do ..LoadEvents("/tmp/sample_mining_db_events.csv")
 		Do ..LoadOperators("/tmp/sample_mining_db_operators.csv")
+		Do ..LoadLoads("/tmp/sample_mining_db_loads.csv")
+		Do ..LoadDumps("/tmp/sample_mining_db_dumps.csv")
 	}
 	ClassMethod LoadEqmt(filename As %String)
 	{
@@ -127,7 +129,49 @@ Class SampleDispatch.Utils Extends %Persistent
 				$$$ThrowStatusExceptionIfError(tSC, "LoadShiftsSaveException")
 			}
 	}
+		ClassMethod LoadLoads(filename As %String)
+	{
+			#Dim objRs As %Library.ResultSet
+			#Dim objPatient As Patient
+			
+			set objRs = ##class(%Library.ResultSet).%New("IRISDemo.Util.FileReader:CSV")
 	
+			Set tSC = objRs.Execute( filename) 
+			$$$ThrowStatusExceptionIfError(tSC, "LoadItemMasterFileException")
+			
+			While objRs.Next() 
+			{		
+				set obj = ##class(SampleDispatch.Loads).%New()
+				Set obj.Eqmt =  ##class(SampleDispatch.Eqmt).EqmtIndexOpen(objRs.Get("eqmt"))
+				Set obj.Time =  ..FixTimeStamp(objRs.Get("time"))
+				Set obj.Tons =  objRs.Get("tons")
+				
+				Set tSC = obj.%Save()
+				$$$ThrowStatusExceptionIfError(tSC, "LoadLoadsSaveException")
+			}
+	}
+		ClassMethod LoadDumps(filename As %String)
+	{
+			#Dim objRs As %Library.ResultSet
+			#Dim objPatient As Patient
+			
+			set objRs = ##class(%Library.ResultSet).%New("IRISDemo.Util.FileReader:CSV")
+	
+			Set tSC = objRs.Execute( filename) 
+			$$$ThrowStatusExceptionIfError(tSC, "LoadItemMasterFileException")
+			
+			While objRs.Next() 
+			{
+				set obj = ##class(SampleDispatch.Dumps).%New()
+				Set obj.Eqmt =  ##class(SampleDispatch.Eqmt).EqmtIndexOpen(objRs.Get("eqmt"))
+				Set obj.Time =  ..FixTimeStamp(objRs.Get("time"))
+				Set obj.Tons =  objRs.Get("tons")
+				
+				
+				Set tSC = obj.%Save()
+				$$$ThrowStatusExceptionIfError(tSC, "LoadDumpsSaveException")
+			}
+	}
 	ClassMethod FixTimeStamp(time As %String) As %TimeStamp
 	{
 		Quit $ZDateTime($ZDateTimeH(time,,,,6),3)
