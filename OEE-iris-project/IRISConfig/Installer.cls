@@ -33,18 +33,9 @@ ClassMethod LoadTransactionalData(pNamespace As %String) As %Status
 	{
 		ZN pNamespace
 				
-		Do ##class(IRISDemo.Data.Utils).LoadData()
+		//Do ##class(IRISDemo.Data.Utils).LoadData()
 		
-		Try
-		{
-		
-			Do ##class(SampleDispatch.Utils).LoadEverything()
-		}
-		Catch (oException)
-		{
-			Do $System.Status.DisplayError(oException.AsStatus())
-		}
-		
+		Do ##class(SampleDispatch.Utils).LoadEverything()
 		
 		/// All possible events that were triggered when we loaded the demo data
 		/// must be deleted. 

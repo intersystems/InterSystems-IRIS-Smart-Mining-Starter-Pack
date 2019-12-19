@@ -33,15 +33,17 @@ Method ProcessEvents()
 	
 	Set tLastKey = ..Adapter.GetPersistentValue(..%ConfigName, "LastEventKey")
 	
-	Set tQueryStatement="SELECT ID, Code->Code StatusCode, Eqmt, ""Time"" EventTime "_
-						"FROM SampleDispatch.Events where ID>?"
+	// Ordering by time should not be necessary if this table has a Primary Key that is numeric and sequential. 
+	// Actually we are counting on this.
+	Set tQueryStatement="SELECT Code->Code StatusCode, Eqmt, ""Time"" EventTime "_
+						"FROM SampleDispatch.Events where ""Time"">? order by ""Time"""
 						
 	Set sc = ..Adapter.ExecuteQuery(.oRS, tQueryStatement, tLastKey)
 	$$$ThrowStatusExceptionIfError(sc, "ProcessEventsQueryException")
 	
 	While oRS.Next()
 	{
-		Set tLastKey = oRS.Get("ID")
+		Set tLastKey = oRS.Get("Time")
 		$$$TRACE("Processing State Change Event "_tLastKey_"...")
 		
 		set oEvent = ##class(SampleDispatch.BO.Event.StatusChangeEvent).%New()
@@ -96,7 +98,8 @@ Method ProcessCompletedDumps()
 Method OnInit() As %Status
 {
    #; initialize persistent last key value
-   Do ..Adapter.InitializePersistentValue(..%ConfigName, "LastEventKey",0)
+   //Do ..Adapter.InitializePersistentValue(..%ConfigName, "LastEventKey",0)
+   Do ..Adapter.InitializePersistentValue(..%ConfigName, "LastEventKey", $ZDateTime("0,0", 3))
    Do ..Adapter.InitializePersistentValue(..%ConfigName, "LastCompletedDumpKey",0)
    Quit $$$OK
 }
