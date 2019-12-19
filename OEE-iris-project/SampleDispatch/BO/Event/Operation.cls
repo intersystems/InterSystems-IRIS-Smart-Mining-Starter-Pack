@@ -35,11 +35,40 @@ Method StatusChangeEvent(pInput As SampleDispatch.BO.Event.StatusChangeEvent, Ou
 	Quit sc
 }
 
+Method CompletedDumpEvent(pInput As SampleDispatch.BO.Event.CompletedDumpEvent, Output pOutput As Ens.Response) As %Status
+{
+	#Dim eventChange As OEE.Data.EventChange
+	#Dim previousChange As OEE.Data.EventChange
+	Set sc=$$$OK
+	
+	Try
+	{		
+		Set dump = ##class(OEE.Data.Dump).%New()
+		Set dump.EquipmentId = pInput.EquipmentId
+		Set dump.StartTime = pInput.StartTime
+		Set dump.EndTime = pInput.EndTime
+		Set dump.Tons = pInput.Tons
+		
+		Set sc = dump.%Save()
+		
+	}
+	Catch (oException)
+	{
+		Set sc = oException.AsStatus()
+	}
+	
+	Quit sc
+}
+
 XData MessageMap {
 <MapItems>
     <MapItem MessageType="SampleDispatch.BO.Event.StatusChangeEvent">
         <Method>StatusChangeEvent</Method>
     </MapItem>
+    <MapItem MessageType="SampleDispatch.BO.Event.CompletedDumpEvent">
+        <Method>CompletedDumpEvent</Method>
+    </MapItem>
+
 </MapItems>
 }
 

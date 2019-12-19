@@ -16,7 +16,7 @@ Method OnProcessInput(pInput As EnsLib.SQL.Snapshot, Output pOutput As %Register
 	{
 		Do ..ProcessEvents()
 		
-		//Do ..ProcessDumps()
+		Do ..ProcessCompletedDumps()
 		
 	}
 	Catch(oException)
@@ -58,14 +58,15 @@ Method ProcessEvents()
 	}	
 }
 
-Method ProcessDumps()
+/// We will only bring dumps that are COMPLETE. So we are querying for all dumps that have a non null EndTime
+Method ProcessCompletedDumps()
 {
 	#Dim oRS As EnsLib.SQL.GatewayResultSet
 	
-	Set tLastKey = ..Adapter.GetPersistentValue(..%ConfigName, "LastDumpKey")
+	Set tLastKey = ..Adapter.GetPersistentValue(..%ConfigName, "LastCompletedDumpKey")
 	
-	Set tQueryStatement="SELECT ID, Eqmt, ""Time"" EventTime, Tons "_
-						"FROM SampleDispatch.Dumps where ID>?"
+	Set tQueryStatement="SELECT ID, Eqmt, StartTime, EndTime Tons "_
+						"FROM SampleDispatch.Dumps where ID>? and EndTime is not null"
 						
 	Set sc = ..Adapter.ExecuteQuery(.oRS, tQueryStatement, tLastKey)
 	$$$ThrowStatusExceptionIfError(sc, "ProcessDumpsQueryException")
@@ -75,17 +76,18 @@ Method ProcessDumps()
 		Set tLastKey = oRS.Get("ID")
 		$$$TRACE("Processing Dump "_tLastKey_"...")
 		
-		set oEvent = ##class(SampleDispatch.BO.Event.DumpEvent).%New()
+		set oEvent = ##class(SampleDispatch.BO.Event.CompletedDumpEvent).%New()
 		set oEvent.EquipmentId = oRS.Get("Eqmt")
-		set oEvent.EventTime = oRS.Get("EventTime")
-		set oEvent.Tons = oRS.Get("Tons d")
+		set oEvent.StartTime = oRS.Get("StartTime")
+		set oEvent.EndTime = oRS.Get("EndTime")
+		set oEvent.Tons = oRS.Get("Tons")
 		
 		Set ..%SessionId=""
 		
 		set sc = ..SendRequestAsync("Sample Dispatch Event Operation", oEvent)
 		$$$ThrowStatusExceptionIfError(sc, "ProcessSingleDumpException")
 		
-		Do ..Adapter.SetPersistentValue(..%ConfigName, "LastDumpKey", tLastKey)
+		Do ..Adapter.SetPersistentValue(..%ConfigName, "LastCompletedDumpKey", tLastKey)
 	}
 	
 	
@@ -95,7 +97,7 @@ Method OnInit() As %Status
 {
    #; initialize persistent last key value
    Do ..Adapter.InitializePersistentValue(..%ConfigName, "LastEventKey",0)
-   Do ..Adapter.InitializePersistentValue(..%ConfigName, "LastDumpKey",0)
+   Do ..Adapter.InitializePersistentValue(..%ConfigName, "LastCompletedDumpKey",0)
    Quit $$$OK
 }
 

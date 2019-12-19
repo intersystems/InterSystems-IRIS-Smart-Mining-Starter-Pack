@@ -2,8 +2,10 @@ Class SampleDispatch.BO.Event.StatusChangeEvent Extends (%Persistent,Ens.Request
 {
 	/// documentation
 	Property EquipmentId As %String [ Required ];
+	
 	/// documentation
 	Property EventTime As %TimeStamp [ Required];
+	
 	/// documentation
 	Property NewStatusCode As %String [Required];
 
