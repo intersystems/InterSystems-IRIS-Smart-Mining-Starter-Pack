@@ -18,9 +18,9 @@ XData ProductionDefinition
     <Setting Target="Adapter" Name="Credentials">SampleDispatch</Setting>
     <Setting Target="Adapter" Name="JDBCDriver">com.intersystems.jdbc.IRISDriver</Setting>
     <Setting Target="Adapter" Name="JGService">Java Gateway Service</Setting>
-    <Setting Target="Adapter" Name="Parameters"><![CDATA[&%LastKey]]></Setting>
-    <Setting Target="Adapter" Name="Query"><![CDATA[SELECT ID, Code->Code StatusCode, Eqmt, "Time" EventTime
-FROM SampleDispatch.Events where ID>?]]></Setting>
+    <Setting Target="Adapter" Name="Parameters"></Setting>
+    <Setting Target="Adapter" Name="Query">select 1</Setting>
+    <Setting Target="Adapter" Name="KeyFieldName"></Setting>
   </Item>
   <Item Name="Sample Dispatch Event Operation" Category="" ClassName="SampleDispatch.BO.Event.Operation" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="false" Schedule="">
   </Item>
