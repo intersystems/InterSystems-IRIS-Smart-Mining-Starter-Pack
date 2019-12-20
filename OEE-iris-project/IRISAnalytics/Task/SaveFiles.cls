@@ -11,7 +11,11 @@ Class IRISAnalytics.Task.SaveFiles Extends (IRISDemo.Util.BaseTask, %SYS.Task.De
 		Set tSC = $$$OK
 		Try
 		{
-            Do ..Log("Saving IRIS analytics files to "_..Folder)
+			Set tFile = ##class(%File).NormalizeFilename("iris-analytics-artifacts.xml", ..Folder)
+			
+            Do ..Log("Saving IRIS analytics files to "_tFile)
+            Set tSC=$system.OBJ.Export("*.DFI", tFile)
+            Quit:$$$ISERR(tSC)
 		}
 		Catch(Exception)
 		{

@@ -6,6 +6,7 @@ ARG IRIS_PROJECT_FOLDER_NAME=OEE-iris-project
  
 # Adding source code that will be loaded by the installer
 ADD --chown=irisowner:irisuser ./${IRIS_PROJECT_FOLDER_NAME}/ $IRIS_APP_SOURCEDIR
+ADD --chown=irisowner:irisuser ./iris-analytics/*.xml $IRIS_APP_SOURCEDIR
 
 ADD --chown=irisowner:irisuser ./production_data.tar.gz /tmp/
 
