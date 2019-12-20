@@ -27,9 +27,6 @@ then
     docker-compose rm -f
     docker-compose up --remove-orphans
 else
-    docker run --rm --init --name oee \
-    -v $PWD/iris-analytics:/tmp/iris-analytics \
-    -p 51773:51773 -p 52773:52773 \
-    ${DOCKER_REPO}:oee-version-${VERSION}
+    docker run --rm --init --name oee -v "$PWD/iris-analytics":/tmp/iris-analytics -p 51773:51773 -p 52773:52773 ${DOCKER_REPO}:oee-version-${VERSION}
 fi
 # 
