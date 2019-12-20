@@ -1,14 +1,13 @@
 Class SampleDispatch.Events Extends %Persistent
 {
-		/// documentation
-		Property Time As %TimeStamp;
-		
-		/// documentation
-		Property Code As EventCodes [ Required ];
-		
-		/// documentation
-		Property Eqmt as Eqmt;
-		
+	/// documentation
+	Property EventTime As %TimeStamp;
+	
+	/// documentation
+	Property Code As EventCodes [ Required ];
+	
+	/// documentation
+	Property Eqmt as Eqmt;
 		
 Storage Default
 {
@@ -17,7 +16,7 @@ Storage Default
 <Value>%%CLASSNAME</Value>
 </Value>
 <Value name="2">
-<Value>Time</Value>
+<Value>EventTime</Value>
 </Value>
 <Value name="3">
 <Value>Code</Value>

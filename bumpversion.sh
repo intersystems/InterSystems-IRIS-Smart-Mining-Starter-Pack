@@ -63,7 +63,7 @@ if [ -f VERSION ]; then
     # belonging to this repository. References to other images such as Spark and Zeppelin 
     # will be let alone.
     #
-    #sed -E -i '' "s;(intersystemsdc/irisdemo-demo-fraudprevention:.+)-version-[0-9][0-9.]*;\1-version-$INPUT_STRING;g" ./docker-compose.yml
+    sed -E -i '' "s;(intersystemsdc/mining:.+)-version-[0-9][0-9.]*;\1-version-$INPUT_STRING;g" ./docker-compose.yml
     #sed -E -i '' "s;(intersystemsdc/irisdemo-demo-fraudprevention:.+)-version-[0-9][0-9.]*;\1-version-$INPUT_STRING;g" ./banking_trn_srv/Dockerfile
 
     echo "## $INPUT_STRING ($NOW)" > tmpfile
@@ -80,7 +80,7 @@ if [ -f VERSION ]; then
     # Add files that were changed by the bumpversion.sh:
     #
     #git add CHANGELOG.md VERSION docker-compose.yml ./banking_trn_srv/Dockerfile
-    git add CHANGELOG.md VERSION
+    git add CHANGELOG.md VERSION docker-compose.yml
 
     git commit -m "Bump version to ${INPUT_STRING}."
     git tag -a -m "Tag version ${INPUT_STRING}." "v$INPUT_STRING"

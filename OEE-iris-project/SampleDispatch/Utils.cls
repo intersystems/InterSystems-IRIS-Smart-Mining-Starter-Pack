@@ -75,7 +75,7 @@ Class SampleDispatch.Utils
 		{
 			set obj = ##class(SampleDispatch.Events).%New()
 		
-			Set obj.Time = ..FixTimeStamp(objRs.Get("time"))
+			Set obj.EventTime = ..FixTimeStamp(objRs.Get("time"))
 			Set obj.Code =  ##class(SampleDispatch.EventCodes).CodeIndexOpen(objRs.Get("code"))
 			Set obj.Eqmt = ##class(SampleDispatch.Eqmt).EqmtIndexOpen(objRs.Get("eqmt"))
 			

@@ -41,8 +41,8 @@ Method ProcessEvents()
 	
 	// Ordering by time should not be necessary if this table has a Primary Key that is numeric and sequential. 
 	// Actually we are counting on this.
-	Set tQueryStatement="SELECT Code->Code StatusCode, Eqmt, ""Time"" EventTime "_
-						"FROM SampleDispatch.Events where ""Time"">? order by ""Time"""
+	Set tQueryStatement="SELECT Code->Code StatusCode, Eqmt, EventTime "_
+						"FROM SampleDispatch.Events where EventTime>? order by EventTime"
 						
 	Set sc = ..Adapter.ExecuteQuery(.oRS, tQueryStatement, tLastKey)
 	$$$ThrowStatusExceptionIfError(sc, "ProcessEventsQueryException")

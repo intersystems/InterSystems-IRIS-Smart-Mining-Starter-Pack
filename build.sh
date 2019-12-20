@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOCKER_REPO=intersystemsdc/irisdemo-demo-oee
+DOCKER_REPO=intersystemsdc/mining
 VERSION=`cat ./VERSION`
 
-docker build -t ${DOCKER_REPO}:version-${VERSION} .
+docker build -t ${DOCKER_REPO}:oee-version-${VERSION} .

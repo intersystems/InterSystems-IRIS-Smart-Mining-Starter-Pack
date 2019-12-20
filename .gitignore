@@ -1,1 +1,4 @@
 .buildpath
+*.tar
+**/logs/
+**/conf/
