@@ -2,9 +2,15 @@ Include DEMOMACROS
 
 Class SampleDispatch.BS.Event.Service extends Ens.BusinessService {
 
-Parameter ADAPTER = "EnsLib.SQL.InboundAdapter";
+/// We are using this custom adapter that is based on EnsLib.SQL.InboundAdapter to hide some properties we don't
+/// want people to change.
+Parameter ADAPTER = "SampleDispatch.Adapter.SQL.PeriodicInboundAdapter";
 
-Property Adapter As EnsLib.SQL.InboundAdapter;
+/// The Adapter property on Ens.BusinessService points to Ens.InboundAdapter. Polymorphism allows us to assign
+/// an object of any child class of Ens.BusinessService such as EnsLib.SQL.InboundAdapter. But that does't help
+/// us with code completion. When we press "." after ..Adapter, we will only get Methods and Properties from Ens.BusinessService.
+/// By overriding the property here with the right class type, we will be able to use code completion. 
+Property Adapter As SampleDispatch.Adapter.SQL.PeriodicInboundAdapter;
 
 Method OnProcessInput(pInput As EnsLib.SQL.Snapshot, Output pOutput As %RegisteredObject) As %Status
 {

@@ -1,11 +1,16 @@
 Class SampleDispatch.Eqmt Extends %Persistent
 {
+
 /// documentation
-Property Eqmt As %Integer;
+Property EqmtCode As %Integer;
+
 /// documentation
 Property Name As %String;
 
-index EqmtIndex on Eqmt [Unique ];
+Property Capacity As %Float;
+
+index EqmtIndex on EqmtCode [Unique ];
+
 
 Storage Default
 {
@@ -14,10 +19,13 @@ Storage Default
 <Value>%%CLASSNAME</Value>
 </Value>
 <Value name="2">
-<Value>Eqmt</Value>
+<Value>EqmtCode</Value>
 </Value>
 <Value name="3">
 <Value>Name</Value>
+</Value>
+<Value name="4">
+<Value>Capacity</Value>
 </Value>
 </Data>
 <DataLocation>^SampleDispatch.EqmtD</DataLocation>
