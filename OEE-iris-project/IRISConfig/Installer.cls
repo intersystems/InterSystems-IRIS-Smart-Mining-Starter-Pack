@@ -53,6 +53,28 @@ ClassMethod LoadTransactionalData(pNamespace As %String) As %Status
 	Quit tSC 
 }
 
+ClassMethod BuildCubeAndEnableCubeRegistry(pNamespace As %String) As %Status
+{
+	Set tSC = $$$OK
+	Try
+	{
+		ZN pNamespace
+			
+		Set tSC = ##class(%DeepSee.CubeManager.Utils).SetActiveRegistry("OEE.Cube.Registry", 1)
+		Quit:$$$ISERR(tSC)
+		
+		Set tSC = ##class(%DeepSee.CubeManager.Utils).BuildAllRegisteredGroups()
+	}
+	Catch (oException)
+	{
+		Set tSC = oException.AsStatus()
+	}
+	
+	ZN "%SYS"
+	
+	Quit tSC 
+}
+
 /// You can customize this to run code during docker build
 XData Install [ XMLNamespace = INSTALLER ]
 {
@@ -61,7 +83,12 @@ XData Install [ XMLNamespace = INSTALLER ]
 		<IfDef Var="SourceDir">
             <Log Text="SourceDir defined - offline install from ${SourceDir}" Level="0"/>
             <Import File="${SourceDir}" Recurse="true"/>
+            
+			<Log Text="Creating Task to save IRIS Analytic files to external volume..." Level="0"/>
+			<Invoke Class="IRISAnalytics.Task.SaveFiles" Method="Create" CheckStatus="true"/>
+
         </IfDef>
+                
 	</Namespace>
 	
 	<Log Text="Loading transactional data..." Level="0"/>
@@ -74,6 +101,10 @@ XData Install [ XMLNamespace = INSTALLER ]
 		<Arg name="pNamespace" Value="${Namespace}"/>
 	</Invoke>
 	
+	<Log Text="Building cube and enabling cube registry..." Level="0"/>
+	<Invoke Class="IRISConfig.Installer" Method="BuildCubeAndEnableCubeRegistry" CheckStatus="true">
+		<Arg name="pNamespace" Value="${Namespace}"/>
+	</Invoke>
 	
 </Manifest>
 }

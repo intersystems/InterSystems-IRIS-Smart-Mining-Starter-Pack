@@ -13,6 +13,9 @@ services:
     - type: bind
       source: ./common_shared/
       target: /common_shared
+    - type: bind
+      source: ./iris-analytics/
+      target: /tmp/iris-analytics
 
   # DISPATCH:
   #   image: intersystemsdc/mining:dispatch-version-0.1.2
