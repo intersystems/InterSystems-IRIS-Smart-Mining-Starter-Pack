@@ -11,6 +11,7 @@ ADD --chown=irisowner:irisuser ./iris-analytics/*.xml $IRIS_APP_SOURCEDIR
 ADD --chown=irisowner:irisuser ./production_data.tar.gz /tmp/
 
 ADD --chown=irisowner:irisuser ./csv /tmp/
+ADD --chown=irisowner:irisuser ./mssql-jdbc-7.4.1.jre8.jar /tmp/
 
 # Running the installer. This will load the source from our project.
 RUN /usr/irissys/demo/irisdemoinstaller.sh 

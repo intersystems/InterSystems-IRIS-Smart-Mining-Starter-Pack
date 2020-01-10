@@ -5,7 +5,6 @@ Class SampleDispatch.Adapter.SQL.PeriodicInboundAdapter Extends EnsLib.SQL.Inbou
 {
 	/// Hiding parameters
 	Parameter SETTINGS = "-Query:Data,-Parameters:Data,-DeleteQuery:Data,-KeyFieldName:Data";
-
 	/// Setting InitialExpression to "select 1"
 	Property Query As %String(MAXLEN = "") [ Required, InitialExpression = "select 1" ];
 	

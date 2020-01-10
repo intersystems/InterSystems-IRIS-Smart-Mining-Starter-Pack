@@ -1,6 +1,7 @@
 Include DEMOMACROS
 
-Class SampleDispatch.BS.Event.Service extends Ens.BusinessService {
+Class SampleDispatch.BS.Event.Service Extends Ens.BusinessService
+{
 
 /// We are using this custom adapter that is based on EnsLib.SQL.InboundAdapter to hide some properties we don't
 /// want people to change.
@@ -63,7 +64,7 @@ Method ProcessEvents()
 		$$$ThrowStatusExceptionIfError(sc, "ProcessSingleEventException")
 		
 		Do ..Adapter.SetPersistentValue(..%ConfigName, "LastEventKey", tLastKey)
-	}	
+	}
 }
 
 /// We will only bring dumps that are COMPLETE. So we are querying for all NEW dumps that have a non null EndTime
@@ -97,8 +98,6 @@ Method ProcessCompletedDumps()
 		
 		Do ..Adapter.SetPersistentValue(..%ConfigName, "LastCompletedDumpKey", tLastKey)
 	}
-	
-	
 }
 
 Method OnInit() As %Status
