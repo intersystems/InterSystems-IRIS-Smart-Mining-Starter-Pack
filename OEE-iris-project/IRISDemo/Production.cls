@@ -23,7 +23,7 @@ XData ProductionDefinition
     <Setting Target="Adapter" Name="KeyFieldName"></Setting>
   </Item>
     <Item Name="MineCare SQL Event Service" Category="" ClassName="SampleDispatch.BS.Event.MineCareService" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="true" Schedule="">
-    <Setting Target="Adapter" Name="DSN">jdbc:sqlserver://172.25.200.245:1433</Setting>
+    <Setting Target="Adapter" Name="DSN">jdbc:sqlserver://devsl.xompass.com:1401</Setting>
     <Setting Target="Adapter" Name="Credentials">MineCareCredentials</Setting>
     <Setting Target="Adapter" Name="JGService">Java Gateway Service</Setting>
     <Setting Target="Adapter" Name="Parameters"></Setting>
