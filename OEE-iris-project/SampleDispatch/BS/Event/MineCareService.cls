@@ -34,7 +34,7 @@ Method ProcessCompleteEvent()
 	$$$TRACE("Next event Id "_tLastKey_"...")
 	
 	/// Gets all the new received events
-	Set tQueryStatement="SELECT Id, EquipmentId, StartTime, EndTime, ReasonCode FROM dbo.Activity WHERE Id>?"
+	Set tQueryStatement="SELECT Id, EquipmentId, StartTime, EndTime, ReasonCode FROM dbo.Activity WHERE Id>? AND EndTime is not null"
 						
 						
 	Set sc = ..Adapter.ExecuteQuery(.oRS, tQueryStatement, tLastKey)
