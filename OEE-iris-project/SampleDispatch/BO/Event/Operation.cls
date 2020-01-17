@@ -128,6 +128,44 @@ Method CompletedDumpEvent(pInput As SampleDispatch.BO.Event.CompletedDumpEvent, 
 	Quit sc
 }
 
+
+Method CompleteEvent(pInput As SampleDispatch.BO.Event.CompleteEvent, Output pOutput As Ens.Response) As %Status
+{
+	#Dim eventChange As OEE.Data.EventChange
+	#Dim previousChange As OEE.Data.EventChange
+	#Dim timeSlice As OEE.Data.OEETimeSlice
+	
+	Set sc=$$$OK
+	
+	Try
+	{		
+		Set event = ##class(OEE.Data.EventChange).%New()
+		Set event.EquipmentId = pInput.EquipmentId
+		Set event.StartTime = pInput.StartTime
+		Set event.EndTime = pInput.EndTime
+		Set event.NewStatusCode = pInput.ReasonCode
+		
+		Set sc = event.%Save()
+		
+		// Now we can update the time slice record. We are assuming that a dump is always inside a single shift
+		// hence, no fragmentation is necessary
+		
+		Set timeSlice = ##class(OEE.Data.OEETimeSlice).%New()
+		Set timeSlice.EventChange = event
+		Set timeSlice.StartTime = event.StartTime
+		Set timeSlice.EndTime = event.EndTime
+		
+		Set sc = timeSlice.%Save()
+		
+	}
+	Catch (oException)
+	{
+		Set sc = oException.AsStatus()
+	}
+	
+	Quit sc
+}
+
 XData MessageMap {
 <MapItems>
     <MapItem MessageType="SampleDispatch.BO.Event.StatusChangeEvent">
@@ -136,7 +174,9 @@ XData MessageMap {
     <MapItem MessageType="SampleDispatch.BO.Event.CompletedDumpEvent">
         <Method>CompletedDumpEvent</Method>
     </MapItem>
-
+    <MapItem MessageType="SampleDispatch.BO.Event.CompleteEvent">
+        <Method>CompleteEvent</Method>
+    </MapItem>
 </MapItems>
 }
 
