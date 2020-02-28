@@ -5,6 +5,8 @@ Class SampleDispatch.EventCodes Extends %Persistent
 	Property Code As %Integer;
 	/// documentation
 	Property Description As %String;
+	/// documentation
+	/// Property CodeType As type;
 	
 	Index CodeIndex On Code [ Unique ];
 	
