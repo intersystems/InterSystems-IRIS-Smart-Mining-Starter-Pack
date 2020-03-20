@@ -1,12 +1,9 @@
 Class ASPMining.CanonicalModel.Equipment.EquipmentCategory Extends %Persistent
 {
-	/// documentation
-	Property CategoryId As %Integer;
-	
 	/// documentation e.g: Truck, Shovel, etc.
-	Property Name As %Integer;
+	Property Name As %String;
 
-	index CategoryIdIndex on CategoryId [Unique ];
+
 Storage Default
 {
 <Data name="EquipmentCategoryDefaultData">
@@ -14,7 +11,7 @@ Storage Default
 <Value>%%CLASSNAME</Value>
 </Value>
 <Value name="2">
-<Value>CategoryId</Value>
+<Value>Id</Value>
 </Value>
 <Value name="3">
 <Value>Name</Value>
