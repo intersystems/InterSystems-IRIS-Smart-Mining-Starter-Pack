@@ -30,3 +30,7 @@ Here is the list of end points:
 ## Where is the Quick ML instructions?
 
 [Here](QUICKML.md).
+
+## Sample BDs
+Minecare: devsl.xompass.com:1401 SA/Modular1
+Powerview: 200.104.39.222:1433 SA/perrovaca
