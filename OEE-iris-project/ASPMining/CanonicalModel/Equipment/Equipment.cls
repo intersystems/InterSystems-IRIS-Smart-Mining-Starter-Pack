@@ -1,7 +1,7 @@
 Class ASPMining.CanonicalModel.Equipment.Equipment Extends %Persistent
 {
 	/// documentation
-	Property Category As EquipmentCategory;
+	Property EquipmentCategory As EquipmentCategory;
 	
 	/// documentation
 	Property Name As %String;
@@ -26,6 +26,9 @@ Storage Default
 </Value>
 <Value name="5">
 <Value>Capacity</Value>
+</Value>
+<Value name="6">
+<Value>EquipmentCategory</Value>
 </Value>
 </Data>
 <DataLocation>^ASPMining.CanoniF845.EquipmentD</DataLocation>

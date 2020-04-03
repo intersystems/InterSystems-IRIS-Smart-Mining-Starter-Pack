@@ -1,5 +1,9 @@
 Class ASPMining.CanonicalModel.Planning.Shift Extends %Persistent
 {	
+/// documentation
+Property Date As %DateTime;
+/// documentation
+Property ShiftType As ShiftType;
 	/// documentation
 	Property StartTime As %TimeStamp;
 	
@@ -47,6 +51,12 @@ Storage Default
 </Value>
 <Value name="9">
 <Value>Id</Value>
+</Value>
+<Value name="10">
+<Value>Date</Value>
+</Value>
+<Value name="11">
+<Value>ShiftType</Value>
 </Value>
 </Data>
 <DataLocation>^ASPMining.CanonicalMB953.ShiftD</DataLocation>

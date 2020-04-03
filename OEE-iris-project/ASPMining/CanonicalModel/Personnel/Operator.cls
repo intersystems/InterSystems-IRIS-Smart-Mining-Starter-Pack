@@ -4,7 +4,9 @@ Class ASPMining.CanonicalModel.Personnel.Operator Extends %Persistent
 	Property Crew As Crew;
 	
 	/// documentation
-	Property OperatorName As %String;
+	Property FirstName As %String;
+	/// documentation
+	Property LastName As %String;
 	
 Storage Default
 {
@@ -20,6 +22,12 @@ Storage Default
 </Value>
 <Value name="4">
 <Value>OperatorName</Value>
+</Value>
+<Value name="5">
+<Value>FirstName</Value>
+</Value>
+<Value name="6">
+<Value>LastName</Value>
 </Value>
 </Data>
 <DataLocation>^ASPMining.Canonic1320.OperatorD</DataLocation>

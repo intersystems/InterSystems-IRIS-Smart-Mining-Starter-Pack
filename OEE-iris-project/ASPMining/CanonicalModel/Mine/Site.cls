@@ -1,11 +1,15 @@
 Class ASPMining.CanonicalModel.Mine.Site Extends %Persistent
 {
-
+/// documentation
+Property Name As %String;
 Storage Default
 {
 <Data name="SiteDefaultData">
 <Value name="1">
 <Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>Name</Value>
 </Value>
 </Data>
 <DataLocation>^ASPMining.CanonicalMod2AE.SiteD</DataLocation>
