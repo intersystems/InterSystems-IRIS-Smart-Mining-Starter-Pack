@@ -7,6 +7,12 @@ Property Equipment As ASPMining.CanonicalModel.Equipment.Equipment;
 Property StatusReason As StatusReason;
 /// documentation
 Property StatusType As StatusType;
+/// documentation
+Property StartTime As %TimeStamp;
+/// documentation
+Property EndTime As %TimeStamp;
+/// documentation
+Property Duration As %Integer;
 
 Storage Default
 {
@@ -22,6 +28,15 @@ Storage Default
 </Value>
 <Value name="4">
 <Value>StatusType</Value>
+</Value>
+<Value name="5">
+<Value>StartTime</Value>
+</Value>
+<Value name="6">
+<Value>EndTime</Value>
+</Value>
+<Value name="7">
+<Value>Duration</Value>
 </Value>
 </Data>
 <DataLocation>^ASPMining.CanoB953.StatusEventD</DataLocation>

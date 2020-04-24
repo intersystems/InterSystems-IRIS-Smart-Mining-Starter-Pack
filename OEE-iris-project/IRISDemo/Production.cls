@@ -25,7 +25,6 @@ XData ProductionDefinition
     <Setting Target="Adapter" Name="Query">select 1</Setting>
     <Setting Target="Adapter" Name="KeyFieldName"></Setting>
   </Item>
-  -->
     <Item Name="MineCare SQL Event Service" Category="" ClassName="SampleDispatch.BS.Event.MineCareService" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="true" Schedule="">
     <Setting Target="Adapter" Name="DSN">jdbc:sqlserver://devsl.xompass.com:1401</Setting>
     <Setting Target="Adapter" Name="Credentials">MineCareCredentials</Setting>
@@ -37,7 +36,19 @@ XData ProductionDefinition
     <Setting Target="Adapter" Name="ConnectionAttributes">databaseName=MineCare;user=SA;password=Modular1;</Setting>
     <Setting Target="Adapter" Name="KeyFieldName"></Setting>
   </Item>
-  <Item Name="Sample Dispatch Event Operation" Category="" ClassName="SampleDispatch.BO.Event.Operation" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="false" Schedule="">
+  -->
+  <Item Name="PowerView SQL Event Service" Category="" ClassName="SampleDispatch.BS.Event.PowerViewService" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="true" Schedule="">
+    <Setting Target="Adapter" Name="DSN">jdbc:sqlserver://dev.austekchile.cl:1433</Setting>
+    <Setting Target="Adapter" Name="Credentials">PowerViewCredentials</Setting>
+    <Setting Target="Adapter" Name="JGService">Java Gateway Service</Setting>
+    <Setting Target="Adapter" Name="Parameters"></Setting>
+    <Setting Target="Adapter" Name="Query">SELECT TOP 1 * from dbo.hist_statusevents</Setting>
+    <Setting Target="Adapter" Name="JDBCDriver">com.microsoft.sqlserver.jdbc.SQLServerDriver</Setting>
+    <Setting Target="Adapter" Name="JDBCClasspath">/tmp/mssql-jdbc-7.4.1.jre8.jar</Setting>
+    <Setting Target="Adapter" Name="ConnectionAttributes">databaseName=PowerView;user=iris;password=oee;</Setting>
+    <Setting Target="Adapter" Name="KeyFieldName"></Setting>
+  </Item>
+  <Item Name="PowerView Event Operation" Category="" ClassName="SampleDispatch.BO.Event.Operation" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="false" Schedule="">
   </Item>
 </Production>
 }

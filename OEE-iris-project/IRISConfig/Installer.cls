@@ -15,6 +15,7 @@ ClassMethod CreateCredentials(pNamespace As %String) As %Status
 		
 		Set tSC = ##class(Ens.Config.Credentials).SetCredential("SampleDispatch", "SuperUser", "sys", 1)
 		Set tSC2 = ##class(Ens.Config.Credentials).SetCredential("MineCareCredentials", "SA", "Minecare1", 1)
+		Set tSC3 = ##class(Ens.Config.Credentials).SetCredential("PowerViewCredentials", "iris", "oee", 1)
 		Quit:$System.Status.IsError(tSC)
 	}
 	Catch (oException)

@@ -7,6 +7,9 @@ Class ASPMining.CanonicalModel.Equipment.EquipmentModel Extends %Persistent
  Property Brand As %String;
  /// documentation
  Property NominalCapacityTons As %Float;
+ 
+ index EquipmentModelIndex on Model [Unique ];
+ 
 Storage Default
 {
 <Data name="EquipmentModelDefaultData">

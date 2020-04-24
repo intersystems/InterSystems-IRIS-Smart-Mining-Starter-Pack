@@ -3,6 +3,11 @@ Class ASPMining.CanonicalModel.Operation.StatusReason Extends %Persistent
 {
 /// documentation
 Property Reason As %String;
+Property StatusType As StatusType;
+Property Description As %String;
+
+index ReasonIndex on Reason [unique ];
+
 Storage Default
 {
 <Data name="StatusReasonDefaultData">
@@ -11,6 +16,12 @@ Storage Default
 </Value>
 <Value name="2">
 <Value>Reason</Value>
+</Value>
+<Value name="3">
+<Value>Description</Value>
+</Value>
+<Value name="4">
+<Value>StatusType</Value>
 </Value>
 </Data>
 <DataLocation>^ASPMining.CanB953.StatusReasonD</DataLocation>

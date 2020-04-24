@@ -1,16 +1,25 @@
 Class SampleDispatch.BO.Event.CompleteEvent Extends %Persistent
-{
-	/// documentation
-	Property EquipmentId As %String [ Required ];
-	
-	/// documentation
-	Property StartTime As %TimeStamp [ Required];
+{	
 
-	/// documentation
-	Property EndTime As %TimeStamp [ Required];
-	
-	/// documentation
-	Property ReasonCode As %String [Required];
+Property Id As %Integer;
+
+Property ShiftId As %Integer;
+
+Property EquipmentId As %String;
+
+Property StartTime As %TimeStamp;
+
+Property EndTime As %TimeStamp;
+
+Property Duration As %Integer;
+
+Property StatusReasonId As %Integer;
+
+/// documentation
+Property StatusReasonDescription As %String;
+
+Property StatusTypeId As %Integer;
+
 Storage Default
 {
 <Data name="CompleteEventDefaultData">
@@ -31,6 +40,24 @@ Storage Default
 </Value>
 <Value name="6">
 <Value>ReasonCode</Value>
+</Value>
+<Value name="7">
+<Value>Duration</Value>
+</Value>
+<Value name="8">
+<Value>Id</Value>
+</Value>
+<Value name="9">
+<Value>ShiftId</Value>
+</Value>
+<Value name="10">
+<Value>StatusReasonId</Value>
+</Value>
+<Value name="11">
+<Value>StatusTypeId</Value>
+</Value>
+<Value name="12">
+<Value>StatusReasonDescription</Value>
 </Value>
 </Data>
 <DataLocation>^SampleDispat51FA.CompleteEventD</DataLocation>

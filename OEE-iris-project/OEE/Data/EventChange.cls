@@ -9,6 +9,8 @@ Class OEE.Data.EventChange Extends %Persistent
 	/// documentation
 	Property StartTime As %TimeStamp [ Required];
 	
+	Property Duration As %Integer;
+	
 	Property EndTime As %TimeStamp;
 	
 	Property SessionIds As %String; 
@@ -56,6 +58,9 @@ Storage Default
 </Value>
 <Value name="6">
 <Value>SessionIds</Value>
+</Value>
+<Value name="7">
+<Value>Duration</Value>
 </Value>
 </Data>
 <DataLocation>^OEE.Data.EventChangeD</DataLocation>

@@ -3,6 +3,10 @@ Class ASPMining.CanonicalModel.Operation.StatusType Extends %Persistent
 {
 /// documentation
 Property Type As %String;
+Property Description As %String;
+
+
+index TypeIndex on Type [unique ];
 Storage Default
 {
 <Data name="StatusTypeDefaultData">
@@ -11,6 +15,9 @@ Storage Default
 </Value>
 <Value name="2">
 <Value>Type</Value>
+</Value>
+<Value name="3">
+<Value>Description</Value>
 </Value>
 </Data>
 <DataLocation>^ASPMining.CanonB953.StatusTypeD</DataLocation>
