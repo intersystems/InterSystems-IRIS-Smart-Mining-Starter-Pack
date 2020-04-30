@@ -4,6 +4,9 @@ Class ASPMining.CanonicalModel.Personnel.Crew Extends %Persistent
 	/// documentation
 	
 	Property Name As %String;
+	
+	/// documentation
+	Index CrewIndex On Name [unique];
 Storage Default
 {
 <Data name="CrewDefaultData">

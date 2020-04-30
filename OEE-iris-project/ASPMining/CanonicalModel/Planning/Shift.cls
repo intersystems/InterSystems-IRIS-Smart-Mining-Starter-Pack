@@ -1,26 +1,18 @@
 Class ASPMining.CanonicalModel.Planning.Shift Extends %Persistent
 {	
+Property Id As %Integer;
 /// documentation
-Property Date As %DateTime;
+Property DateTime As %DateTime;
+/// documentation
+Property StartSeconds As %Integer;
+Property StartDay As %Integer;
 /// documentation
 Property ShiftType As ShiftType;
-	/// documentation
-	Property StartTime As %TimeStamp;
+
+/// documentation
+Property Crew As ASPMining.CanonicalModel.Personnel.Crew;
 	
-	/// documentation
-	Property Year As %Integer;
-	
-	/// documentation
-	Property Month As %Integer;
-	
-	/// documentation
-	Property Day As %Integer;
-	
-	/// documentation
-	Property DayNight As %Integer;
-	
-	/// documentation
-	Property Crew As ASPMining.CanonicalModel.Equipment.Equipment;
+index ShiftIndex on Id [unique ];
 	
 Storage Default
 {
@@ -57,6 +49,15 @@ Storage Default
 </Value>
 <Value name="11">
 <Value>ShiftType</Value>
+</Value>
+<Value name="12">
+<Value>DateTime</Value>
+</Value>
+<Value name="13">
+<Value>StartSeconds</Value>
+</Value>
+<Value name="14">
+<Value>StartDay</Value>
 </Value>
 </Data>
 <DataLocation>^ASPMining.CanonicalMB953.ShiftD</DataLocation>

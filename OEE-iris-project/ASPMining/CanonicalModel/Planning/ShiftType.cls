@@ -5,6 +5,9 @@ Class ASPMining.CanonicalModel.Planning.ShiftType Extends %Persistent
 Property Type As %String;
 /// documentation
 Property Other As %String;
+
+/// documentation
+Index ShiftTypeIndex On Type [unique];
 Storage Default
 {
 <Data name="ShiftTypeDefaultData">

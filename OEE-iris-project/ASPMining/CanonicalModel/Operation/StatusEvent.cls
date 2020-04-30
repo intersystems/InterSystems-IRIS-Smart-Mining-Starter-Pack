@@ -2,6 +2,8 @@
 Class ASPMining.CanonicalModel.Operation.StatusEvent Extends %Persistent
 {
 /// documentation
+/// documentation
+Property Shift As ASPMining.CanonicalModel.Planning.Shift;
 Property Equipment As ASPMining.CanonicalModel.Equipment.Equipment;
 /// documentation
 Property StatusReason As StatusReason;
@@ -37,6 +39,9 @@ Storage Default
 </Value>
 <Value name="7">
 <Value>Duration</Value>
+</Value>
+<Value name="8">
+<Value>Shift</Value>
 </Value>
 </Data>
 <DataLocation>^ASPMining.CanoB953.StatusEventD</DataLocation>

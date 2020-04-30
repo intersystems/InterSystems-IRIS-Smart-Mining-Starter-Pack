@@ -187,6 +187,13 @@ Method CompleteEvent(pInput As SampleDispatch.BO.Event.CompleteEvent, Output pOu
 		}else{
 			Set event.StatusType = ##class(ASPMining.CanonicalModel.Operation.StatusType).TypeIndexOpen(pInput.StatusTypeId)
 		}
+		
+		If '##class(ASPMining.CanonicalModel.Planning.Shift).ShiftIndexExists(pInput.ShiftId){
+			set event.Shift = ##class(ASPMining.CanonicalModel.Planning.Shift).%New()
+			set event.Shift.Id = pInput.ShiftId
+		}else{
+			set event.Shift = ##class(ASPMining.CanonicalModel.Planning.Shift).ShiftIndexOpen(pInput.ShiftId)
+		}
 		//Set event.StatusReason = ##class(ASPMining.CanonicalModel.Operation.StatusReason).%New() // pInput.StatusReasonId
 		//Set event.StatusReason.Reason = pInput.StatusReasonId
 		//Set event.StatusType = ##class(ASPMining.CanonicalModel.Operation.StatusType).%New() // pInput.StatusTypeId
@@ -241,6 +248,25 @@ Method NewReason(pInput As ASPMining.CanonicalModel.Operation.StatusReason, Outp
 	Quit sc
 }
 
+Method NewShift(pInput As ASPMining.CanonicalModel.Planning.Shift, Output pOutput As Ens.Response) As %Status
+{
+
+	Set sc=$$$OK
+	
+	Try
+	{		
+		If '##class(ASPMining.CanonicalModel.Planning.Shift).ShiftIndexExists(pInput.Id) {
+			Set sc = pInput.%Save()
+		}
+	}
+	Catch (oException)
+	{
+		Set sc = oException.AsStatus()
+	}
+	
+	Quit sc
+}
+
 XData MessageMap {
 <MapItems>
     <MapItem MessageType="SampleDispatch.BO.Event.StatusChangeEvent">
@@ -257,6 +283,9 @@ XData MessageMap {
     </MapItem>
     <MapItem MessageType="ASPMining.CanonicalModel.Operation.StatusReason">
         <Method>NewReason</Method>
+    </MapItem>
+    <MapItem MessageType="ASPMining.CanonicalModel.Planning.Shift">
+        <Method>NewShift</Method>
     </MapItem>
 </MapItems>
 }
