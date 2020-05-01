@@ -10,9 +10,9 @@ Property StatusReason As StatusReason;
 /// documentation
 Property StatusType As StatusType;
 /// documentation
-Property StartTime As %TimeStamp;
+Property StartDate As %DateTime;
 /// documentation
-Property EndTime As %TimeStamp;
+Property EndDate As %DateTime;
 /// documentation
 Property Duration As %Integer;
 
@@ -42,6 +42,12 @@ Storage Default
 </Value>
 <Value name="8">
 <Value>Shift</Value>
+</Value>
+<Value name="9">
+<Value>StartDate</Value>
+</Value>
+<Value name="10">
+<Value>EndDate</Value>
 </Value>
 </Data>
 <DataLocation>^ASPMining.CanoB953.StatusEventD</DataLocation>

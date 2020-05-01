@@ -1,0 +1,2 @@
+Ver en Explorador de Clases
+http://wsl:52773/csp/sys/exp/%25CSP.UI.Portal.ClassList.zen?$NAMESPACE=APPINT&$NAMESPACE=APPINT

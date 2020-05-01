@@ -7,9 +7,9 @@ Property ShiftId As %Integer;
 
 Property EquipmentId As %String;
 
-Property StartTime As %TimeStamp;
+Property StartDate As %DateTime;
 
-Property EndTime As %TimeStamp;
+Property EndDate As %DateTime;
 
 Property Duration As %Integer;
 
@@ -58,6 +58,12 @@ Storage Default
 </Value>
 <Value name="12">
 <Value>StatusReasonDescription</Value>
+</Value>
+<Value name="13">
+<Value>StartDate</Value>
+</Value>
+<Value name="14">
+<Value>EndDate</Value>
 </Value>
 </Data>
 <DataLocation>^SampleDispat51FA.CompleteEventD</DataLocation>

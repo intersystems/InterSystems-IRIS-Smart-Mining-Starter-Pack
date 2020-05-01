@@ -3,6 +3,8 @@ Class ASPMining.CanonicalModel.Production.DumpEvent Extends %Persistent
 /// documentation
 Property Shift As ASPMining.CanonicalModel.Planning.Shift;
 /// documentation
+Property LoadEvent As LoadEvent;
+/// documentation
 Property Location As ASPMining.CanonicalModel.Mine.Location;
 /// documentation
 Property EquipmentTruck As ASPMining.CanonicalModel.Equipment.Equipment;
@@ -50,6 +52,12 @@ Storage Default
 </Value>
 <Value name="10">
 <Value>MeasuredTons</Value>
+</Value>
+<Value name="11">
+<Value>LeadEvent</Value>
+</Value>
+<Value name="12">
+<Value>LoadEvent</Value>
 </Value>
 </Data>
 <DataLocation>^ASPMining.Canoni4037.DumpEventD</DataLocation>

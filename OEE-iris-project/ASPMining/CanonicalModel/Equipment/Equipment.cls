@@ -13,8 +13,8 @@ Class ASPMining.CanonicalModel.Equipment.Equipment Extends %Persistent
 	
 	Property Capacity As %Float;
 	
-	index EquipmentIndex on Id [Unique ];
-
+	index EquipmentIndex on Id [Unique];
+	
 Storage Default
 {
 <Data name="EquipmentDefaultData">
@@ -22,10 +22,10 @@ Storage Default
 <Value>%%CLASSNAME</Value>
 </Value>
 <Value name="2">
-<Value>Id</Value>
+<Value>EquipmentCategory</Value>
 </Value>
 <Value name="3">
-<Value>Category</Value>
+<Value>EquipmentModel</Value>
 </Value>
 <Value name="4">
 <Value>Name</Value>
@@ -34,10 +34,7 @@ Storage Default
 <Value>Capacity</Value>
 </Value>
 <Value name="6">
-<Value>EquipmentCategory</Value>
-</Value>
-<Value name="7">
-<Value>EquipmentModel</Value>
+<Value>Id</Value>
 </Value>
 </Data>
 <DataLocation>^ASPMining.CanoniF845.EquipmentD</DataLocation>

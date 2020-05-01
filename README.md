@@ -32,5 +32,9 @@ Here is the list of end points:
 [Here](QUICKML.md).
 
 ## Sample BDs
-Minecare: devsl.xompass.com:1401 SA/Modular1
-Powerview: 200.104.39.222:1433 SA/perrovaca
+Minecare: devsl.xompass.com:1401 SA/Modular1 [Download](https://devxompass-my.sharepoint.com/:u:/g/personal/andres_xompass_com/EUFh5k-tHaFFj6XhhNMFcdMBa3YHUaAoxEVtwg6C4qm8AQ?e=J7PlTp)
+PowerviewCH: dev.austekchile.cl:1433 iris/oee [Download](https://devxompass-my.sharepoint.com/:u:/g/personal/andres_xompass_com/EcUKuHJ-AZZPvdh7BKkAptwBnuY2qdq-MR35EQMw58zBYA?e=e6ya3g)
+
+## Using Class Explorer
+http://localhost:52773/ClassExplorer/
+https://community.intersystems.com/post/objectscript-class-explorer-exploring-objectscript-classes-uml-notation

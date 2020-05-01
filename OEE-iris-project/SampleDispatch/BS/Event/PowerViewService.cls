@@ -109,7 +109,7 @@ Method ProcessNewCompleteEvents()
 	$$$TRACE("Next event ddbkey "_tLastKey_"...")
 	
 	/// Gets all the new received events
-	Set tQueryStatement="SELECT ddbkey, shiftindex, eqmt, operid, starttime, endtime, reason, duration, status, reasonlink FROM dbo.hist_statusevents WHERE ddbkey>? AND endtime is not null"
+	Set tQueryStatement="SELECT ddbkey, shiftindex, eqmt, operid, starttime, endtime, reason, duration, status, reasonlink FROM dbo.hist_statusevents WHERE ddbkey>? AND endtime is not null ORDER BY ddbkey"
 						
 						
 	Set sc = ..Adapter.ExecuteQuery(.oRS, tQueryStatement, tLastKey)
@@ -130,16 +130,39 @@ Method ProcessNewCompleteEvents()
 		set oEvent.ShiftId = oRS.Get("shiftindex")
 		set oEvent.Duration = oRS.Get("duration")
 		
-		if '##class(ASPMining.CanonicalModel.Planning.Shift).ShiftIndexExists(oEvent.ShiftId){
-			set shift = ##class(ASPMining.CanonicalModel.Planning.Shift).ShiftIndexOpen(oEvent.ShiftId)			
-			set oEvent.StartTime = $ZDateTime(shift.StartDay_","_(shift.StartSeconds + oRS.Get("starttime")))
-			$$$TRACE("EVENT StartTime "_oEvent.StartTime_"...")
-	
-			set oEvent.StartTime = $ZDateTime(shift.StartDay_","_(shift.StartSeconds + oRS.Get("endtime")))
-			$$$TRACE("EVENT EndTime "_oEvent.StartTime_"...")
+		if ##class(ASPMining.CanonicalModel.Planning.Shift).ShiftIndexExists(oEvent.ShiftId){
+			set shift = ##class(ASPMining.CanonicalModel.Planning.Shift).ShiftIndexOpen(oEvent.ShiftId)		
+			$$$TRACE("LOG1 StartSeconds "_shift.StartSeconds_",starttime: "_oRS.Get("starttime"))	
 			
-			set oEvent.StatusReasonId = oRS.Get("reason") //TODO: Asegurar que se tiene este id en la tabla StatusReason
-			set oEvent.StatusTypeId = oRS.Get("status") //TODO: Asegurar que se tiene este id en la tabla StatusType
+			//Checking if starttime is within same day or next day, this could happen since shifts belong to more than 1 day
+			set startseconds = shift.StartSeconds + oRS.Get("starttime")
+			$$$TRACE("startseconds: "_startseconds)
+			If (startseconds) >= 86400 {
+				set nextday = shift.StartDay + ##class(%Library.Integer).Normalize(startseconds / 86400) //TODO: CHECK IF EVENT THAT ENDS IN LATER DAY/SHIFT REPEATS OR HAS ONLY 1 EVENT
+				set newstartseconds =  startseconds # 86400
+				$$$TRACE("newstartseconds "_newstartseconds_" startseconds "_startseconds_ " nextday "_nextday)
+				set oEvent.StartDate = $ZDateTime(nextday_","_newstartseconds)
+			}else{
+				set oEvent.StartDate = $ZDateTime(shift.StartDay_","_startseconds)
+			}
+			$$$TRACE("EVENT StartTimeDT "_oEvent.StartDate_",StartTime: "_oRS.Get("starttime")_ " Duration: "_oEvent.Duration_" EndTime: "_oRS.Get("endtime"))
+			
+			
+			//Checking if endtime is within same day or next day, just like with start time
+			set endseconds = shift.StartSeconds + oRS.Get("endtime")
+			$$$TRACE("endseconds: "_endseconds)
+			If (endseconds) >= 86400 {
+				set nextday = shift.StartDay + ##class(%Library.Integer).Normalize(endseconds / 86400) //TODO: CHECK IF EVENT THAT ENDS IN END OF SHIFT OR IN MANY DAYS LATER, EASY: CHECK IF ANY DURTION LONGER THAN 86400
+				set newendseconds =  endseconds # 86400
+				$$$TRACE("newendseconds "_newendseconds_" endseconds "_endseconds_ " nextday "_nextday)
+				set oEvent.EndDate = $ZDateTime(nextday_","_newendseconds)
+			}else{
+				set oEvent.EndDate = $ZDateTime(shift.StartDay_","_endseconds)
+			}
+			$$$TRACE("EVENT EndTime "_oEvent.EndDate_"...")
+			
+			set oEvent.StatusReasonId = oRS.Get("reason")
+			set oEvent.StatusTypeId = oRS.Get("status")
 			
 			$$$TRACE("StatusReasonId "_oEvent.StatusReasonId_"...")
 						
@@ -164,7 +187,7 @@ Method ProcessNewReasons()
 	$$$TRACE("Next equipment event ddbkey "_tLastKey_"...")
 	
 	/// Gets all the new received events where equipment is involved, infer form here which ones are new
-	Set tQueryStatement="SELECT ddbkey, name, reason, status FROM dbo.hist_reasontable WHERE ddbkey>? "
+	Set tQueryStatement="SELECT MAX(ddbkey) as ddbkey, MAX(name) as name, reason , MAX(status) as status FROM dbo.hist_reasontable WHERE ddbkey>? GROUP BY reason"
 
 	Set sc = ..Adapter.ExecuteQuery(.oRS, tQueryStatement, tLastKey)
 	
@@ -196,10 +219,10 @@ Method ProcessNewReasons()
 					set oReason.StatusType.Description = "Production"
 				}
 				If (statuscode=3){
-					set oReason.StatusType.Description = "Delay"
+					set oReason.StatusType.Description = "Standby"
 				}
 				If (statuscode=4){
-					set oReason.StatusType.Description = "Standby"
+					set oReason.StatusType.Description = "Delay"
 				}
 				If (statuscode>4){
 					set oReason.StatusType.Description = "Otro"
@@ -245,7 +268,7 @@ Method ProcessNewEquipments()
 			#Dim oEquipment As ASPMining.CanonicalModel.Equipment.Equipment
 			
 			set oEquipment.Id = oRS.Get("eqmtid")
-			set oEquipment.Name = oRS.Get("unit")_" "_oEquipment.Id
+			set oEquipment.Name = oRS.Get("unit")_" - "_oEquipment.Id
 			set oEquipment.Capacity = oRS.Get("size")
 			
 			If '##class(ASPMining.CanonicalModel.Equipment.EquipmentCategory).EquipmentCategoryIndexExists(oRS.Get("unit")){

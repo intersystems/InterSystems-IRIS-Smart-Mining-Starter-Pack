@@ -1,4 +1,4 @@
-1) Alguna forma de identificar bien la linea que tira el error en los log?
-2) Explciar forma de retiro de datos actual y preguntar si hay alguna forma de hacer una query dentro de otra query, para asi no tener que hacerlas ne secuencia.
-3) Como ver utilizacion de recursos en IRIS - chequear si alguna parte del servicio esta demorando mucho
-4) GUI para opciones
+pendiente:
+1) estrategia alternativa para IndexExists usando globals
+2) como habilitar parametros en la Interfaz
+3) Como hacer una formula que calcule contra el tiempo total de un shift para poder sacar el ratio.
