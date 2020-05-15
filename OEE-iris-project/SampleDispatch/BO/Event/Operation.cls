@@ -267,6 +267,44 @@ Method NewShift(pInput As ASPMining.CanonicalModel.Planning.Shift, Output pOutpu
 	Quit sc
 }
 
+Method NewDump(pInput As ASPMining.CanonicalModel.Production.DumpEvent, Output pOutput As Ens.Response) As %Status
+{
+
+	Set sc=$$$OK
+	
+	Try
+	{		
+		If '##class(ASPMining.CanonicalModel.Production.DumpEvent).DumpIndexExists(pInput.DumpId) {
+			Set sc = pInput.%Save()
+		}
+	}
+	Catch (oException)
+	{
+		Set sc = oException.AsStatus()
+	}
+	
+	Quit sc
+}
+
+Method NewOEMEvent(pInput As ASPMining.CanonicalModel.HWMonitoring.OEMEvent, Output pOutput As Ens.Response) As %Status
+{
+
+	Set sc=$$$OK
+	
+	Try
+	{		
+		If '##class(ASPMining.CanonicalModel.HWMonitoring.OEMEvent).OEMEventIndexExists(pInput.Id) {
+			Set sc = pInput.%Save()
+		}
+	}
+	Catch (oException)
+	{
+		Set sc = oException.AsStatus()
+	}
+	
+	Quit sc
+}
+
 XData MessageMap {
 <MapItems>
     <MapItem MessageType="SampleDispatch.BO.Event.StatusChangeEvent">
@@ -286,6 +324,12 @@ XData MessageMap {
     </MapItem>
     <MapItem MessageType="ASPMining.CanonicalModel.Planning.Shift">
         <Method>NewShift</Method>
+    </MapItem>
+    <MapItem MessageType="ASPMining.CanonicalModel.Production.DumpEvent">
+        <Method>NewDump</Method>
+    </MapItem>
+    <MapItem MessageType="ASPMining.CanonicalModel.HWMonitoring.OEMEvent">
+        <Method>NewOEMEvent</Method>
     </MapItem>
 </MapItems>
 }

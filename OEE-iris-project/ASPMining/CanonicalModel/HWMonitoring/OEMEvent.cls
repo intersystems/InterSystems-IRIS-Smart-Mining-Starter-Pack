@@ -2,6 +2,8 @@
 Class ASPMining.CanonicalModel.HWMonitoring.OEMEvent Extends %Persistent
 {
 	/// documentation
+	Property Id As %Integer;
+	/// documentation
 	Property OEMEventType As OEMEventType;
 	/// documentation
 	Property OEMInterface As OEMInterface;
@@ -19,6 +21,8 @@ Class ASPMining.CanonicalModel.HWMonitoring.OEMEvent Extends %Persistent
 	Property Longitude As %Float;
 	/// Local value of EquipmentId, not reference to an EquipmentId, in case it changes to a different equipment
 	Property EquipmentId As %Integer;
+	
+	index OEMEventIndex on Id [unique];
 Storage Default
 {
 <Data name="OEMEventDefaultData">
@@ -51,6 +55,9 @@ Storage Default
 </Value>
 <Value name="10">
 <Value>EquipmentId</Value>
+</Value>
+<Value name="11">
+<Value>Id</Value>
 </Value>
 </Data>
 <DataLocation>^ASPMining.CanonicE4E6.OEMEventD</DataLocation>

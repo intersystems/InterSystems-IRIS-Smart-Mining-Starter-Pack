@@ -19,7 +19,8 @@ Method OnProcessInput(pInput As EnsLib.SQL.Snapshot, Output pOutput As %Register
 		Do ..ProcessNewShifts()
 		Do ..ProcessNewReasons()
 		Do ..ProcessNewCompleteEvents()
-		////Do ..ProcessCompleteDumps()
+		Do ..ProcessNewCompleteDumps()
+		//Do ..ProcessNewCompleteLoads()
 		
 	}
 	Catch(oException)
@@ -298,6 +299,77 @@ Method ProcessNewEquipments()
 	
 }
 
+Method ProcessNewCompleteDumps()
+{
+	#Dim oRS As EnsLib.SQL.GatewayResultSet
+	
+	Set tLastKey = ..Adapter.GetPersistentValue(..%ConfigName, "LastDumpKey")
+	$$$TRACE("Next dump event ddbkey "_tLastKey_"...")
+	
+	/// Gets all the new received events where equipment is involved, infer form here which ones are new
+	Set tQueryStatement="SELECT CONCAT(shiftindex, ddbkey) AS index2, ddbkey, shiftindex, truck, excav, loc, grade, blast, bay, loadrec, measureton, dumptons  FROM dbo.hist_dumps WHERE CONCAT(shiftindex, ddbkey)>? ORDER BY shiftindex, ddbkey ASC"
+	//SELECT MIN(ddbkey) as ddbkey, eqmtid, MAX(size) as size, MAX(eqmttype#) as eqmttype#, MAX(eqmttype) as eqmttype, MAX(unit) as unit FROM dbo.hist_eqmtlist GROUP BY eqmtid
+
+	Set sc = ..Adapter.ExecuteQuery(.oRS, tQueryStatement, tLastKey)
+	
+	While oRS.Next()
+	{
+		Set tLastKey = oRS.Get("index2")
+		$$$TRACE("Processing dump ddbkey "_tLastKey)
+		
+		If '##class(ASPMining.CanonicalModel.Production.DumpEvent).DumpIndexExists(oRS.Get("index2")){
+			$$$TRACE("Dump event does not exists "_oRS.Get("index2")_"...")
+			set oDump = ##class(ASPMining.CanonicalModel.Production.DumpEvent).%New()
+			#Dim oDump As ASPMining.CanonicalModel.Production.DumpEvent
+			
+			set shiftindex = oRS.Get("shiftindex")
+			set truck = oRS.Get("truck")
+			set excav = oRS.Get("excav")
+			set loadindex = oRS.Get("loadrec")
+											
+			set oDump.DumpId = oRS.Get("index2")
+			set oDump.MeasuredTons = oRS.Get("measureton")
+			// check shift
+			if '##class(ASPMining.CanonicalModel.Planning.Shift).ShiftIndexExists(shiftindex){
+				$$$TRACE("ERROR IN DUMP: SHIFT DOES NOT EXISTS: "_shiftindex)
+			}else{
+				set oDump.Shift = ##class(ASPMining.CanonicalModel.Planning.Shift).ShiftIndexOpen(shiftindex)
+			}
+			
+			// check truck
+			if '##class(ASPMining.CanonicalModel.Equipment.Equipment).EquipmentIndexExists(truck){
+				$$$TRACE("ERROR IN DUMP: TRUCK DOES NOT EXISTS: "_truck)
+			}else{
+				set oDump.EquipmentTruck = ##class(ASPMining.CanonicalModel.Equipment.Equipment).EquipmentIndexOpen(truck)
+			}
+			// check excav
+			if '##class(ASPMining.CanonicalModel.Equipment.Equipment).EquipmentIndexExists(excav){
+				$$$TRACE("ERROR IN DUMP: EXCAV DOES NOT EXISTS: "_excav)
+			}else{
+				set oDump.EquipmentExcav = ##class(ASPMining.CanonicalModel.Equipment.Equipment).EquipmentIndexOpen(excav)
+			}
+			
+			//check load
+			//if '##class(ASPMining.CanonicalModel.Production.LoadEvent).LoadIndexExists()
+			
+			
+			Set ..%SessionId=""
+			
+			set sc = ..SendRequestAsync("PowerView Event Operation", oDump)
+		}else{
+			$$$TRACE("Dump event already exists "_oRS.Get("index2")_"...")
+		}
+		
+		Do ..Adapter.SetPersistentValue(..%ConfigName, "LastDumpKey", tLastKey)
+	}
+	
+	
+}
+Method ProcessNewCompleteLoads()
+{
+	
+}
+
 Method OnInit() As %Status
 {
    #; initialize persistent last key value
@@ -306,6 +378,10 @@ Method OnInit() As %Status
    Do ..Adapter.InitializePersistentValue(..%ConfigName, "LastReasonKey", 0)
    Do ..Adapter.InitializePersistentValue(..%ConfigName, "LastEquipmentKey", 0)
    Do ..Adapter.InitializePersistentValue(..%ConfigName, "LastShiftKey", 0)
+   Do ..Adapter.InitializePersistentValue(..%ConfigName, "LastDumpShiftKey", 0)
+   Do ..Adapter.InitializePersistentValue(..%ConfigName, "LastDumpKey", 0)
+   Do ..Adapter.InitializePersistentValue(..%ConfigName, "LastLoadShiftKey", 0)
+   Do ..Adapter.InitializePersistentValue(..%ConfigName, "LastLoadKey", 0)
    /// lAST eVENT KEY IS A TIMESTAMP KEY
    /// Do ..Adapter.InitializePersistentValue(..%ConfigName, "LastEventKey", $ZDateTime("0,0", 3))
    /// Do ..Adapter.InitializePersistentValue(..%ConfigName, "LastCompletedDumpKey",0)

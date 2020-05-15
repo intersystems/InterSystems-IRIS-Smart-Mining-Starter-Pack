@@ -1,6 +1,8 @@
 Class ASPMining.CanonicalModel.Production.LoadEvent Extends %Persistent
 {
 /// documentation
+Property LoadId As %BigInt;
+/// documentation
 Property Shift As ASPMining.CanonicalModel.Planning.Shift;
 /// documentation
 Property DumpEvent As DumpEvent;
@@ -20,6 +22,7 @@ Property Latitude As %Float;
 Property Longitude As %Float;
 /// documentation
 Property MeasuredTons As %Float;
+index LoadIndex on LoadId [Unique ];
 Storage Default
 {
 <Data name="LoadEventDefaultData">
