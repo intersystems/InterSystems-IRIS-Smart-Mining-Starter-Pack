@@ -32,8 +32,16 @@ Here is the list of end points:
 [Here](QUICKML.md).
 
 ## Sample BDs
-Minecare: devsl.xompass.com:1401 SA/Modular1 [Download](https://devxompass-my.sharepoint.com/:u:/g/personal/andres_xompass_com/EUFh5k-tHaFFj6XhhNMFcdMBa3YHUaAoxEVtwg6C4qm8AQ?e=J7PlTp)
-PowerviewCH: dev.austekchile.cl:1433 iris/oee [Download](https://devxompass-my.sharepoint.com/:u:/g/personal/andres_xompass_com/EcUKuHJ-AZZPvdh7BKkAptwBnuY2qdq-MR35EQMw58zBYA?e=e6ya3g)
+The following options contain 3 Sample databases:  
+**MineCare**: A samll dump of a MineCare DB of a mine  
+**PowerView**: A samll dump of a PowerView DB of the same mine than MineCare dump  
+**PowerViewCH**: A 1 year dump of a PowerView DB of a different mine  
+
+### Option 1 - Linux Local DB
+Run a Docker SQL Server 2019, using the provided MiningDBsV2.tar file and follow the instructions inside the README file. [Download Here](https://devxompass-my.sharepoint.com/:u:/g/personal/andres_xompass_com/EZEqZkotoS1Hgis7J5skeIYBApzKJoxoZVhGnCr5F-J-Gw?e=OX1zvY)
+### Option 2 - Connect to SQL DB
+iris:oee@dev.austekchile.cl:1433
+
 
 ## Using Class Explorer
 http://localhost:52773/ClassExplorer/
