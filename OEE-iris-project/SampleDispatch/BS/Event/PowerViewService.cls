@@ -110,7 +110,7 @@ Method ProcessNewCompleteEvents()
 	$$$TRACE("Next event ddbkey "_tLastKey_"...")
 	
 	/// Gets all the new received events
-	Set tQueryStatement="SELECT ddbkey, shiftindex, eqmt, operid, starttime, endtime, reason, duration, status, reasonlink FROM dbo.hist_statusevents WHERE ddbkey>? AND endtime is not null ORDER BY ddbkey"
+	Set tQueryStatement="SELECT ddbkey, shiftindex, eqmt, operid, starttime, endtime, reason, duration, status, reasonlink FROM dbo.hist_statusevents WHERE ddbkey<10000 AND endtime is not null ORDER BY ddbkey"
 						
 						
 	Set sc = ..Adapter.ExecuteQuery(.oRS, tQueryStatement, tLastKey)
@@ -299,21 +299,35 @@ Method ProcessNewEquipments()
 	
 }
 
+/*Method ProcessNewCompleteLoads(){
+	#Dim oRS As EnsLib.SQL.GatewayResultSet
+	
+	Set tLastKey = ..Adapter.GetPersistentValue(..%ConfigName, "LastLoadKey")
+	$$$TRACE("Next load event key "_tLastKey_"...")
+	
+	/// Gets all the new received events where equipment is involved, infer form here which ones are new
+	Set tQueryStatement="SELECT CONCAT(shiftindex, ddbkey) AS index2, ddbkey, shiftindex, truck, excav, loc, grade, dumpasn, dumprec, measureton, dumptons, timearrive, timedump, timefull, calctravti, loadtons  FROM dbo.hist_loads WHERE CONCAT(shiftindex, ddbkey)>? ORDER BY shiftindex, ddbkey ASC"
+	
+}*/
+
+
 Method ProcessNewCompleteDumps()
 {
 	#Dim oRS As EnsLib.SQL.GatewayResultSet
 	
 	Set tLastKey = ..Adapter.GetPersistentValue(..%ConfigName, "LastDumpKey")
-	$$$TRACE("Next dump event ddbkey "_tLastKey_"...")
+	$$$TRACE("Next dump event key "_tLastKey_"...")
 	
 	/// Gets all the new received events where equipment is involved, infer form here which ones are new
-	Set tQueryStatement="SELECT CONCAT(shiftindex, ddbkey) AS index2, ddbkey, shiftindex, truck, excav, loc, grade, blast, bay, loadrec, measureton, dumptons  FROM dbo.hist_dumps WHERE CONCAT(shiftindex, ddbkey)>? ORDER BY shiftindex, ddbkey ASC"
+	Set tQueryStatement="SELECT CONCAT(shiftindex, ddbkey) AS index2, ddbkey, shiftindex, truck, excav, loc, grade, bay, loadrec, measureton, dumptons, timearrive, timedump, timeempty, calctravti, dumptons  FROM dbo.hist_dumps WHERE CONCAT(shiftindex, ddbkey)>? ORDER BY shiftindex, ddbkey ASC"
 	//SELECT MIN(ddbkey) as ddbkey, eqmtid, MAX(size) as size, MAX(eqmttype#) as eqmttype#, MAX(eqmttype) as eqmttype, MAX(unit) as unit FROM dbo.hist_eqmtlist GROUP BY eqmtid
 
+	$$$TRACE("index2a ")
 	Set sc = ..Adapter.ExecuteQuery(.oRS, tQueryStatement, tLastKey)
 	
 	While oRS.Next()
 	{
+		$$$TRACE("index2c "_oRS.Get("index2"))
 		Set tLastKey = oRS.Get("index2")
 		$$$TRACE("Processing dump ddbkey "_tLastKey)
 		
@@ -328,12 +342,23 @@ Method ProcessNewCompleteDumps()
 			set loadindex = oRS.Get("loadrec")
 											
 			set oDump.DumpId = oRS.Get("index2")
-			set oDump.MeasuredTons = oRS.Get("measureton")
+			set oDump.MeasuredTons = oRS.Get("dumptons")
+			set oDump.TravelTime = oRS.Get("calctravti")
 			// check shift
 			if '##class(ASPMining.CanonicalModel.Planning.Shift).ShiftIndexExists(shiftindex){
 				$$$TRACE("ERROR IN DUMP: SHIFT DOES NOT EXISTS: "_shiftindex)
 			}else{
-				set oDump.Shift = ##class(ASPMining.CanonicalModel.Planning.Shift).ShiftIndexOpen(shiftindex)
+				set shift = ##class(ASPMining.CanonicalModel.Planning.Shift).ShiftIndexOpen(shiftindex)	
+				set oDump.Shift = shift	
+				$$$TRACE("Dump Shift StartSeconds "_shift.StartSeconds)
+				$$$TRACE("Dump TimeArrive "_oRS.Get("timearrive"))	
+				$$$TRACE("Dump TimeDump "_oRS.Get("timedump"))	
+				$$$TRACE("Dump TimeEmpty "_oRS.Get("timeempty"))	
+				
+				set oDump.TimeArrive = ..ShiftOffsetToDateTime(oRS.Get("timearrive"), shiftindex)
+				set oDump.TimeDump = ..ShiftOffsetToDateTime(oRS.Get("timedump"), shiftindex)
+				set oDump.TimeEmpty = ..ShiftOffsetToDateTime(oRS.Get("timeempty"), shiftindex)
+				$$$TRACE("DUMP TimeArrive: "_oDump.TimeDump)
 			}
 			
 			// check truck
@@ -365,9 +390,28 @@ Method ProcessNewCompleteDumps()
 	
 	
 }
-Method ProcessNewCompleteLoads()
-{
-	
+
+Method ShiftOffsetToDateTime(offset as %Integer, shiftindex as %Integer){
+	if '##class(ASPMining.CanonicalModel.Planning.Shift).ShiftIndexExists(shiftindex){
+		$$$TRACE("SHIFT DOES NOT EXISTS: "_shiftindex)
+		Return $ZDateTime("0,0")
+	}else{
+		set shift = ##class(ASPMining.CanonicalModel.Planning.Shift).ShiftIndexOpen(shiftindex)		
+		
+		//Checking if starttime is within same day or next day, this could happen since shifts belong to more than 1 day
+		set startseconds = shift.StartSeconds + offset
+		//$$$TRACE("startseconds: "_startseconds)
+		// Check if time in 
+		If (startseconds) >= 86400 {
+			set nextday = shift.StartDay + ##class(%Library.Integer).Normalize(startseconds / 86400) //TODO: CHECK IF EVENT THAT ENDS IN LATER DAY/SHIFT REPEATS OR HAS ONLY 1 EVENT
+			set newstartseconds =  startseconds # 86400
+			$$$TRACE("newstartseconds "_newstartseconds_" startseconds "_startseconds_ " nextday "_nextday)
+			Return $ZDateTime(nextday_","_newstartseconds)
+		}else{
+			$$$TRACE("startseconds "_startseconds)
+			Return $ZDateTime(shift.StartDay_","_startseconds)
+		}
+	}
 }
 
 Method OnInit() As %Status

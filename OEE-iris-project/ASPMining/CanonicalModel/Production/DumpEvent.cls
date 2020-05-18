@@ -5,6 +5,14 @@ Property DumpId As %BigInt;
 /// documentation
 Property Shift As ASPMining.CanonicalModel.Planning.Shift;
 /// documentation
+Property TimeArrive As %DateTime;
+/// documentation
+Property TimeDump As %DateTime;
+/// documentation
+Property TimeEmpty As %DateTime;
+/// documentation
+Property TravelTime As %Integer;
+/// documentation
 Property LoadEvent As LoadEvent;
 /// documentation
 Property Location As ASPMining.CanonicalModel.Mine.Location;
@@ -62,6 +70,24 @@ Storage Default
 </Value>
 <Value name="12">
 <Value>LoadEvent</Value>
+</Value>
+<Value name="13">
+<Value>DumpId</Value>
+</Value>
+<Value name="14">
+<Value>TimeArrive</Value>
+</Value>
+<Value name="15">
+<Value>TimeDump</Value>
+</Value>
+<Value name="16">
+<Value>TimeEmpty</Value>
+</Value>
+<Value name="17">
+<Value>TravelTime</Value>
+</Value>
+<Value name="18">
+<Value>Grade</Value>
 </Value>
 </Data>
 <DataLocation>^ASPMining.Canoni4037.DumpEventD</DataLocation>
