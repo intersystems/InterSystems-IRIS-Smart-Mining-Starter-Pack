@@ -1,9 +1,9 @@
 /// Narrow area inside a Site where events are generated from, e.g: Loading spot inside Site A.
 Class ASPMining.CanonicalModel.Mine.Location Extends %Persistent
 {
-/// documentation
+/// Grade of the material in this location
 Property Grade As %Float;
-/// documentation
+/// Site to which this Location belongs
 Property Site As Site;
 Storage Default
 {

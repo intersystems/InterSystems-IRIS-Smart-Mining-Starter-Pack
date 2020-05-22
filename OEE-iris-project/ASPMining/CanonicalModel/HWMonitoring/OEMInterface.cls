@@ -1,8 +1,8 @@
 Class ASPMining.CanonicalModel.HWMonitoring.OEMInterface Extends %Persistent
 {
-/// documentation
+/// Display Name of the OEM Interface
 Property Name As %String;
-/// documentation
+/// Brand of the Interface (optional)
 Property Brand As %String;
 Storage Default
 {

@@ -1,8 +1,8 @@
 Class ASPMining.CanonicalModel.HWMonitoring.OEMInterfaceMap Extends %Persistent
 {
-/// documentation
+/// OEMInterface Reference
 Property OEMInterface As OEMInterface;
-/// documentation
+/// Equipment Reference where this Interface is connected to
 Property Equipment As ASPMining.CanonicalModel.Equipment.Equipment;
 
 index OEMInterfaceIndex on OEMInterface [Unique ];

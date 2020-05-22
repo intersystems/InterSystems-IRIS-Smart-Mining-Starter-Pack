@@ -1,25 +1,25 @@
 /// History of all OEM Events
 Class ASPMining.CanonicalModel.HWMonitoring.OEMEvent Extends %Persistent
 {
-	/// documentation
+	/// Unique Id of event provided by Mining software
 	Property Id As %Integer;
-	/// documentation
+	/// Type of the event, e.g: Overspeed event.
 	Property OEMEventType As OEMEventType;
-	/// documentation
+	/// HW Interface that generator this event
 	Property OEMInterface As OEMInterface;
-	/// documentation
+	/// Shift when this event happened
 	Property Shift As ASPMining.CanonicalModel.Planning.Shift;
-	/// documentation
+	/// Mine Site location where the event happened
 	Property Location As ASPMining.CanonicalModel.Mine.Location;
-	/// documentation
+	/// Reading time of the event
 	Property ReadTime As %DateTime;
-	/// documentation
+	/// Value of the event (if it has one)
 	Property Value As %Float;
-	/// documentation
+	/// GPS Latitude if available
 	Property Latitude As %Float;
-	/// documentation
+	/// GPS Longitude if available
 	Property Longitude As %Float;
-	/// Local value of EquipmentId, not reference to an EquipmentId, in case it changes to a different equipment
+	/// Local copy of EquipmentId for this event, not reference to an Equipment Object, in case it changes to a different equipment
 	Property EquipmentId As %Integer;
 	
 	index OEMEventIndex on Id [unique];

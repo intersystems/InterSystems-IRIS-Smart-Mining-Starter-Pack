@@ -1,9 +1,9 @@
 /// Historic registry of all crews that have existed in the past and the Operators it had. This way, in case of a temporary change of operator in some Crew, this data will stay here.
 Class ASPMining.CanonicalModel.Personnel.CrewRegistry Extends %Persistent
 {
-/// documentation
-Property Crew As Crew;
-	/// documentation
+	/// Link to Crew
+	Property Crew As Crew;
+	/// List of Operators that this Crew had at each Shift assignment
 	Property OperatorList As %Library.ArrayOfObjects;
 Storage Default
 {

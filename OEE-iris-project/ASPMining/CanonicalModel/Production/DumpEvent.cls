@@ -1,34 +1,34 @@
 Class ASPMining.CanonicalModel.Production.DumpEvent Extends %Persistent
 {
-/// documentation
+/// Unique DumpId
 Property DumpId As %BigInt;
-/// documentation
+/// Shift when this Dump Happened
 Property Shift As ASPMining.CanonicalModel.Planning.Shift;
-/// documentation
+/// Time when the Truck Arrived
 Property TimeArrive As %DateTime;
-/// documentation
+/// Time when the Load Started
 Property TimeDump As %DateTime;
-/// documentation
+/// Time when the Load Completed
 Property TimeEmpty As %DateTime;
-/// documentation
+/// Calculated Travel Time of the vehicle to arrive at the dump point
 Property TravelTime As %Integer;
-/// documentation
+/// Next LoadEvent assigned to this Truck
 Property LoadEvent As LoadEvent;
-/// documentation
+/// Location where the Dump happened
 Property Location As ASPMining.CanonicalModel.Mine.Location;
-/// documentation
+/// Truck Link
 Property EquipmentTruck As ASPMining.CanonicalModel.Equipment.Equipment;
-/// documentation
+/// Excavator Link
 Property EquipmentExcav As ASPMining.CanonicalModel.Equipment.Equipment;
-/// documentation
+/// Truck's Operator Link
 Property OperatorTruck As ASPMining.CanonicalModel.Personnel.Operator;
-/// documentation
+/// Excavator's Operator Link
 Property OperatorExcav As ASPMining.CanonicalModel.Personnel.Operator;
-/// documentation
+/// GPS of event (if available)
 Property Latitude As %Float;
-/// documentation
+/// GPS of event (if available)
 Property Longitude As %Float;
-/// documentation
+/// Measured tons of the Dump (if available)
 Property MeasuredTons As %Float;
 
 index DumpIndex on DumpId [Unique ];

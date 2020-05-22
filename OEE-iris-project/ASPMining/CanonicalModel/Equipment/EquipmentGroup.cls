@@ -1,9 +1,9 @@
 Class ASPMining.CanonicalModel.Equipment.EquipmentCategory Extends %Persistent
 {
-	/// documentation e.g: Truck, Shovel, etc.
+	/// Display name of the Category e.g: Truck, Excav, etc.
 	Property Name As %String;
 
-	/// documentation 
+	/// Description of the Category, e.g: Newest fleet of excavators. 
 	Property Description As %String;
 	
 	index EquipmentCategoryIndex on Name [Unique ];
