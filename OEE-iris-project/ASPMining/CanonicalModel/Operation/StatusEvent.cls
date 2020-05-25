@@ -1,19 +1,19 @@
 /// History of status changes of equipment or other elements
 Class ASPMining.CanonicalModel.Operation.StatusEvent Extends %Persistent
 {
-/// documentation
-/// documentation
+/// Shift where this event happened
 Property Shift As ASPMining.CanonicalModel.Planning.Shift;
+/// Equipment that generated this event
 Property Equipment As ASPMining.CanonicalModel.Equipment.Equipment;
-/// documentation
+/// Status Reason Link
 Property StatusReason As StatusReason;
-/// documentation
+/// Status Type Link
 Property StatusType As StatusType;
-/// documentation
+/// Start date of the event
 Property StartDate As %DateTime;
-/// documentation
+/// End date of the event
 Property EndDate As %DateTime;
-/// documentation
+/// Calculated duration of the event
 Property Duration As %Integer;
 
 Storage Default

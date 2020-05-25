@@ -1,11 +1,11 @@
 /// Information about brand and model of equipment
 Class ASPMining.CanonicalModel.Equipment.EquipmentModel Extends %Persistent
 {
- /// documentation
+ /// Model of the equipment provided by manufacturer
  Property Model As %String;
- /// documentation
+ /// Manufacturer's brand name
  Property Brand As %String;
- /// documentation
+ /// Manufacturer's specified Tonnage of equipment (if applies)
  Property NominalCapacityTons As %Float;
  
  index EquipmentModelIndex on Model [Unique ];

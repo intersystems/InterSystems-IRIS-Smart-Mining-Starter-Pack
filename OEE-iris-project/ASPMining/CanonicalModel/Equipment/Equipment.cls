@@ -1,16 +1,17 @@
 Class ASPMining.CanonicalModel.Equipment.Equipment Extends %Persistent
 {
-	/// documentation
+	/// Mine Unique Identifier of Vehicle
 	Property Id As %String;
 	
-	/// documentation
+	/// Category of Equipment, eg: Truck, Excav.
 	Property EquipmentCategory As EquipmentCategory;
-	/// documentation
+	/// Model of Equipment: e.g: CAT 770
 	Property EquipmentModel As EquipmentModel;
 	
-	/// documentation
+	/// Readable Display Name of Vehicle
 	Property Name As %String;
 	
+	/// Capacity of Vehicle ASSIGNED BY USERS
 	Property Capacity As %Float;
 	
 	index EquipmentIndex on Id [Unique];

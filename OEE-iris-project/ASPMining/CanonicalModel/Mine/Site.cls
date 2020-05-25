@@ -1,6 +1,6 @@
 Class ASPMining.CanonicalModel.Mine.Site Extends %Persistent
 {
-/// documentation
+/// Display Name of the Site
 Property Name As %String;
 Storage Default
 {

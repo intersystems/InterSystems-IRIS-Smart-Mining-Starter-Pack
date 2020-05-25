@@ -217,13 +217,13 @@ Method ProcessNewReasons()
 					set oReason.StatusType.Description = "Downtime"
 				}
 				If (statuscode=2){
-					set oReason.StatusType.Description = "Production"
+					set oReason.StatusType.Description = "Delay"
 				}
 				If (statuscode=3){
 					set oReason.StatusType.Description = "Standby"
 				}
 				If (statuscode=4){
-					set oReason.StatusType.Description = "Delay"
+					set oReason.StatusType.Description = "Operative"
 				}
 				If (statuscode>4){
 					set oReason.StatusType.Description = "Otro"

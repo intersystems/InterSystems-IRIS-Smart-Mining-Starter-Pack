@@ -1,15 +1,16 @@
 Class ASPMining.CanonicalModel.Planning.Shift Extends %Persistent
 {	
+/// Uniquie Shift Id
 Property Id As %Integer;
-/// documentation
+/// Start time of the Shift
 Property DateTime As %DateTime;
-/// documentation
+/// Auxiliar variable, offset in seconds from start of the day
 Property StartSeconds As %Integer;
+/// Auxiliar variable, offset in days from start of IRIS internal time
 Property StartDay As %Integer;
-/// documentation
+/// Shift's Shift Type
 Property ShiftType As ShiftType;
-
-/// documentation
+/// Crew Assigned to this shift
 Property Crew As ASPMining.CanonicalModel.Personnel.Crew;
 	
 index ShiftIndex on Id [unique ];

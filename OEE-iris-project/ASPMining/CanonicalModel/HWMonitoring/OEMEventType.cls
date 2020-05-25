@@ -1,8 +1,8 @@
 Class ASPMining.CanonicalModel.HWMonitoring.OEMEventType Extends %Persistent
 {
-/// documentation
+/// Assigned description of the event: e.g: "generated when driver is over accelerating"
 Property Description As %String;
-/// documentation
+/// Other explainatory content: e.g: "for calibration only purposes"
 Property Other As %String;
 Storage Default
 {

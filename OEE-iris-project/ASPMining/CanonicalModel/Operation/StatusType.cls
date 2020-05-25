@@ -1,8 +1,9 @@
 /// Type of the status: Operative/Standby/Downtime/Delay
 Class ASPMining.CanonicalModel.Operation.StatusType Extends %Persistent
 {
-/// documentation
+/// Type of the status, e.g: 1,2,3,4
 Property Type As %String;
+/// Description of the status, e.g: Operative, Standby, Downtime, Delay. Very important for Operational KPIs
 Property Description As %String;
 
 

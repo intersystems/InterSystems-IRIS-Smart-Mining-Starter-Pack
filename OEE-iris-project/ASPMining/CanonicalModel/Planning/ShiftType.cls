@@ -1,12 +1,11 @@
 /// Types of shifts have a basic schedule day/night, and can have some extra information like holyday information
 Class ASPMining.CanonicalModel.Planning.ShiftType Extends %Persistent
 {
-/// documentation
+/// Shift Type, commonly day and night, e.g: A,B
 Property Type As %String;
-/// documentation
+/// Any special details about this shift, e.g: holyday
 Property Other As %String;
 
-/// documentation
 Index ShiftTypeIndex On Type [unique];
 Storage Default
 {

@@ -1,11 +1,10 @@
 Class ASPMining.CanonicalModel.Personnel.Operator Extends %Persistent
 {	
-	/// documentation
+	/// Current Crew Link
 	Property Crew As Crew;
-	
-	/// documentation
+	/// Operator's first name
 	Property FirstName As %String;
-	/// documentation
+	/// Operator's last name
 	Property LastName As %String;
 	
 Storage Default

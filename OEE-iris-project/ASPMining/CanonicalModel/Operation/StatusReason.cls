@@ -1,9 +1,11 @@
 /// List of all possible status change code reasons
 Class ASPMining.CanonicalModel.Operation.StatusReason Extends %Persistent
 {
-/// documentation
+/// Reason code, e.g: "112"
 Property Reason As %String;
+/// Link to Status Type
 Property StatusType As StatusType;
+/// Description for the Reason, e.g: "operator went to restroom"
 Property Description As %String;
 
 index ReasonIndex on Reason [unique ];
