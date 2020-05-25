@@ -1,0 +1,12 @@
+Copy the code below into the %OnDashboardAction method of the KPI class
+
+
+#######################################################
+
+if pAction = "MyAction"
+	{
+		
+		Set pContext.command = "alert: "_pContext.valueList
+	}
+	
+	Quit $$$OK

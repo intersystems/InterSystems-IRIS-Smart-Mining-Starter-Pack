@@ -1,0 +1,43 @@
+Replace the filter declaration in the XDATA block with the code below:
+
+################################################################
+
+<filter name="Server" valueList="Deano,Frank,Sammy" multiSelect="false"/>
+
+
+
+
+Replace the code in %OnExecute() with the code below:
+
+################################################################
+
+//Get some randomized disk use/capacity/server status info.	
+	Set list = ##class(Training.DeepSee.Utils).GetDiskInfo()
+	
+	Set tFilter = ..%filterValues
+
+	Set ..%seriesCount=0
+
+	
+	for i=1:1:$ListLength(list) {
+		
+		If ( (tFilter.Server = "") || (tFilter.Server = $List($List(list,i),1)))
+		{
+		Set ..%seriesCount=..%seriesCount + 1
+		Set ..%seriesNames(..%seriesCount)=$List($List(list,i),1)
+		Set ..%data(..%seriesCount,"Used")=$List($List(list,i),2)
+		Set ..%data(..%seriesCount,"Available")=$List($List(list,i),3)
+		Set ..%data(..%seriesCount,"Status")=$List($List(list,i),4)
+		Set ..%data(..%seriesCount,"Location")=$List($List(list,i),5)
+		}
+		
+	 Else{
+		 
+		 continue
+		 
+	 }
+	
+		
+	}
+	
+	Quit $$$OK

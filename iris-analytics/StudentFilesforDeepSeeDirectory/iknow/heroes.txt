@@ -1,0 +1,13 @@
+%%NAME,Heroes
+batman,batman
+dark knight,batman
+caped crusader,batman
+luke skywalker,luke skywalker
+luke,luke skywalker
+jedi knight luke skywalker,luke skywalker
+spock,spock
+commander spock,spock
+kirk,captain kirk
+captain kirk,captain kirk
+james kirk,captain kirk
+james tiberius kirk,captain kirk

@@ -1,0 +1,74 @@
+#####Below is a a pair of iKnow matching dictionaries which can be added to iKnow domain defn class.#######
+<matching dropBeforeBuild="true" autoExecute="true" ignoreDictionaryErrors="true">
+<dictionary name="heroes">
+<item name="captain kirk" uri=":heroes:kirk">
+<term string="kirk" />
+<term string="captain kirk" />
+<term string="jim kirk" />
+<term string="james tiberius kirk" />
+</item>
+<item name="batman" uri=":heroes:batman">
+<term string="batman" />
+<term string="dark knight" />
+<term string="caped crusader" />
+</item>
+<item name="spock" uri=":heroes:spock">
+<term string="spock" />
+<term string="commander spock" />
+</item>
+<item name="luke skywalker" uri=":heroes:luke skywalker">
+<term string="luke skywalker" />
+<term string="leia&apos;s brother" />
+<term string="vader&apos;s son" />
+<term string="luke" />
+</item>
+<item name="gandalf" uri=":heroes:gandalf">
+<term string="gandalf" />
+</item>
+<item name="sarah connor" uri=":heroes:sarah connor">
+<term string="sarah connor" />
+<term string="sarah" />
+</item>
+<item name="kyle reese" uri=":heroes:kyle reese">
+<term string="kyle reese" />
+<term string="reese" />
+</item>
+<item name="frodo" uri=":heroes:frodo">
+<term string="frodo" />
+<term string="frodo baggins"/>
+<term string="ring bearer" />
+</item>
+<item name="sam" uri=":heroes:sam">
+<term string="sam" />
+</item>
+</dictionary>
+<dictionary name="villains">
+<item name="darth vader" uri=":villain:darth vader">
+<term string="vader" />
+<term string="lord vader" />
+<term string="luke&apos;s father" />
+</item>
+<item name="sauron" uri=":villain:sauron">
+<term string="sauron" />
+<term string="dark lord sauron" />
+</item>
+<item name="voldemort" uri=":villain:voldemort">
+<term string="voldemort" />
+<term string="lord voldemort" />
+</item>
+<item name="colonel kurtz" uri=":villain:colonel kurtz">
+<term string="kurtz" />
+<term string="colonel kurtz" />
+<term string="colonel walter e. kurtz" />
+</item>
+<item name="joker" uri=":villain:joker">
+<term string="joker" />
+</item>
+<item name="nero" uri=":villain:nero">
+<term string="nero" />
+</item>
+<item name="terminator" uri=":villain:terminator">
+<term string="terminator" />
+</item>
+</dictionary>
+</matching>

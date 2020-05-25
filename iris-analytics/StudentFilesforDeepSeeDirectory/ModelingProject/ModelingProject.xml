@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-32) 2014.1 (Build 515U)" ts="2013-10-21 23:23:14">
+<Class name="ABC.Orders">
+<SqlTableName>Orders</SqlTableName>
+<Super>%Persistent</Super>
+<TimeChanged>63116,84027.798579</TimeChanged>
+<TimeCreated>61079,51781.861768</TimeCreated>
+
+<Parameter name="DSTIME">
+<Description>
+Track changes to this class.</Description>
+<Default>auto</Default>
+</Parameter>
+
+<Property name="InternalOrder">
+<Description>
+If true, this represents an internal order</Description>
+<Type>%Boolean</Type>
+</Property>
+
+<Property name="OrderDate">
+<Description>
+Date of this order.</Description>
+<Type>%String</Type>
+</Property>
+
+<Property name="OrderType">
+<Description>
+Order Type.</Description>
+<Type>%Integer</Type>
+</Property>
+
+<Property name="Item">
+<Description>
+Item Ordered. (XXX-9999)</Description>
+<Type>%String</Type>
+</Property>
+
+<Property name="Quantity">
+<Description>
+Quantity ordered.</Description>
+<Type>%Integer</Type>
+</Property>
+
+<Property name="PerItemCharge">
+<Description>
+Actual amount of this sale.</Description>
+<Type>%Numeric</Type>
+<Parameter name="SCALE" value="2"/>
+</Property>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+<DataLocation>^ABC.OrdersD</DataLocation>
+<DefaultData>OrdersDefaultData</DefaultData>
+<IdLocation>^ABC.OrdersD</IdLocation>
+<IndexLocation>^ABC.OrdersI</IndexLocation>
+<StreamLocation>^ABC.OrdersS</StreamLocation>
+<ExtentSize>100000</ExtentSize>
+<Data name="OrdersDefaultData">
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>InternalOrder</Value>
+</Value>
+<Value name="3">
+<Value>OrderDate</Value>
+</Value>
+<Value name="4">
+<Value>OrderType</Value>
+</Value>
+<Value name="5">
+<Value>Item</Value>
+</Value>
+<Value name="6">
+<Value>Quantity</Value>
+</Value>
+<Value name="7">
+<Value>PerItemCharge</Value>
+</Value>
+</Data>
+</Storage>
+</Class>
+
+
+<Class name="ABC.Utils">
+<Description><![CDATA[
+Utility methods for the ABC example.
+To create data for this DeepSee model, the easiest thing to do is to
+use the <method>BuildData</method>:<br/>
+From the command line:<br/>
+<example language="cache">
+Do ##class(ABC.Utils).BuildData(1000000,1,1)
+</example>
+The first argument is the number of records to create, 
+the second argument indicates that index building should be done in parallel,
+the third is a verbose flag; if true, then progress is displayed as the data is built.]]></Description>
+<IncludeCode>%DeepSee</IncludeCode>
+<Super>%RegisteredObject</Super>
+<TimeChanged>63116,84025.683102</TimeChanged>
+<TimeCreated>61079,52504.259694</TimeCreated>
+
+<Method name="Setup">
+<Description>
+Add this alias so that each DeepSee sample has a Setup() method</Description>
+<ClassMethod>1</ClassMethod>
+<FormalSpec>pCount:%Integer=100000,pASync:%Boolean=1,pVerbose:%Boolean=1</FormalSpec>
+<Implementation><![CDATA[	do ..BuildData(pCount,pASync,pVerbose)
+]]></Implementation>
+</Method>
+
+<Method name="BuildData">
+<Description><![CDATA[
+Build the transactional data that will provide data for the DeepSee model.
+Any old records will be deleted.<br/>
+<var>pCount</var> is the number of records to create.<br/>
+<var>pAsync</var> if true, indicates that parallel processing should be used to build the cube.<br/>
+<var>pVerbose</var> if true, indicates that status messages should be written to the console.<br/>]]></Description>
+<ClassMethod>1</ClassMethod>
+<FormalSpec>pCount:%Integer=100000,pASync:%Boolean=1,pVerbose:%Boolean=1</FormalSpec>
+<Implementation><![CDATA[
+	
+	// Kill old data
+	Do ##class(ABC.Orders).%KillExtent()
+
+	// build new data
+	Do ..CreateRecords(pCount,pVerbose)
+]]></Implementation>
+</Method>
+
+<Method name="CreateRecords">
+<Description><![CDATA[
+Does the actual work of creating new records in the source data.
+<var>pCount</var> is the number of records to create.<br/>
+<var>pVerbose</var> if true, indicates that status messages should be written to the console.<br/>]]></Description>
+<ClassMethod>1</ClassMethod>
+<FormalSpec>pCount:%Integer=1000,pVerbose:%Boolean=1</FormalSpec>
+<Private>1</Private>
+<Implementation><![CDATA[
+	Set tSC = $$$OK
+	Try {
+		// build new data
+
+
+			// 
+			Kill tProducts
+			Set tProducts($I(tProducts)) = $LB("DVD-10100",25.99)
+			Set tProducts($I(tProducts)) = $LB("DVD-10200",17.50)
+			Set tProducts($I(tProducts)) = $LB("DVD-10300",15)
+			Set tProducts($I(tProducts)) = $LB("DVD-10400",20)
+			Set tProducts($I(tProducts)) = $LB("DVD-10500",13.13)
+			Set tProducts($I(tProducts)) = $LB("DVD-10600",10.50)
+
+			Set tProducts($I(tProducts)) = $LB("BK-41003",45)
+			Set tProducts($I(tProducts)) = $LB("BK-51004",29.95)
+			Set tProducts($I(tProducts)) = $LB("BK-51202",34.50)
+			Set tProducts($I(tProducts)) = $LB("BK-51301",17.80)
+
+			Set tProducts($I(tProducts)) = $LB("EL-21007",35.75)
+			Set tProducts($I(tProducts)) = $LB("EL-31305",17.50)
+			Set tProducts($I(tProducts)) = $LB("EL-51202",25,30)
+			Set tProducts($I(tProducts)) = $LB("EL-51402",21.00)
+			Set tProducts($I(tProducts)) = $LB("EL-52407",21.00)
+			Set tProducts($I(tProducts)) = $LB("EL-52908",40.99)
+
+
+		// distribution of dates increasing with time
+		// last 5 full years, plus part of current year
+		Set tCurrYear = +$E($ZDT($H,3),1,4)
+		Set tStartYear = tCurrYear - 5
+		Set tCurrMonth = +$E($ZDT($H,3),6,7)
+		Set tMonthSeed = 1000
+		Set tMonthTotal = tMonthSeed
+		Set tMonths = 60 + tCurrMonth
+		For m = 1:1:tMonths {
+			Set tMonthTotal = (tMonthTotal * 1.01)\1
+			Set tMonthDist(tMonthTotal) = m
+		}
+
+		// now build main table
+		Set tCount = pCount
+	
+		Set tRows = 0
+
+		For n = 1:1:tCount {
+			Set tRecord = ##class(ABC.Orders).%New()
+			Set tRecord.InternalOrder = $S($R(10)<7:0,1:1)
+		
+			// last 5 full years plus part of current year, with distribution increasing with time
+			Set tMonth = 1
+			Set mr = $R(tMonthTotal - tMonthSeed) + tMonthSeed
+			Set mi = $O(tMonthDist(mr))
+			Set:mi'="" tMonth = $G(tMonthDist(mi),1)
+
+			Set tYear = tStartYear + ((tMonth-1)\12)
+			Set tMonth = ((tMonth-1)#12) + 1
+			Set tDay = $R($$$iscDaysInMonth(tYear,tMonth)) + 1
+			Set tH = +$ZDTH(tYear_"-"_$$$iscPadZero(tMonth,2)_"-"_$$$iscPadZero(tDay,2),3)
+
+			Set tRecord.OrderDate = $zd(tH,3)
+			
+			// product
+			Set tItem = tProducts($R(tProducts)+1)
+			Set tRecord.Item = $list(tItem,1)
+
+			Set tRecord.Quantity = $S($R(10)<7:1,1:$R(4)+1)
+			Set tRecord.PerItemCharge = $list(tItem,2)
+
+			// slowly change channel distribution
+			Set tRecord.OrderType = $S($R(18000)<(tH-50000):2,1:1)
+
+			// some are null
+			If ($R(10) < 1) Set tRecord.OrderType = ""
+
+
+   			Set tSC = tRecord.%Save()
+			If $$$ISERR(tSC) {
+				Do $System.Status.DisplayError(tSC)
+			}
+			Else {
+				Set tRows = tRows + 1
+			}
+			If (pVerbose&&('(tRows#1000))) Write $C(13,27)_"[0J"_$FN(tRows,",",0)_" rows created"
+
+		}
+
+		If (pVerbose) Write $C(13,27)_"[0J"_$FN(+$G(tRows),",",0)_" row(s) created"
+
+		// Kill geodata index
+		Kill ^||HoleFoods.GeoData
+	}
+	Catch(ex) {
+		Set tSC = ex.AsStatus()
+	}
+
+	If $$$ISERR(tSC) {
+		Do $System.Status.DisplayError(tSC)
+	}
+]]></Implementation>
+</Method>
+</Class>
+</Export>

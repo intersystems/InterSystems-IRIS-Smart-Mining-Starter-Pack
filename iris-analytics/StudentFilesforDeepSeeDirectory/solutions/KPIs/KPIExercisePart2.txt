@@ -1,0 +1,25 @@
+The below code provides the filters for the %OnGetSQL() method. KPI Exercise part 2. Paste immediately before the 
+$$$OK in the existing method body.
+
+##################################################################################
+
+If $IsObject(..%filterValues){
+		
+		Set tWhere=""
+		
+		if (..%filterValues.Region '="") {
+		 
+		  Set tWhere = ..%GetSQLForFilter("Outlet->Country->Region->Name","Region")
+		 
+		}
+		
+		}
+		 
+		 if (tWhere '="") {
+			 
+			 Set tSQL1=$Piece(pSQL,"Group By",1)
+			 Set tSQL2=$Piece(pSQL,"Group By",2)
+			 Set pSQL=tSQL1_" WHERE "_tWhere
+			 Set pSQL=pSQL_" Group By "_tSQL2
+			 
+		 }

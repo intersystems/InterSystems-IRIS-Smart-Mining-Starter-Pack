@@ -1,0 +1,11 @@
+The below code is the method body for the %OnGetSQL() method for KPI Exercise part 1. Paste into
+the method.
+
+########################################################
+
+Set pSQL="Select TOP 1000 Product->Name Product,"
+		_" Product ProductCode,Product->Price Price,"
+		_" SUM(AmountOfSale) Amount, SUM(TargetAmount)"
+		_" Targeted From HoleFoods.SalesTransaction Group By"
+		_" Product"
+	Quit $$$OK
