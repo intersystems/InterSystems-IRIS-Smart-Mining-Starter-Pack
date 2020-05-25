@@ -1,0 +1,12 @@
+%%NAME,Villains
+sauron,sauron
+lord sauron,sauron
+dark lord sauron,sauron
+vader,vader
+darth vader,vader
+lord vader,vader
+voldemort,voldemort,
+lord voldemort,voldemort
+kurtz,kurtz
+colonel kurtz,kurtz
+colonel walter e. kurtz,kurtz

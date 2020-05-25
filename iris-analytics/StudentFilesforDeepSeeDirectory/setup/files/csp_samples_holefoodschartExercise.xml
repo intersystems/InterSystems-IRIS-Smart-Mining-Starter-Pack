@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2016.1 (Build 641U)" ts="2016-06-13 15:04:09">
+<CSP name="holefoodschartExercise.csp" application="/csp/samples/" default="1"><![CDATA[
+<html>
+<head>
+
+<!-- Put your page Title here -->
+<title>	Cache Server Page </title>
+<title>HoleFoods: Units, Revenue, Transactions YTD</title>
+		<meta name="description" content="HoleFoods" />
+
+		<!-- amCharts javascript sources -->
+		<script src="amcharts/amcharts.js" type="text/javascript"></script>
+		<script src="amcharts/serial.js" type="text/javascript"></script>
+		
+		<!--DeepSee javascript sources -->
+		
+		<!--
+		
+			EXERCISE: Complete the following pair of script declarations by putting in the names of the JavaScript files
+			containing the DeepSee JavaScript API.
+		
+		-->
+		
+		<script src="Name of JavaScript file here" type="text/javascript"></script>
+		<script src="Name of JavaScript file here" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+
+		function initializePage() {
+			
+			console.log("initialize page");
+			
+			// Get the connection data.
+			var username = document.getElementById('username').value;
+			var pwd = document.getElementById('password').value;
+			var host = document.getElementById('host').value;
+			var port = document.getElementById('port').value;
+		
+			//create a configuration including a DeepSee connection.
+		
+			/*
+			
+				EXERCISE: Complete the configuration object for our data controller. Setup the configuration to for the following: 
+				
+				1. Executing a pivot named Training/DeepSee/Exercises/Revenue by Year and Region.pivot
+				2. Connecting to the SAMPLES namespace.
+				3. Using the /api/deepsee/v1 web application.
+			
+			
+			*/
+		
+			var configuration = {};
+			configuration.widget = 'widget1';
+			configuration.type = //Add Appropriate Type Here;
+			configuration.initialMDX = 
+			configuration.pivotName=//Add Pivot Name Here;
+			configuration.showTotals = false;
+		
+			//Final 2 arguments are web application and namespace.
+			configuration.connection = new DeepSeeConnection(username,pwd,"http://"+host+":"+port+"web application name here", "namespace here");
+			
+			/*Create data controller using configuration. Note dc variable not declared so has global scope.
+			  When runQuery() returns, the drawChart method is invoked.
+			*/
+			
+			/*
+				EXERCISE: Complete the code for doing the following:
+				
+				1. Instantiating a new DeepSeeDataController object and assigning it to the dc variable. Pass the configuration object
+				as the first argument and "drawChart" the name of the method to call after runQuery execute.
+				
+				2. Invoking the runQuery() method on the DeepSeeDataController object to execute the DeepSee pivot table and retrieve
+				the results.
+			
+			
+			*/
+			
+			dc = "DeepSeeDataController instantiation code here";
+			
+			
+			//Execute the query.
+			
+			//Code to execute the query using the DeepSeeDataController here;
+					
+			
+		}
+	
+	//Function that populates the dropdown box containing the filtering options.
+		
+	function drawMemberDropdown(data) {
+	
+			var memberDropdown = document.getElementById('memberDropdown');
+			
+			var data = DeepSeeUtils.getResultsAsArray(data);
+			console.log("filter members %o",data);
+			
+			memberDropdown.options[0] = new Option("All Categories","All");
+			
+			for (var i = 0; i < data.length; ++ i) {
+			memberDropdown.options[memberDropdown.options.length] = new Option(data[i].text,data[i].value);	
+		
+		
+		}
+		
+
+	}
+	
+	//Function that executes when the user clicks "Apply Filter"
+		
+	function applyFilter() {
+		var filterInfo = {};
+		
+		//If the user selects "All Categories" on the filter dropdown, filter using the All Member.
+		if (memberDropdown.options[memberDropdown.selectedIndex].text === "All Categories")
+		{
+			filterInfo.filterName = "Product Category";
+			filterInfo.filterSpec = "[Product].&[All Product]"
+			dc.applyFilter(filterInfo);
+			
+		}
+		//Otherwise create a filterspec using whichever member the user selects.
+		else {
+			
+			filterInfo.filterName = "Product Category";
+			filterInfo.filterSpec = "[Product].[P1].[Product Category]" + '.' + memberDropdown.options[memberDropdown.selectedIndex].value;
+			dc.applyFilter(filterInfo);
+			
+		}	
+		
+	}
+
+	function drawChart(dc) {
+		
+		//Retrieve a result set from the data controller (dc).
+		
+		/* EXERCISE: Complete the method call that retrieves the query results from the data controller object.
+		
+		
+		*/
+		var resultSet = "correct method call here";
+	
+			
+		var chartDataPoint = [];
+		var chartLabel=[];
+		var chartData = [];	
+		
+		/* EXERCISE: Complete the code for looping over the rows and columns of the result set and creating an
+		   array of objects containing the chart data points. This array will be the data source for the chart.
+		
+		   Each object in the array has the following structure:
+		   
+		   				{
+							"date": "YYYY",
+							"Asia": N,
+							"Europe": N,
+							"N.America": N,
+							"S.America": N
+						}
+			
+		
+		*/	
+		
+		
+		for (var i = 1; i <= resultSet.getRowCount(); ++i) {
+			for (var j = 1; j <= resultSet.getColumnCount(); ++j) {
+				chartDataPoint[j] = resultSet.getOrdinalValue(i,j);
+				}
+				chartLabel = resultSet.getOrdinalLabel(2,i);	
+				chartData[chartData.length] = "Object goes here";
+		}
+	console.log("chartdata %o",chartData);	
+	
+		/*	EXERCISE: Complete the code for retrieving the members of the Product Category level. These members are used to populate
+			the filter dropdown box.		
+			
+		*/ 
+			
+	 if(!memberDropdown.options.length){
+				filterCubeName = resultSet.getCubeName();
+				console.log(filterCubeName);
+				DeepSeeUtils.getMembersForFilter(dc.connection,filterCubeName,"MDX Level Name Here",drawMemberDropdown)	
+			}
+		
+		/*  EXERCISE: Complete the call to the makeChart() method by setting the dataProvider property 
+			equal to the array of chart data.
+			
+		*/	
+			
+	AmCharts.makeChart("chartdiv",
+				{
+					"type": "serial",
+					"categoryField": "date",
+					"dataDateFormat": "YYYY",
+					"colors": [
+						"#fdd400",
+						"#0000CC",
+						"#448e4d",
+						"#FF0000"
+					],
+					"theme": "default",
+					"categoryAxis": {
+						"minPeriod": "YYYY",
+						"parseDates": true
+					},
+					"chartCursor": {
+						"enabled": true,
+						"animationDuration": 0,
+						"categoryBalloonDateFormat": "YYYY"
+					},
+					"chartScrollbar": {
+						"enabled": true
+					},
+					"trendLines": [],
+					"graphs": [
+						{
+							"bullet": "round",
+							"id": "AmGraph-1",
+							"title": "Asia",
+							"valueField": "Asia",
+							"balloonText":"Asia: $[[value]]"
+						},
+						{
+							"bullet": "square",
+							"id": "AmGraph-2",
+							"title": "Europe",
+							"valueField": "Europe",
+							"balloonText": "Europe: $[[value]]"
+						},
+						{
+							"bullet": "triangleUp",
+							"id": "AmGraph-3",
+							"title": "N. America",
+							"valueField": "N. America",
+							"balloonText":"N. America $[[value]]"
+						},
+						{
+							"bullet": "diamond",
+							"id": "AmGraph-4",
+							"title": "S. America",
+							"valueField": "S. America",
+							"balloonText":"S. America $[[value]]"
+						}
+					],
+					"guides": [],
+					"valueAxes": [
+						{
+							"id": "ValueAxis-1",
+							"title": "Revenue in Dollars",
+							"unit": "$",
+							"unitPosition": "left"
+						}
+					],
+					"allLabels": [],
+					"balloon": {},
+					"legend": {
+						"enabled": true,
+						"useGraphSettings": true,
+						"valueWidth":80,
+						"valueText":"$"+"[[value]]"
+					},
+					"titles": [
+						{
+							"id": "Title-1",
+							"size": 15,
+							"text": "Revenue by Region and Year"
+						}
+					],
+					
+					//Configure the chart to use the array of data created above.
+					"dataProvider": "Data Array Here",	
+					
+				}
+			);
+
+	}
+
+</script>
+</head>
+<body>
+	<div id="maindiv" width = "100%">
+<form width="100%">
+Username: <input type="text" value="SuperUser" name="username" id="username">    Password: <input type="password" value="SYS" name="password" id="password">  Host: <input type="text" value="localhost" name="host" id="host">  Port: <input type="text" value="57772" name="port" id="port"><br><br>
+</form>
+<button onclick="initializePage()">
+Show Chart
+</button>
+<br>
+<button onclick="applyFilter()">
+Apply Filter
+</button>
+<select id="memberDropdown" selected=""></select>
+<br>
+</div>
+<div id="chartdiv" style="width: 1000px; height: 800px; background-color: #FFFFFF;" ></div>
+</body>
+</html>
+]]></CSP>
+</Export>

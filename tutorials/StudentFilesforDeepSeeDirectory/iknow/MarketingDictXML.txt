@@ -1,0 +1,30 @@
+#####Below is an iKnow matching dictionary which can be added to iKnow domain defn class.#######
+
+<matching dropBeforeBuild="true" autoExecute="true"	ignoreDictionaryErrors="true">
+
+<dictionary name="ISC Products">
+
+	<item name="intersystems cach&#201;" uri=":iscproduct:intersystems cach&#201;">
+	
+	<term string="intersystems cach&#201;"/>
+	
+	<term string="cach&#201;"/>
+	
+	</item>
+
+	<item name="intersystems ensemble" uri=":iscproduct:intersystems ensemble:">
+	<term string ="intersystems ensemble"/>
+	<term string="ensemble"/>
+	
+	</item>
+
+	<item name="intersystems deepsee" uri=":iscproduct:intersystems deepsee:">
+	
+	<term string="intersystems deepsee"/>
+	
+	<term string="deepsee"/>
+	
+	</item>
+
+</dictionary>
+</matching>

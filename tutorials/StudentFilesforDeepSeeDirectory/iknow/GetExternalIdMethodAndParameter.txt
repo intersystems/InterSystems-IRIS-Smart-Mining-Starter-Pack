@@ -1,0 +1,9 @@
+
+Parameter FILELOCATION As %String = "C:\DeepSee\iknow\movies";
+
+ClassMethod GetExternalId(MovieName As %String) As %String
+{
+	
+	Set ExternalId = ":FILE:"_..#FILELOCATION_"\"_MovieName_".txt"
+	Return ExternalId
+}

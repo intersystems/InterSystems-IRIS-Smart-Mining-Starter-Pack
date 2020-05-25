@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2012.2 (Build 612U)" ts="2012-08-02 09:40:31">
+<Class name="Training.DeepSee.DashboardPage">
+<Description>
+Created using the page template: Default</Description>
+<Super>%ZEN.Component.page</Super>
+<TimeChanged>62671,33811.176064</TimeChanged>
+<TimeCreated>62651,54711.799153</TimeCreated>
+
+<Parameter name="APPLICATION">
+<Description>
+Class name of application this page belongs to.</Description>
+</Parameter>
+
+<Parameter name="PAGENAME">
+<Description>
+Displayed name of this page.</Description>
+<Default>DashboardPage</Default>
+</Parameter>
+
+<Parameter name="DOMAIN">
+<Description>
+Domain used for localization.</Description>
+</Parameter>
+
+<Property name="DashboardURL">
+<Type>%String</Type>
+</Property>
+
+<XData name="Style">
+<Description>
+This Style block contains page-specific CSS style definitions.</Description>
+<Data><![CDATA[
+<style type="text/css">
+
+#dashFrame{
+	
+ border:none;
+ margin:0;
+ padding:0;
+}
+</style>
+]]></Data>
+</XData>
+
+<XData name="Contents">
+<Description>
+This XML block defines the contents of this page.</Description>
+<XMLNamespace>http://www.intersystems.com/zen</XMLNamespace>
+<Data><![CDATA[
+<page xmlns="http://www.intersystems.com/zen" title="DashboardPage">
+<hgroup width="100%">
+
+<vgroup width="20%">
+<!--<form align="center">
+<combobox 
+align="center"
+name="Region"
+id="Region"
+label="Region:"
+
+/>
+<spacer height="30" />
+<combobox 
+align="center"
+name="Channel"
+id="Channel"
+label="Channel:"
+/>
+<spacer height="30" />
+<button  align="center" caption="Apply Filters"
+id="getDash" onclick="zenPage.applyFilters();" />
+</form> -->
+
+</vgroup>
+<vgroup width="80%">
+<iframe name="dashFrame" id="dashFrame" src=""
+align="center"
+height="775"
+width="750"
+frameBorder="false"
+
+
+>
+</iframe>
+</vgroup>
+</hgroup>
+</page>
+]]></Data>
+</XData>
+
+<Method name="%OnAfterCreatePage">
+<Description><![CDATA[
+This callback is called after the server-side page 
+object and all of its children are created.<br/>
+Subclasses can override this to add, remove, or modify 
+items within the page object model, or to provide values
+for controls.]]></Description>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	
+	Set tSC = $$$OK
+	Try {
+		
+		//Set up pieces of dashboard url to for value of iFrame src attribute
+		//Use XDASHBOARD and XEMBED if encrypting dashboard url
+		
+		set tDashBase="_DeepSee.UserPortal.DashboardViewer.zen?XDASHBOARD="
+		
+		//Exercise: 
+		set tDashboard="Training/DeepSee/Demos/PivotAndChartDash.dashboard"
+		
+		Set tFrame = %page.%GetComponentById("dashFrame")
+		
+		//Assemble dashboard URL, optionally encrypting the dashboard and embed parts.
+	
+		Set ..DashboardURL = 
+				tDashBase_..Encrypt(tDashboard)_"&XEMBED="_..Encrypt(1)
+		
+		Set tFrame.src = ..DashboardURL
+	
+		/* - Uncomment this section when doing the Optional Exercise
+	
+		//Populate the Product Region Filter, optionally encrypting the valueList items to hide from prying eyes.
+	
+		set Region = %page.%GetComponentById("Region")
+	
+		//Optional Exercise
+		Set tSC = ##class(%DeepSee.Utils).%GetDimensionMembers("HOLEFOODS","[Outlet].[H1].[Region]",,.pMembers)
+		$$$ThrowOnError(tSC)
+	
+		set i = $order(pMembers(""))
+		while i '= "" {
+			
+			set val="[Outlet].[H1].[Region].&["_$list(pMembers(i),4)_"]"
+			set valueList = $G(valueList) _..Encrypt(val)_","
+			set displayList= $G(displayList) _ $list(pMembers(i),2) _ ","
+			set i = $order(pMembers(i))
+		}
+		
+		set Region.valueList = valueList
+		set Region.displayList = displayList
+		kill valueList,displayList,val,encryptVal
+	
+		//Populate the Channel Filter, optionally encrypting the valueList items to hide from prying eyes.
+	
+		set Channel = %page.%GetComponentById("Channel")
+	
+		Set tSC = ##class(%DeepSee.Utils).%GetDimensionMembers("HOLEFOODS","[Channel].[H1].[Channel Name]",,.pMembers)
+		$$$ThrowOnError(tSC)
+	
+		set i = $order(pMembers(""))
+	
+		while i '= "" {
+			
+			set val="[Channel].[H1].[Channel Name].&["_$list(pMembers(i),4)_"]"
+			set valueList = $G(valueList) _..Encrypt(val)_","
+			set displayList= $G(displayList) _ $list(pMembers(i),2) _ ","
+			set i = $order(pMembers(i))
+		}
+		set Channel.valueList = valueList
+		set Channel.displayList = displayList
+		kill valueList,displayList
+		
+		*/
+	} 
+	
+	Catch tEX{
+		
+		Set tSC = tEX.AsStatus()	
+		
+	}
+	Quit tSC
+]]></Implementation>
+</Method>
+
+<Method name="applyFilters">
+<Language>javascript</Language>
+<ClientMethod>1</ClientMethod>
+<Implementation><![CDATA[
+	try{
+		var frame = zenPage.getComponentById('dashFrame');
+		var dashboardURL = zenPage.DashboardURL;
+		var tReg = zenPage.getComponentById('Region');
+		var tChan = zenPage.getComponentById('Channel');
+		var tRegionValue = tReg.getProperty('value');
+		var tChannelValue = tChan.getProperty('value');
+	
+		var filterBase = "&XSETTINGS=";
+		filter=zenPage.PrepareFilter(tRegionValue, tChannelValue);
+		frame.setProperty('src',dashboardURL+filterBase+filter);
+	}
+
+	catch (err) {
+		
+		  txt="There was an error on this page.\n\n";
+  		  txt+="Error description: " + err.message + "\n\n";
+  		  txt+="Click OK to continue.\n\n";
+  		  alert(txt);
+		
+	}
+]]></Implementation>
+</Method>
+
+<Method name="PrepareFilter">
+<ClassMethod>1</ClassMethod>
+<FormalSpec>pRegionValue:%String,pChannelValue:%String</FormalSpec>
+<ReturnType>%String</ReturnType>
+<ZenMethod>1</ZenMethod>
+<Implementation><![CDATA[
+
+	//Assemble dashboard filter. If selected filter values are encrypted, decrypt while assembling. 
+
+	Set tFilter=""
+	if (pRegionValue '= "") {
+		
+		Set tFilter = "FILTER:"_..Decrypt(pRegionValue)
+			
+		}
+		
+	if (pChannelValue '=""){
+		
+		//If both filters are used. Append Channel value with '~'
+		if (pRegionValue '="")
+		{
+			Set tFilter = tFilter _ "~" _..Decrypt(pChannelValue)
+		}
+		
+		//Otherwise Channel is the only filter.
+		else {
+			
+			Set tFilter = "FILTER:"_..Decrypt(pChannelValue)
+		}
+		
+	}
+	
+	//Encrypt filter
+	Set tFilter = ..Encrypt(tFilter)
+	
+	//Return filter. Optionally use output encoding translation for use in urls,e.g., spaces become %20
+	quit $ZCVT(tFilter,"O","URL")
+]]></Implementation>
+</Method>
+</Class>
+</Export>

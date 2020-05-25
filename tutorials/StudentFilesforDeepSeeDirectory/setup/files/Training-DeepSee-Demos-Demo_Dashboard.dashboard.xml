@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2014.1.4 (Build 803U)" ts="2015-09-11 10:56:33">
+<Document name="Training-DeepSee-Demos-Demo Dashboard.dashboard.DFI">
+<dashboard xmlns="http://www.intersystems.com/deepsee/library" name="Demo Dashboard" folderName="Training/DeepSee/Demos" title="Demonstration Dashboard" description="" keywords="" owner="" shared="true" public="true" locked="false" resource="" timeCreated="2013-08-08T15:22:58.034Z" createdBy="DEN" category="Training" bookCover="" scheme="" worklistCount="0" snapTo="true" snapGrid="true" gridRows="10" gridCols="10" canResize="true" canModify="true" showTitleBar="true" companyName="" companyLogo="" companyStyle="">
+  <widget name="Table1" type="pivot" subtype="pivot" subtypeClass="lineChart" title="Transactions" dataSource="Training/DeepSee/Demos/Transactions by Year and Region 2013 to NOW.pivot" dataLink="" drillDownDataSource="" width="200" height="200" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="6" rowSpanL="4" showToolbar="true" theme="" dataColorList="">
+    <control name="" action="showGeoListing" target="" targetProperty="Customer Info" location="widget" type="auto" controlClass="" label="" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen=""></control>
+    <control name="" action="showListing" target="" targetProperty="Listing" location="widget" type="auto" controlClass="" label="" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen=""></control>
+    <control name="" action="refresh" target="" targetProperty="" location="widget" type="auto" controlClass="" label="" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen=""></control>
+    <control name="" action="reloadDashboard" target="" targetProperty="" location="widget" type="auto" controlClass="" label="" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen=""></control>
+    <control name="" action="newWindow" target="" targetProperty="DemoHFTransactionForm.CSP?OBJID=$$$VALUELIST" location="widget" type="auto" controlClass="" label="Show Form" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="listingSelected1"></control>
+    <control name="" action="chooseColumnSpec" target="" targetProperty="HFRowAndColSpecs.termlist" location="widget" type="auto" controlClass="" label="Columns" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen=""></control>
+    <control name="" action="applyFilter" target="" targetProperty="[Product].[P1].[Product Category]" location="widget" type="auto" controlClass="" label="Product Category" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen=""></control>
+    <control name="" action="applyFilter" target="" targetProperty="[Product].[P1].[Product Name]" location="widget" type="auto" controlClass="" label="Product Name" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen=""></control>
+    <property name="analyzer">0</property>
+    <property name="drillDown">1</property>
+    <property name="print">1</property>
+  </widget>
+  <widget name="Chart1" type="pivot" subtype="columnChart" subtypeClass="barChart" title="Units, Transactions, and Revenue by Product Category" dataSource="Training/DeepSee/Demos/Count Units and Amount by Product Category Pivot.pivot" dataLink="" drillDownDataSource="" width="200" height="200" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="4" homeColL="0" colSpanL="6" rowSpanL="6" showToolbar="true" theme="" dataColorList="">
+    <control name="" action="applyFilter" target="" targetProperty="[DateOfSale].[Actual].[YearSold]" location="widget" type="auto" controlClass="" label="YearSold" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen=""></control>
+    <property name="analyzer">0</property>
+    <property name="drillDown">1</property>
+    <property name="legendPos">right</property>
+    <property name="print">1</property>
+    <override name="barChart">{legendVisible:'false',xAxis:{_type:'axis'},yAxisList:[{majorGridLines:false,_type:'axis'}],_type:'barChart'}</override>
+    <override name="legend">{_type:'chartLegend'}</override>
+  </widget>
+  <widget name="Meter1" type="meter" subtype="speedometer" subtypeClass="" title="" dataSource="Training/DeepSee/Demos/Total Revenue Units Sold Count for Current Year.pivot" dataLink="" drillDownDataSource="" width="200" height="200" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="6" colSpanL="2" rowSpanL="3" showToolbar="true" theme="" dataColorList="">
+    <dataProperty name="" label="Revenue YTD" width="" align="" subtype="speedometer" style="" display="" format="" showAs="" valueColumn="false" summary="" summaryValue="" dataValue="Revenue" targetValue="" thresholdLower="50000" thresholdUpper="450000" rangeLower="" rangeUpper="500000" baseValue="" override="{height:185,width:185,dataBinding:&apos;Revenue&apos;,label:&apos;Revenue YTD&apos;,rangeUpper:&apos;500000&apos;,thresholdLower:&apos;50000&apos;,thresholdUpper:&apos;450000&apos;,value:137966.32,highLampColor:&apos;url(#deep-green)&apos;,highRangeStyle:&apos;fill:url(#deep-green);&apos;,lowRangeStyle:&apos;fill:url(#glow-red);&apos;,odometerFormat:&apos;$###,###.##&apos;,_type:&apos;speedometer&apos;}"></dataProperty>
+    <property name="analyzer">0</property>
+    <property name="format">$###,###.##</property>
+    <property name="highRangeColor">url(#glow-green)</property>
+    <property name="lowRangeColor">url(#glow-red)</property>
+  </widget>
+  <widget name="Meter2" type="meter" subtype="speedometer" subtypeClass="" title="" dataSource="Training/DeepSee/Demos/Total Revenue Units Sold Count for Current Year.pivot" dataLink="" drillDownDataSource="" width="200" height="200" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="3" homeColL="6" colSpanL="2" rowSpanL="3" showToolbar="true" theme="" dataColorList="">
+    <dataProperty name="" label="Transactions YTD" width="" align="" subtype="speedometer" style="" display="" format="" showAs="" valueColumn="false" summary="" summaryValue="" dataValue="Count" targetValue="" thresholdLower="10000" thresholdUpper="90000" rangeLower="0" rangeUpper="100000" baseValue="" override="{height:183,width:183,dataBinding:&apos;Count&apos;,label:&apos;Transactions YTD&apos;,rangeLower:&apos;0&apos;,rangeUpper:&apos;100000&apos;,thresholdLower:&apos;10000&apos;,thresholdUpper:&apos;90000&apos;,value:12061,highLampColor:&apos;url(#glow-green)&apos;,highRangeStyle:&apos;fill:url(#glow-green);&apos;,lowRangeStyle:&apos;fill:url(#glow-red);&apos;,_type:&apos;speedometer&apos;}"></dataProperty>
+    <property name="analyzer">0</property>
+    <property name="highRangeColor">url(#glow-green)</property>
+    <property name="lowRangeColor">url(#glow-red)</property>
+  </widget>
+  <widget name="Meter3" type="meter" subtype="speedometer" subtypeClass="" title="" dataSource="Training/DeepSee/Demos/Total Revenue Units Sold Count for Current Year.pivot" dataLink="" drillDownDataSource="" width="200" height="200" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="6" homeColL="6" colSpanL="2" rowSpanL="3" showToolbar="true" theme="" dataColorList="">
+    <dataProperty name="" label="Units YTD" width="" align="" subtype="speedometer" style="" display="" format="" showAs="" valueColumn="false" summary="" summaryValue="" dataValue="Units Sold" targetValue="" thresholdLower="10000" thresholdUpper="90000" rangeLower="0" rangeUpper="100000" baseValue="" override="{height:253,width:253,dataBinding:&apos;Units Sold&apos;,label:&apos;Units YTD&apos;,rangeUpper:&apos;100000&apos;,thresholdLower:&apos;10000&apos;,thresholdUpper:&apos;90000&apos;,value:20539,highLampColor:&apos;url(#glow-green)&apos;,highRangeStyle:&apos;fill:url(#glow-green);&apos;,lowRangeStyle:&apos;fill:url(#glow-red);&apos;,_type:&apos;speedometer&apos;}"></dataProperty>
+    <property name="analyzer">0</property>
+    <property name="highRangeColor">url(#glow-green)</property>
+    <property name="lowRangeColor">url(#glow-red)</property>
+  </widget>
+</dashboard>
+</Document></Export>

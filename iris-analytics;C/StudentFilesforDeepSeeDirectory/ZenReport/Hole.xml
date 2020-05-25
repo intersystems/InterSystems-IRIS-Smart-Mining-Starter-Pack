@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25" zv="Cache for UNIX (Apple Mac OS X for x86-64) 2013.1 (Build 385)" ts="2013-01-31 08:53:46">
+<Class name="HoleFoods.Report">
+<Description>
+HoleFoods.Report</Description>
+<Super>%ZEN.Report.reportPage</Super>
+<TimeChanged>62853,31565.336474</TimeChanged>
+<TimeCreated>62852,72166.181691</TimeCreated>
+
+<Parameter name="APPLICATION">
+<Description>
+Class name of application this report belongs to.</Description>
+</Parameter>
+
+<Parameter name="DEFAULTMODE">
+<Description><![CDATA[
+Specifies the default display mode used for this report if
+the URL parameter, <var>$MODE</var>, is not present.]]></Description>
+<Type>STRING</Type>
+<Constraint>,html,tohtml,toxslfo,pdf,xml,xslfo,excel,toexcel,ps,pdfprint,xlsx</Constraint>
+<Default>html</Default>
+<Flags>ENUM</Flags>
+</Parameter>
+
+<Parameter name="REPORTXMLNAMESPACE">
+<Description>
+This is the optional XML namespace used for the report.</Description>
+</Parameter>
+
+<XData name="ReportDefinition">
+<Description>
+This XML defines the logical contents of this report.</Description>
+<XMLNamespace>http://www.intersystems.com/zen/report/definition</XMLNamespace>
+<Data><![CDATA[
+<report xmlns="http://www.intersystems.com/zen/report/definition"
+ name="Report" sql="SELECT AmountOfSale,DateOfSale,Outlet->City,Outlet->Country->Name as Country,Product->Name as Product,UnitsSold
+FROM HoleFoods.SalesTransaction
+WHERE Actual = 1 and Channel is not null
+ORDER BY Product->Name, Country, DateOfSale">
+<group name="ByProduct" breakOnField="Product">
+<attribute name="Name" field="Product"/>
+<aggregate name="TotalAmount" type="SUM" field="AmountOfSale"/>
+<aggregate name="UnitsCount" type="SUM" field="UnitsSold"/>
+<group name="ByCountry" breakOnField="Country">
+<attribute name="Country" field="Country"/>
+<aggregate name="CountryCount" type="COUNT" field="Country"/>
+<group name="Txn">
+<attribute name="Amount" field="AmountOfSale"/>
+<attribute name="Date" field="DateOfSale"/>
+<attribute name="City" field="City"/>
+<attribute name="Units" field="UnitsSold"/>
+</group>
+</group>
+</group>
+</report>
+]]></Data>
+</XData>
+
+<XData name="ReportDisplay">
+<Description>
+This XML defines the display for this report.
+This is used to generate the XSLT stylesheets for both HTML and XSL-FO.</Description>
+<XMLNamespace>http://www.intersystems.com/zen/report/display</XMLNamespace>
+<Data><![CDATA[
+<report xmlns="http://www.intersystems.com/zen/report/display"
+ name="Report" title="HoleFoods Sales by Product">
+<!-- Optional Init element inserts custom XSLT instructions at the top level of the generated XSLT stylesheet. -->
+<init ></init>
+<!-- Optional Document element specifies page layout and style characteristics. -->
+<document width="8.5in" height="11in" marginLeft="1.25in" marginRight="1.25in" marginTop="1.0in" marginBottom="1.0in" >
+ <class name="table.text">
+  <att name="table-layout" value="fixed" />
+ </class>
+ <class name="th.text">
+  <att name="font-size" value="1.15em" />
+  <att name="color" value="red" />
+ </class>
+ <class name="td.text">
+  <att name="font-size" value="1em" />
+  <att name="color" value="blue" />
+ </class>
+</document>
+<!-- Optional Pageheader element. -->
+<pageheader ></pageheader>
+<!-- Optional Pagefooter element. Does not apply in HTML output. -->
+<pagefooter ></pagefooter>
+<!-- Required Body element. -->
+<body>
+<group name="ByProduct" pagebreak="true">
+<table orient="col" class="text">
+<item field="@Name" caption="Product" />
+<item field="UnitsCount" caption="Units Count" width="120px" style="text-align:right"/>
+<item field="TotalAmount" caption="Total Amount" width="120px" style="text-align:right"/>
+</table>
+<group name="ByCountry">
+<line pattern="empty"/>
+<table orient="row" class="table2" >
+<item field="@Country" caption="Country" width="90px"/>
+<item field="CountryCount" caption="Txn Count" width="70px"/>
+</table>
+<group name="Txn">
+<line pattern="empty"/>
+<table orient="col" class="table4">
+<item field="@Date" caption="Date" width="90px"/>
+<item field="@City" caption="City" width="110px" />
+<item field="@Units" caption="Units" width="90px"/>
+<item field="@Amount" caption="Amount" width="60px" style="text-align:right"/>
+</table>
+</group>
+</group>
+</group>
+</body>
+</report>
+]]></Data>
+</XData>
+</Class>
+</Export>

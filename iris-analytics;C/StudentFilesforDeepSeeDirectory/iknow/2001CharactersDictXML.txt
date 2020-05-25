@@ -1,0 +1,37 @@
+#####Below is an iKnow matching dictionary which can be added to iKnow domain defn class.#######
+<matching dropBeforeBuild="true" autoExecute="true" ignoreDictionaryErrors="true">
+
+<dictionary name ="2001 Space Odyssey Characters">
+
+ <item name ="hal" uri=":2001 Characters:hal">
+ 
+ <term string="hal"/>
+ <term string="hal9000"/>
+ <term string="hal9000 Computer"/>
+ <term string="heuristic algorithm computer"/>
+ 
+ </item>
+
+
+<item name="frank" uri=":2001 Characters:frank">
+
+<term string="frank"/>
+<term string="frank poole"/>
+<term string="dr. frank poole"/>
+
+</item>
+
+
+<item name="dave" uri=":2001 Characters:dave">
+
+<term string="dave"/>
+<term string="dave bowman"/>
+<term string="commander dave bowman"/>
+
+</item>
+
+
+</dictionary>
+
+
+</matching>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2013.1 (Build 440)" ts="2013-04-05 11:08:38">
+<Class name="Training.DeepSee.CategoryOnlineSA">
+<Description>
+</Description>
+<ProcedureBlock>1</ProcedureBlock>
+<Super>%DeepSee.SubjectArea</Super>
+<TimeChanged>62917,40012.662992</TimeChanged>
+<TimeCreated>62917,39101.898558</TimeCreated>
+<DependsOn>Training.DeepSee.HoleFoodsTransactionCube</DependsOn>
+
+<Parameter name="DOMAIN"/>
+
+<XData name="SubjectArea">
+<Description>
+SubjectArea definition from Architect.</Description>
+<XMLNamespace>http://www.intersystems.com/deepsee/subjectarea</XMLNamespace>
+<Data><![CDATA[
+<subjectArea xmlns="http://www.intersystems.com/deepsee/subjectarea" name="Category Online" displayName="Category Data for Online Sales" disabled="false" baseCube="HoleFoodsTransactionCube">
+  <measure name="Amount Sold" disabled="false" hidden="true"></measure>
+</subjectArea>
+]]></Data>
+</XData>
+
+<Method name="%OnGetFilterSpec">
+<ClassMethod>1</ClassMethod>
+<FormalSpec>pFilterSpec:%String</FormalSpec>
+<ReturnType>%String</ReturnType>
+<Implementation><![CDATA[
+	Set category=$Get(^MyCategory)
+	Set pFilterSpec= "([Product].[H1].[Product Category].&["
+	_category_"],[CHANNEL NAME].[H1].[CHANNEL NAME].&[Online])"
+	Quit pFilterSpec
+]]></Implementation>
+</Method>
+</Class>
+</Export>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2012.2 (Build 612U)" ts="2012-08-15 15:13:40">
+<Class name="Training.DeepSee.MultipleImageViewer">
+<Description>
+Created using the page template: Default</Description>
+<Super>%ZEN.Component.page</Super>
+<TimeChanged>62684,54201.794665</TimeChanged>
+<TimeCreated>62671,55839.238173</TimeCreated>
+
+<Parameter name="APPLICATION">
+<Description>
+Class name of application this page belongs to.</Description>
+</Parameter>
+
+<Parameter name="PAGENAME">
+<Description>
+Displayed name of this page.</Description>
+<Default>MultipleImageViewer</Default>
+</Parameter>
+
+<Parameter name="DOMAIN">
+<Description>
+Domain used for localization.</Description>
+</Parameter>
+
+<Property name="Ids">
+<Type>%ZEN.Datatype.integer</Type>
+<InitialExpression>10</InitialExpression>
+<Parameter name="ZENURL" value="Ids"/>
+</Property>
+
+<XData name="Style">
+<Description>
+This Style block contains page-specific CSS style definitions.</Description>
+<Data><![CDATA[
+<style type="text/css">
+</style>
+]]></Data>
+</XData>
+
+<XData name="Contents">
+<Description>
+This XML block defines the contents of this page.</Description>
+<XMLNamespace>http://www.intersystems.com/zen</XMLNamespace>
+<Data><![CDATA[
+<page xmlns="http://www.intersystems.com/zen" title="">
+
+</page>
+]]></Data>
+</XData>
+
+<Method name="%OnAfterCreatePage">
+<Description><![CDATA[
+This callback is called after the server-side page 
+object and all of its children are created.<br/>
+Subclasses can override this to add, remove, or modify 
+items within the page object model, or to provide values
+for controls.]]></Description>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	Set tSC=$$$OK
+	Try{ 
+		Set tGroup = ##class(%ZEN.Component.vgroup).%New()
+		Set tGroup.align="center"
+  
+		do %page.%AddChild(tGroup)
+	
+		set html = ##class(%ZEN.Component.html).%New()
+	
+		Set sql="SELECT Product->SKU as SKU FROM HoleFoods.SalesTransaction WHERE %ID %INLIST $ListFromString( ? )"
+	
+		Set stmt=##class(%SQL.Statement).%New()
+	
+		Set tSC=stmt.%Prepare(sql)
+		$$$ThrowOnError(tSC)
+	
+		Set rs=stmt.%Execute(%page.Ids)
+		Set string=""
+	
+		set startTable="<table>"
+		Set startRow="<tr>"
+		Set endRow="</tr>"
+		set endTable="</table>"
+	
+		set string=startTable_startRow
+		set i=0
+		while rs.%Next(){
+			set string=string_"<td>"_"<img height=""300"" width=""300"" src="""_rs.SKU_".png""/>"_"</td>"
+			set i=i+1
+			if i#3=0{
+				set string=string_endRow_startRow
+			}
+		}
+		Set string=string_endRow_endTable
+	
+		set html.content=string
+		Do tGroup.%AddChild(html)
+	}
+	Catch ex{
+		
+		Set tSC=ex.AsStatus()	
+	}	
+		Quit tSC
+]]></Implementation>
+</Method>
+</Class>
+</Export>
