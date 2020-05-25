@@ -1,0 +1,8 @@
+// open docker terminal
+
+bash
+cd irissys
+chmod +x iris
+./iris terminal IRIS
+set $namespace="SAMPLES"
+ 
