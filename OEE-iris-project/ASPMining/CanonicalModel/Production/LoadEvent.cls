@@ -67,6 +67,21 @@ Storage Default
 <Value name="11">
 <Value>DumpEvent</Value>
 </Value>
+<Value name="12">
+<Value>LoadId</Value>
+</Value>
+<Value name="13">
+<Value>TimeArrive</Value>
+</Value>
+<Value name="14">
+<Value>TimeLoad</Value>
+</Value>
+<Value name="15">
+<Value>TimeFull</Value>
+</Value>
+<Value name="16">
+<Value>TravelTime</Value>
+</Value>
 </Data>
 <DataLocation>^ASPMining.Canoni4037.LoadEventD</DataLocation>
 <DefaultData>LoadEventDefaultData</DefaultData>

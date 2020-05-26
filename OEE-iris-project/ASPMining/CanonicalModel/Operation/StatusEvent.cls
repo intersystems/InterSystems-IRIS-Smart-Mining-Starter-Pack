@@ -16,6 +16,21 @@ Property EndDate As %DateTime;
 /// Calculated duration of the event
 Property Duration As %Integer;
 
+
+index StartTimeIndex on StartDate;
+index EndTimeIndex on EndDate;
+
+
+ClassMethod HourToInt(datetime as %DateTime) as %Integer{
+	set hour = 0
+	try{
+		set hour = $ztimeh($piece(datetime," ",2))
+	}catch{
+		set hour = 0
+	}
+	Quit hour
+}
+
 Storage Default
 {
 <Data name="StatusEventDefaultData">
