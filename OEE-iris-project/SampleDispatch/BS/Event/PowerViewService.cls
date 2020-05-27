@@ -138,6 +138,7 @@ Method ProcessNewCompleteEvents()
 			//Checking if starttime is within same day or next day, this could happen since shifts belong to more than 1 day
 			set startseconds = shift.StartSeconds + oRS.Get("starttime")
 			set startday = 0 //used for splicing only
+			set newstartseconds = 0 //used for splicing only
 			$$$TRACE("startseconds: "_startseconds)
 			If (startseconds) >= 86400 { //Note: in powerview never seen an event longer than a shift of 12 hours, but just in case this check was made
 				set nextday = shift.StartDay + ##class(%Library.Integer).Normalize(startseconds / 86400) //TODO: CHECK IF EVENT THAT ENDS IN LATER DAY/SHIFT REPEATS OR HAS ONLY 1 EVENT
@@ -181,22 +182,23 @@ Method ProcessNewCompleteEvents()
 			// Slice the event into fixed length pieces
 			set SliceDuration = 300 //5 minutes slices
 			
-			set firstSliceSlotOffset = startseconds # SliceDuration // ej: if i'm at seconds 1534, returns 34
-			set firstSliceSlot = startseconds - firstSliceSlotOffset // gets the start of the slice slot, e.g: 1500
-			set lastSliceSlotOffset = endseconds # SliceDuration
-			set lastSliceSlot = endseconds - lastSliceSlotOffset
+			set firstSliceSlotOffset = newstartseconds # SliceDuration // ej: if i'm at seconds 1534, returns 34
+			set firstSliceSlot = newstartseconds - firstSliceSlotOffset // gets the start of the slice slot, e.g: 1500
+			set lastSliceSlotOffset = (newstartseconds + oRS.Get("duration") ) # SliceDuration
+			set lastSliceSlot = (newstartseconds + oRS.Get("duration") ) - lastSliceSlotOffset
 			
 			set firstSliceRemainingTime = SliceDuration - firstSliceSlotOffset
 			set lastSliceRemainingTime = SliceDuration - lastSliceSlotOffset
 			
-			If (lastSliceSlot > firstSliceSlot){ //only checks if the duration of the event is longer than a single slot span
+			set extraSliceCount = ##class(%Library.Integer).Normalize((lastSliceSlot - firstSliceSlot)/SliceDuration)
+			
+			If (extraSliceCount > 0){ //only checks if the duration of the event is longer than a single slot span
 				// slice in pieces
-				set extraSliceCount = lastSliceSlot - firstSliceSlot		
-				$$$TRACE("EXTRA SLICES on event with ddbkey "_oRS.Get("ddbkey")_" sliceCount: "_sliceCount)
-				set firstsliceslotseconds = ##class(%Library.Integer).Normalize(startseconds / SliceDuration)
+				$$$TRACE("EXTRA SLICES on event with ddbkey "_oRS.Get("ddbkey")_" sliceCount: "_extraSliceCount_" firstsliceseconds: "_firstSliceSlot_" startday: "_startday)
 
 				//send fraction of first slot
 				set oSliceEvent = ##class(SampleDispatch.BO.Event.SlicedEvent).%New()
+				set oSliceEvent.ddbkey = oRS.Get("ddbkey")
 				set oSliceEvent.EquipmentId = oRS.Get("eqmt")
 				set oSliceEvent.ShiftId = oRS.Get("shiftindex")
 				set oSliceEvent.StatusReasonId = oRS.Get("reason")
@@ -209,6 +211,7 @@ Method ProcessNewCompleteEvents()
 				For i=1:1:extraSliceCount {
 					$$$TRACE("EXTRA SLICE i: "_i) //
 					set oSliceEvent = ##class(SampleDispatch.BO.Event.SlicedEvent).%New()
+					set oSliceEvent.ddbkey = oRS.Get("ddbkey")
 					set oSliceEvent.EquipmentId = oRS.Get("eqmt")
 					set oSliceEvent.ShiftId = oRS.Get("shiftindex")
 					set oSliceEvent.StatusReasonId = oRS.Get("reason")
@@ -233,6 +236,7 @@ Method ProcessNewCompleteEvents()
 				
 			}else{
 				set oSliceEvent = ##class(SampleDispatch.BO.Event.SlicedEvent).%New()
+				set oSliceEvent.ddbkey = oRS.Get("ddbkey")
 				set oSliceEvent.EquipmentId = oRS.Get("eqmt")
 				set oSliceEvent.ShiftId = oRS.Get("shiftindex")
 				set oSliceEvent.StatusReasonId = oRS.Get("reason")

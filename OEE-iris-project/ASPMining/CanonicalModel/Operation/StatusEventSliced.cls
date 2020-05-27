@@ -12,8 +12,11 @@ Class ASPMining.CanonicalModel.Operation.StatusEventSliced Extends %Persistent
 	Property SliceStartDate As %DateTime;
 	/// Calculated duration of the event
 	Property PartialDuration As %Float;
+	/// For data source validation purposes only
+	Property ddbkey As %Integer;
 	
 	index SliceStartTimeIndex on SliceStartDate;
+	index ddbkeyIndex on ddbkey;
 Storage Default
 {
 <Data name="StatusEventSlicedDefaultData">
@@ -37,6 +40,9 @@ Storage Default
 </Value>
 <Value name="7">
 <Value>PartialDuration</Value>
+</Value>
+<Value name="8">
+<Value>ddbkey</Value>
 </Value>
 </Data>
 <DataLocation>^ASPMiningB953.StatusEvent4F11D</DataLocation>

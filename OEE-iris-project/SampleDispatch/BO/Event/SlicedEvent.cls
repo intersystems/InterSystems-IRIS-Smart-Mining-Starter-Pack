@@ -12,6 +12,9 @@ Class SampleDispatch.BO.Event.SlicedEvent Extends (%Persistent,Ens.Request)
 	Property SliceStartDate As %DateTime;
 	/// Calculated duration of the event
 	Property PartialDuration As %Float;
+	/// For data source validation purposes only
+	Property ddbkey As %Integer;
+
 Storage Default
 {
 <Data name="SlicedEventDefaultData">
@@ -19,16 +22,16 @@ Storage Default
 <Value>%%CLASSNAME</Value>
 </Value>
 <Value name="2">
-<Value>Shift</Value>
+<Value>ShiftId</Value>
 </Value>
 <Value name="3">
-<Value>Equipment</Value>
+<Value>EquipmentId</Value>
 </Value>
 <Value name="4">
-<Value>StatusReason</Value>
+<Value>StatusReasonId</Value>
 </Value>
 <Value name="5">
-<Value>StatusType</Value>
+<Value>StatusTypeId</Value>
 </Value>
 <Value name="6">
 <Value>SliceStartDate</Value>
@@ -37,16 +40,7 @@ Storage Default
 <Value>PartialDuration</Value>
 </Value>
 <Value name="8">
-<Value>ShiftId</Value>
-</Value>
-<Value name="9">
-<Value>EquipmentId</Value>
-</Value>
-<Value name="10">
-<Value>StatusReasonId</Value>
-</Value>
-<Value name="11">
-<Value>StatusTypeId</Value>
+<Value>ddbkey</Value>
 </Value>
 </Data>
 <DataLocation>^SampleDispatch51FA.SlicedEventD</DataLocation>

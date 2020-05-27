@@ -370,6 +370,7 @@ Method NewSlicedEvent(pInput As SampleDispatch.BO.Event.SlicedEvent, Output pOut
 		
 		Set event.SliceStartDate = pInput.SliceStartDate
 		set event.PartialDuration = pInput.PartialDuration
+		set event.ddbkey = pInput.ddbkey
 		
 		Set sc = event.%Save()
 		
