@@ -137,27 +137,33 @@ Method ProcessNewCompleteEvents()
 			
 			//Checking if starttime is within same day or next day, this could happen since shifts belong to more than 1 day
 			set startseconds = shift.StartSeconds + oRS.Get("starttime")
+			set startday = 0 //used for splicing only
 			$$$TRACE("startseconds: "_startseconds)
-			If (startseconds) >= 86400 {
+			If (startseconds) >= 86400 { //Note: in powerview never seen an event longer than a shift of 12 hours, but just in case this check was made
 				set nextday = shift.StartDay + ##class(%Library.Integer).Normalize(startseconds / 86400) //TODO: CHECK IF EVENT THAT ENDS IN LATER DAY/SHIFT REPEATS OR HAS ONLY 1 EVENT
 				set newstartseconds =  startseconds # 86400
 				$$$TRACE("newstartseconds "_newstartseconds_" startseconds "_startseconds_ " nextday "_nextday)
+				set startday = nextday
 				set oEvent.StartDate = $ZDateTime(nextday_","_newstartseconds)
 			}else{
+				set startday = shift.StartDay
 				set oEvent.StartDate = $ZDateTime(shift.StartDay_","_startseconds)
 			}
 			$$$TRACE("EVENT StartTimeDT "_oEvent.StartDate_",StartTime: "_oRS.Get("starttime")_ " Duration: "_oEvent.Duration_" EndTime: "_oRS.Get("endtime"))
 			
 			
 			//Checking if endtime is within same day or next day, just like with start time
-			set endseconds = shift.StartSeconds + oRS.Get("endtime")
+			set endseconds = shift.StartSeconds + oRS.Get("starttime") + oEvent.Duration
+			set endday = 0 //used for splicing only
 			$$$TRACE("endseconds: "_endseconds)
 			If (endseconds) >= 86400 {
 				set nextday = shift.StartDay + ##class(%Library.Integer).Normalize(endseconds / 86400) //TODO: CHECK IF EVENT THAT ENDS IN END OF SHIFT OR IN MANY DAYS LATER, EASY: CHECK IF ANY DURTION LONGER THAN 86400
-				set newendseconds =  endseconds # 86400
+				set newendseconds = endseconds # 86400
 				$$$TRACE("newendseconds "_newendseconds_" endseconds "_endseconds_ " nextday "_nextday)
+				set endday = nextday
 				set oEvent.EndDate = $ZDateTime(nextday_","_newendseconds)
 			}else{
+				set endday = shift.StartDay
 				set oEvent.EndDate = $ZDateTime(shift.StartDay_","_endseconds)
 			}
 			$$$TRACE("EVENT EndTime "_oEvent.EndDate_"...")
@@ -171,16 +177,69 @@ Method ProcessNewCompleteEvents()
 			
 			set sc = ..SendRequestAsync("PowerView Event Operation", oEvent)
 			
+			// SLICING OF THE EVENT
 			// Slice the event into fixed length pieces
-			set oEvent.Duration = oRS.Get("duration")
 			set SliceDuration = 300 //5 minutes slices
-			If (oEvent.Duration > SliceDuration){
+			
+			set firstSliceSlotOffset = startseconds # SliceDuration // ej: if i'm at seconds 1534, returns 34
+			set firstSliceSlot = startseconds - firstSliceSlotOffset // gets the start of the slice slot, e.g: 1500
+			set lastSliceSlotOffset = endseconds # SliceDuration
+			set lastSliceSlot = endseconds - lastSliceSlotOffset
+			
+			set firstSliceRemainingTime = SliceDuration - firstSliceSlotOffset
+			set lastSliceRemainingTime = SliceDuration - lastSliceSlotOffset
+			
+			If (lastSliceSlot > firstSliceSlot){ //only checks if the duration of the event is longer than a single slot span
 				// slice in pieces
-				set sliceCount = (oEvent.Duration / SliceDuration)
-				$$$TRACE("sliceCount: "_sliceCount)
-				//set sliceEvent = ##class(ASPMining.CanonicalModel.Operation.StatusEventSliced).%New()
+				set extraSliceCount = lastSliceSlot - firstSliceSlot		
+				$$$TRACE("EXTRA SLICES on event with ddbkey "_oRS.Get("ddbkey")_" sliceCount: "_sliceCount)
+				set firstsliceslotseconds = ##class(%Library.Integer).Normalize(startseconds / SliceDuration)
+
+				//send fraction of first slot
+				set oSliceEvent = ##class(SampleDispatch.BO.Event.SlicedEvent).%New()
+				set oSliceEvent.EquipmentId = oRS.Get("eqmt")
+				set oSliceEvent.ShiftId = oRS.Get("shiftindex")
+				set oSliceEvent.StatusReasonId = oRS.Get("reason")
+				set oSliceEvent.StatusTypeId = oRS.Get("status")
+				set oSliceEvent.SliceStartDate = $ZDateTime(startday_","_firstSliceSlot)
+				set oSliceEvent.PartialDuration = firstSliceRemainingTime / SliceDuration //this event is longer than a single slot so is has the whole remaining time of the first slot
+
+				set sc = ..SendRequestAsync("PowerView Event Operation", oSliceEvent) // maybe new operation?
+				
+				For i=1:1:extraSliceCount {
+					$$$TRACE("EXTRA SLICE i: "_i) //
+					set oSliceEvent = ##class(SampleDispatch.BO.Event.SlicedEvent).%New()
+					set oSliceEvent.EquipmentId = oRS.Get("eqmt")
+					set oSliceEvent.ShiftId = oRS.Get("shiftindex")
+					set oSliceEvent.StatusReasonId = oRS.Get("reason")
+					set oSliceEvent.StatusTypeId = oRS.Get("status")
+					// validate the day we are before anything
+					set thisSlotSeconds = firstSliceSlot + i * SliceDuration
+					If (thisSlotSeconds >= 84600){
+						set nextday = startday + ##class(%Library.Integer).Normalize(thisSlotSeconds / 86400) //will always be only 1 more day if the shifts are 12h or less (considering timezone diff
+						set oSliceEvent.SliceStartDate = $ZDateTime(nextday_","_(thisSlotSeconds # 86400))
+					}else{
+						set oSliceEvent.SliceStartDate = $ZDateTime(startday_","_thisSlotSeconds)
+					}
+					
+					//check if last slot
+					If (i = extraSliceCount){
+						set oSliceEvent.PartialDuration = lastSliceRemainingTime / SliceDuration
+					}else{ //is middle slot
+						set oSliceEvent.PartialDuration = 1.0
+					}
+					set sc = ..SendRequestAsync("PowerView Event Operation", oSliceEvent) // maybe new operation?
+				}
+				
 			}else{
-				//sad
+				set oSliceEvent = ##class(SampleDispatch.BO.Event.SlicedEvent).%New()
+				set oSliceEvent.EquipmentId = oRS.Get("eqmt")
+				set oSliceEvent.ShiftId = oRS.Get("shiftindex")
+				set oSliceEvent.StatusReasonId = oRS.Get("reason")
+				set oSliceEvent.StatusTypeId = oRS.Get("status")
+				set oSliceEvent.SliceStartDate = $ZDateTime(startday_","_firstSliceSlot)
+				set oSliceEvent.PartialDuration = (firstSliceRemainingTime - lastSliceRemainingTime) / SliceDuration
+				set sc = ..SendRequestAsync("PowerView Event Operation", oSliceEvent) // maybe new operation?
 			}
 			
 		}else{
@@ -442,5 +501,6 @@ Method OnInit() As %Status
    /// Do ..Adapter.InitializePersistentValue(..%ConfigName, "LastCompletedDumpKey",0)
    Quit $$$OK
 }
+
 
 }
