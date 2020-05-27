@@ -19,7 +19,7 @@ Method OnProcessInput(pInput As EnsLib.SQL.Snapshot, Output pOutput As %Register
 		Do ..ProcessNewShifts()
 		Do ..ProcessNewReasons()
 		Do ..ProcessNewCompleteEvents()
-		Do ..ProcessNewCompleteDumps()
+		//Do ..ProcessNewCompleteDumps()
 		//Do ..ProcessNewCompleteLoads()
 		
 	}
@@ -170,6 +170,19 @@ Method ProcessNewCompleteEvents()
 			Set ..%SessionId=""
 			
 			set sc = ..SendRequestAsync("PowerView Event Operation", oEvent)
+			
+			// Slice the event into fixed length pieces
+			set oEvent.Duration = oRS.Get("duration")
+			set SliceDuration = 300 //5 minutes slices
+			If (oEvent.Duration > SliceDuration){
+				// slice in pieces
+				set sliceCount = (oEvent.Duration / SliceDuration)
+				$$$TRACE("sliceCount: "_sliceCount)
+				//set sliceEvent = ##class(ASPMining.CanonicalModel.Operation.StatusEventSliced).%New()
+			}else{
+				//sad
+			}
+			
 		}else{
 			$$$TRACE("Skipping event due to: ShiftIndex "_oEvent.ShiftId_" Does not exists for StatusEventId ddbkey: "_oRS.Get("ddbkey"))
 		}
@@ -322,14 +335,12 @@ Method ProcessNewCompleteDumps()
 	Set tQueryStatement="SELECT CONCAT(shiftindex, ddbkey) AS index2, ddbkey, shiftindex, truck, excav, loc, grade, bay, loadrec, measureton, dumptons, timearrive, timedump, timeempty, calctravti, dumptons  FROM dbo.hist_dumps WHERE CONCAT(shiftindex, ddbkey)>? ORDER BY shiftindex, ddbkey ASC"
 	//SELECT MIN(ddbkey) as ddbkey, eqmtid, MAX(size) as size, MAX(eqmttype#) as eqmttype#, MAX(eqmttype) as eqmttype, MAX(unit) as unit FROM dbo.hist_eqmtlist GROUP BY eqmtid
 
-	$$$TRACE("index2a ")
 	Set sc = ..Adapter.ExecuteQuery(.oRS, tQueryStatement, tLastKey)
 	
 	While oRS.Next()
 	{
-		$$$TRACE("index2c "_oRS.Get("index2"))
 		Set tLastKey = oRS.Get("index2")
-		$$$TRACE("Processing dump ddbkey "_tLastKey)
+		$$$TRACE("Processing Dump ddbkey "_tLastKey)
 		
 		If '##class(ASPMining.CanonicalModel.Production.DumpEvent).DumpIndexExists(oRS.Get("index2")){
 			$$$TRACE("Dump event does not exists "_oRS.Get("index2")_"...")

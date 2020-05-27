@@ -1,4 +1,0 @@
-pendiente:
-1) estrategia alternativa para IndexExists usando globals
-2) como habilitar parametros en la Interfaz
-3) Como hacer una formula que calcule contra el tiempo total de un shift para poder sacar el ratio.
