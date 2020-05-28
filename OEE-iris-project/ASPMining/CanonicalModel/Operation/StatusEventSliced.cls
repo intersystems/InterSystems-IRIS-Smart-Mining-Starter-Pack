@@ -15,8 +15,11 @@ Class ASPMining.CanonicalModel.Operation.StatusEventSliced Extends %Persistent
 	/// For data source validation purposes only
 	Property ddbkey As %Integer;
 	
-	index SliceStartTimeIndex on SliceStartDate;
-	index ddbkeyIndex on ddbkey;
+	Parameter DSTIME = "AUTO";
+	
+	index SliceStartTimeIndex on SliceStartDate [type = index];
+	index ddbkeyIndex on ddbkey [type = index];
+	index PartialDurationIndex on PartialDuration [type = bitslice]; //Mejorar calculos de SUM/AVG, etc.
 Storage Default
 {
 <Data name="StatusEventSlicedDefaultData">

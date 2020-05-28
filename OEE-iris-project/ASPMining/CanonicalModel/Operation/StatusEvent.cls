@@ -16,9 +16,14 @@ Property EndDate As %DateTime;
 /// Calculated duration of the event
 Property Duration As %Integer;
 
+Parameter DSTIME = "AUTO";
 
 index StartTimeIndex on StartDate;
 index EndTimeIndex on EndDate;
+index StatusReasonIndex on StatusReason [type = bitmap];  //Para mejorar performance al agrupar/buscar por reason
+index StatusTypeIndex on StatusType [type = bitmap];
+index EquipmentIndex on Equipment [type = bitmap];
+index DurationIndex on Duration [type = bitslice];
 
 
 ClassMethod HourToInt(datetime as %DateTime) as %Integer{

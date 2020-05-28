@@ -110,7 +110,7 @@ Method ProcessNewCompleteEvents()
 	$$$TRACE("Next event ddbkey "_tLastKey_"...")
 	
 	/// Gets all the new received events
-	Set tQueryStatement="SELECT ddbkey, shiftindex, eqmt, operid, starttime, endtime, reason, duration, status, reasonlink FROM dbo.hist_statusevents WHERE ddbkey>? AND endtime is not null ORDER BY ddbkey"
+	Set tQueryStatement="SELECT CONCAT(shiftindex, ddbkey) AS ddbkey, shiftindex, eqmt, operid, starttime, endtime, reason, duration, status, reasonlink FROM dbo.hist_statusevents WHERE CONCAT(shiftindex, ddbkey)>? AND endtime is not null ORDER BY eqmt, shiftindex asc"
 						
 						
 	Set sc = ..Adapter.ExecuteQuery(.oRS, tQueryStatement, tLastKey)
@@ -148,6 +148,7 @@ Method ProcessNewCompleteEvents()
 				set oEvent.StartDate = $ZDateTime(nextday_","_newstartseconds)
 			}else{
 				set startday = shift.StartDay
+				set newstartseconds = startseconds
 				set oEvent.StartDate = $ZDateTime(shift.StartDay_","_startseconds)
 			}
 			$$$TRACE("EVENT StartTimeDT "_oEvent.StartDate_",StartTime: "_oRS.Get("starttime")_ " Duration: "_oEvent.Duration_" EndTime: "_oRS.Get("endtime"))
@@ -190,9 +191,10 @@ Method ProcessNewCompleteEvents()
 			set firstSliceRemainingTime = SliceDuration - firstSliceSlotOffset
 			set lastSliceRemainingTime = SliceDuration - lastSliceSlotOffset
 			
+			// Checks if this events ends in the next window or it ends in the same time window
 			set extraSliceCount = ##class(%Library.Integer).Normalize((lastSliceSlot - firstSliceSlot)/SliceDuration)
 			
-			If (extraSliceCount > 0){ //only checks if the duration of the event is longer than a single slot span
+			If ((lastSliceSlot - firstSliceSlot) > 300){ //only checks if the duration of the event is longer than a single slot span
 				// slice in pieces
 				$$$TRACE("EXTRA SLICES on event with ddbkey "_oRS.Get("ddbkey")_" sliceCount: "_extraSliceCount_" firstsliceseconds: "_firstSliceSlot_" startday: "_startday)
 
@@ -206,10 +208,11 @@ Method ProcessNewCompleteEvents()
 				set oSliceEvent.SliceStartDate = $ZDateTime(startday_","_firstSliceSlot)
 				set oSliceEvent.PartialDuration = firstSliceRemainingTime / SliceDuration //this event is longer than a single slot so is has the whole remaining time of the first slot
 
+				$$$TRACE("MULTI SLICE first PartialDuration: "_oSliceEvent.PartialDuration) //
 				set sc = ..SendRequestAsync("PowerView Event Operation", oSliceEvent) // maybe new operation?
 				
 				For i=1:1:extraSliceCount {
-					$$$TRACE("EXTRA SLICE i: "_i) //
+					//$$$TRACE("EXTRA SLICE i: "_i) //
 					set oSliceEvent = ##class(SampleDispatch.BO.Event.SlicedEvent).%New()
 					set oSliceEvent.ddbkey = oRS.Get("ddbkey")
 					set oSliceEvent.EquipmentId = oRS.Get("eqmt")
@@ -217,10 +220,12 @@ Method ProcessNewCompleteEvents()
 					set oSliceEvent.StatusReasonId = oRS.Get("reason")
 					set oSliceEvent.StatusTypeId = oRS.Get("status")
 					// validate the day we are before anything
-					set thisSlotSeconds = firstSliceSlot + i * SliceDuration
+					set thisSlotSeconds = firstSliceSlot + (i * SliceDuration)
 					If (thisSlotSeconds >= 84600){
-						set nextday = startday + ##class(%Library.Integer).Normalize(thisSlotSeconds / 86400) //will always be only 1 more day if the shifts are 12h or less (considering timezone diff
+						// Will always be only 1 more day if the shifts are 12h or less (considering timezone diff
+						set nextday = startday + ##class(%Library.Integer).Normalize(thisSlotSeconds / 86400)
 						set oSliceEvent.SliceStartDate = $ZDateTime(nextday_","_(thisSlotSeconds # 86400))
+						$$$TRACE("NEXT SLOT StartTime: "_(thisSlotSeconds # 86400))
 					}else{
 						set oSliceEvent.SliceStartDate = $ZDateTime(startday_","_thisSlotSeconds)
 					}
@@ -231,6 +236,7 @@ Method ProcessNewCompleteEvents()
 					}else{ //is middle slot
 						set oSliceEvent.PartialDuration = 1.0
 					}
+					$$$TRACE("EXTRA SLICE i: "_i_" PartialDuration: "_oSliceEvent.PartialDuration) //
 					set sc = ..SendRequestAsync("PowerView Event Operation", oSliceEvent) // maybe new operation?
 				}
 				
@@ -243,6 +249,7 @@ Method ProcessNewCompleteEvents()
 				set oSliceEvent.StatusTypeId = oRS.Get("status")
 				set oSliceEvent.SliceStartDate = $ZDateTime(startday_","_firstSliceSlot)
 				set oSliceEvent.PartialDuration = (firstSliceRemainingTime - lastSliceRemainingTime) / SliceDuration
+				$$$TRACE("SINGLE SLICE ddbkey: "_oSliceEvent.ddbkey_" PartialDuration: "_oSliceEvent.PartialDuration) //
 				set sc = ..SendRequestAsync("PowerView Event Operation", oSliceEvent) // maybe new operation?
 			}
 			
