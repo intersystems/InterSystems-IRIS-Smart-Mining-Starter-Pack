@@ -110,7 +110,8 @@ Method ProcessNewCompleteEvents()
 	$$$TRACE("Next event ddbkey "_tLastKey_"...")
 	
 	/// Gets all the new received events
-	Set tQueryStatement="SELECT CONCAT(shiftindex, ddbkey) AS ddbkey, shiftindex, eqmt, operid, starttime, endtime, reason, duration, status, reasonlink FROM dbo.hist_statusevents WHERE CONCAT(shiftindex, ddbkey)>? AND endtime is not null ORDER BY eqmt, shiftindex asc"
+	set maxShift = 35070
+	Set tQueryStatement="SELECT CONCAT(shiftindex, ddbkey) AS ddbkey, shiftindex, eqmt, operid, starttime, endtime, reason, duration, status, reasonlink FROM dbo.hist_statusevents WHERE shiftindex < "_maxShift_" AND CONCAT(shiftindex, ddbkey)>? AND endtime is not null ORDER BY shiftindex, eqmt asc"
 						
 						
 	Set sc = ..Adapter.ExecuteQuery(.oRS, tQueryStatement, tLastKey)
@@ -137,8 +138,8 @@ Method ProcessNewCompleteEvents()
 			
 			//Checking if starttime is within same day or next day, this could happen since shifts belong to more than 1 day
 			set startseconds = shift.StartSeconds + oRS.Get("starttime")
-			set startday = 0 //used for splicing only
-			set newstartseconds = 0 //used for splicing only
+			set startday = 0 //used for slicing only
+			set newstartseconds = 0 //used for slicing only
 			$$$TRACE("startseconds: "_startseconds)
 			If (startseconds) >= 86400 { //Note: in powerview never seen an event longer than a shift of 12 hours, but just in case this check was made
 				set nextday = shift.StartDay + ##class(%Library.Integer).Normalize(startseconds / 86400) //TODO: CHECK IF EVENT THAT ENDS IN LATER DAY/SHIFT REPEATS OR HAS ONLY 1 EVENT
@@ -183,9 +184,9 @@ Method ProcessNewCompleteEvents()
 			// Slice the event into fixed length pieces
 			set SliceDuration = 300 //5 minutes slices
 			
-			set firstSliceSlotOffset = newstartseconds # SliceDuration // ej: if i'm at seconds 1534, returns 34
+			set firstSliceSlotOffset = newstartseconds # SliceDuration // ej: if i'm at seconds 1534, returns 34 sobran 60
 			set firstSliceSlot = newstartseconds - firstSliceSlotOffset // gets the start of the slice slot, e.g: 1500
-			set lastSliceSlotOffset = (newstartseconds + oRS.Get("duration") ) # SliceDuration
+			set lastSliceSlotOffset = (newstartseconds + oRS.Get("duration") ) # SliceDuration // sobran 154
 			set lastSliceSlot = (newstartseconds + oRS.Get("duration") ) - lastSliceSlotOffset
 			
 			set firstSliceRemainingTime = SliceDuration - firstSliceSlotOffset
@@ -194,7 +195,7 @@ Method ProcessNewCompleteEvents()
 			// Checks if this events ends in the next window or it ends in the same time window
 			set extraSliceCount = ##class(%Library.Integer).Normalize((lastSliceSlot - firstSliceSlot)/SliceDuration)
 			
-			If ((lastSliceSlot - firstSliceSlot) > 300){ //only checks if the duration of the event is longer than a single slot span
+			If ((lastSliceSlot - firstSliceSlot) >= 300){ //only checks if the duration of the event is 1 or more slot spans
 				// slice in pieces
 				$$$TRACE("EXTRA SLICES on event with ddbkey "_oRS.Get("ddbkey")_" sliceCount: "_extraSliceCount_" firstsliceseconds: "_firstSliceSlot_" startday: "_startday)
 
@@ -232,7 +233,7 @@ Method ProcessNewCompleteEvents()
 					
 					//check if last slot
 					If (i = extraSliceCount){
-						set oSliceEvent.PartialDuration = lastSliceRemainingTime / SliceDuration
+						set oSliceEvent.PartialDuration = lastSliceSlotOffset / SliceDuration
 					}else{ //is middle slot
 						set oSliceEvent.PartialDuration = 1.0
 					}
@@ -401,8 +402,9 @@ Method ProcessNewCompleteDumps()
 	Set tLastKey = ..Adapter.GetPersistentValue(..%ConfigName, "LastDumpKey")
 	$$$TRACE("Next dump event key "_tLastKey_"...")
 	
+	set maxShift = 35070
 	/// Gets all the new received events where equipment is involved, infer form here which ones are new
-	Set tQueryStatement="SELECT CONCAT(shiftindex, ddbkey) AS index2, ddbkey, shiftindex, truck, excav, loc, grade, bay, loadrec, measureton, dumptons, timearrive, timedump, timeempty, calctravti, dumptons  FROM dbo.hist_dumps WHERE CONCAT(shiftindex, ddbkey)>? ORDER BY shiftindex, ddbkey ASC"
+	Set tQueryStatement="SELECT CONCAT(shiftindex, ddbkey) AS index2, ddbkey, shiftindex, truck, excav, loc, grade, bay, loadrec, measureton, dumptons, timearrive, timedump, timeempty, calctravti, dumptons  FROM dbo.hist_dumps WHERE shiftindex < "_maxShift_" AND CONCAT(shiftindex, ddbkey)>? ORDER BY shiftindex, ddbkey ASC"
 	//SELECT MIN(ddbkey) as ddbkey, eqmtid, MAX(size) as size, MAX(eqmttype#) as eqmttype#, MAX(eqmttype) as eqmttype, MAX(unit) as unit FROM dbo.hist_eqmtlist GROUP BY eqmtid
 
 	Set sc = ..Adapter.ExecuteQuery(.oRS, tQueryStatement, tLastKey)

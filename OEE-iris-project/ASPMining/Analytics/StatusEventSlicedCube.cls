@@ -50,9 +50,19 @@ XData Cube [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
     <hierarchy name="H1" disabled="false" hidden="false">
       <level name="Id" disabled="false" sourceProperty="Shift.Id" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
       </level>
-      <level name="DateTime" disabled="false" sourceProperty="Shift.DateTime" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
-      </level>
       <level name="Name" displayName="Crew Name" disabled="false" sourceProperty="Shift.Crew.Name" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
+    </hierarchy>
+  </dimension>
+  <dimension name="DateTime" disabled="false" hasAll="false" allCaption="All DateTime" allDisplayName="DateTime" sourceProperty="Shift.DateTime" type="time" calendar="gregorian" hidden="false" showHierarchies="default">
+    <hierarchy name="H1" disabled="false" hidden="false">
+      <level name="DateTime" disabled="false" timeFunction="Year" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
+      <level name="DateTime1" disabled="false" timeFunction="MonthYear" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
+      <level name="DateTime2" disabled="false" timeFunction="DayMonthYear" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
+      <level name="DateTime3" disabled="false" timeFunction="HourNumber" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
       </level>
     </hierarchy>
   </dimension>
