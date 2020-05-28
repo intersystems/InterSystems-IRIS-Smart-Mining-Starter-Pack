@@ -108,10 +108,6 @@ XData Install [ XMLNamespace = INSTALLER ]
 		<Arg name="pNamespace" Value="${Namespace}"/>
 	</Invoke>
 	
-	<Log Text="Adding MDX2JSON..." Level="0"/>
-	<Invoke Class="MDX2JSON.Installer" Method="setup" CheckStatus="true">
-	</Invoke>
-	
 </Manifest>
 }
 }
