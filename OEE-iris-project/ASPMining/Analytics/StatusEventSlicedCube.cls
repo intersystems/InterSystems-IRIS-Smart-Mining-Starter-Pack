@@ -20,7 +20,7 @@ XData Cube [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
       </level>
       <level name="SliceStartDate2" disabled="false" timeFunction="DayMonthYear" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
       </level>
-      <level name="SliceStartDate3" disabled="false" timeFunction="HourNumber" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      <level name="SliceStartDate3" disabled="true" timeFunction="HourNumber" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
       </level>
       <level name="SliceStartDate4" disabled="false" timeFunction="MinuteNumber" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
       </level>
@@ -29,12 +29,6 @@ XData Cube [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
   <dimension name="Reason" disabled="false" hasAll="false" allCaption="All Reason" allDisplayName="Reason" type="data" hidden="false" showHierarchies="default">
     <hierarchy name="H1" disabled="false" hidden="false">
       <level name="Description" disabled="false" sourceProperty="StatusReason.Description" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
-      </level>
-    </hierarchy>
-  </dimension>
-  <dimension name="StatusType" disabled="false" hasAll="false" allCaption="All Description" allDisplayName="Description" type="data" calendar="gregorian" iKnowType="entity" hidden="false" showHierarchies="default">
-    <hierarchy name="H1" disabled="false" hidden="false">
-      <level name="Description" disabled="false" sourceProperty="StatusReason.StatusType.Description" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
       </level>
     </hierarchy>
   </dimension>
@@ -63,6 +57,12 @@ XData Cube [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
       <level name="DateTime2" disabled="false" timeFunction="DayMonthYear" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
       </level>
       <level name="DateTime3" disabled="false" timeFunction="HourNumber" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
+    </hierarchy>
+  </dimension>
+  <dimension name="StatusType" disabled="false" hasAll="false" allCaption="All StatusType" allDisplayName="StatusType" type="data" hidden="false" showHierarchies="default">
+    <hierarchy name="H1" disabled="false" hidden="false">
+      <level name="StatusType" disabled="false" sourceProperty="StatusType.Description" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
       </level>
     </hierarchy>
   </dimension>

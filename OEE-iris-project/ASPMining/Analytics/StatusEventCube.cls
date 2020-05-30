@@ -6,12 +6,6 @@ Class ASPMining.Analytics.StatusEventCube Extends %DeepSee.CubeDefinition [ Depe
 XData Cube [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
 {
 <cube xmlns="http://www.intersystems.com/deepsee" name="StatusCube" displayName="StatusCube" disabled="false" abstract="false" sourceClass="ASPMining.CanonicalModel.Operation.StatusEvent" countMeasureName="%COUNT" bucketSize="8" bitmapChunkInMemory="false" precompute="0" disableListingGroups="false" enableSqlRestrict="false">
-  <dimension name="Type" displayName="Shift Type" disabled="false" hasAll="false" allCaption="All Type" allDisplayName="Type" type="data" calendar="gregorian" iKnowType="entity" hidden="false" showHierarchies="default">
-    <hierarchy name="H1" disabled="false" hidden="false">
-      <level name="Type" displayName="Shift Type" disabled="false" sourceProperty="Shift.ShiftType.Type" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
-      </level>
-    </hierarchy>
-  </dimension>
   <dimension name="Equipment" disabled="false" hasAll="false" allCaption="All Equipment" allDisplayName="Equipment" type="data" hidden="false" showHierarchies="default">
     <hierarchy name="H1" disabled="false" hidden="false">
       <level name="Name" displayName="Equipment Group" disabled="false" sourceProperty="Equipment.EquipmentCategory.Name" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
@@ -31,6 +25,10 @@ XData Cube [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
       <level name="Description1" displayName="Reason" disabled="false" sourceProperty="StatusReason.Description" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
       </level>
     </hierarchy>
+    <hierarchy name="H2" disabled="false" hidden="false">
+      <level name="StatusType" disabled="false" sourceProperty="StatusType.Description" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
+    </hierarchy>
   </dimension>
   <dimension name="StartDate" disabled="false" hasAll="false" allCaption="All StartDate" allDisplayName="StartDate" sourceProperty="StartDate" type="time" calendar="gregorian" hidden="false" showHierarchies="default">
     <hierarchy name="H1" disabled="false" hidden="false">
@@ -46,8 +44,16 @@ XData Cube [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
       </level>
     </hierarchy>
   </dimension>
+  <dimension name="Id" disabled="false" hasAll="false" allCaption="All Id" allDisplayName="Id" type="data" hidden="false" showHierarchies="default">
+    <hierarchy name="H1" disabled="false" hidden="false">
+      <level name="Id" disabled="false" sourceProperty="Shift.Id" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
+    </hierarchy>
+  </dimension>
   <measure name="Duration" disabled="false" sourceProperty="Duration" aggregate="SUM" type="number" hidden="false" searchable="false">
   </measure>
+  <listing name="New_listing1" disabled="false" listingType="table" fieldList="StartDate, Duration, StatusType-&gt;Description, StatusReason-&gt;Reason, StatusReason-&gt;StatusType-&gt;Description">
+  </listing>
 </cube>
 }
 

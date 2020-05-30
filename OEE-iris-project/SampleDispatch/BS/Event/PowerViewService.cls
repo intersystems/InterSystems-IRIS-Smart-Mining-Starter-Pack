@@ -60,7 +60,7 @@ Method ProcessNewShifts()
 			set month=oRS.Get("month#")
 			set day=oRS.Get("day")
 			set year=oRS.Get("year")
-			set daysdiff = ##class(%Library.Integer).Normalize(oRS.Get("date")/86400 + 47450 + 32) //transormacion manual de dias de dias unix->dias horlog
+			set daysdiff = ##class(%Library.Integer).Normalize(oRS.Get("date")/86400 + 47450 + 32) //transormacion manual de dias de dias unix->dias horlog TOD: restar 365
 			set ztimestampformat = daysdiff_","_oRS.Get("start")
 			set oEvent.DateTime = $ZDateTime(ztimestampformat,3)
 			//
@@ -110,8 +110,7 @@ Method ProcessNewCompleteEvents()
 	$$$TRACE("Next event ddbkey "_tLastKey_"...")
 	
 	/// Gets all the new received events
-	set maxShift = 35070
-	Set tQueryStatement="SELECT CONCAT(shiftindex, ddbkey) AS ddbkey, shiftindex, eqmt, operid, starttime, endtime, reason, duration, status, reasonlink FROM dbo.hist_statusevents WHERE shiftindex < "_maxShift_" AND CONCAT(shiftindex, ddbkey)>? AND endtime is not null ORDER BY shiftindex, eqmt asc"
+	Set tQueryStatement="SELECT CONCAT(shiftindex, ddbkey) AS ddbkey, shiftindex, eqmt, operid, starttime, endtime, reason, duration, status, reasonlink FROM dbo.hist_statusevents WHERE shiftindex < '35100' AND CONCAT(shiftindex, ddbkey)>? AND endtime is not null ORDER BY shiftindex, eqmt asc"
 						
 						
 	Set sc = ..Adapter.ExecuteQuery(.oRS, tQueryStatement, tLastKey)
@@ -301,13 +300,13 @@ Method ProcessNewReasons()
 					set oReason.StatusType.Description = "Downtime"
 				}
 				If (statuscode=2){
-					set oReason.StatusType.Description = "Delay"
+					set oReason.StatusType.Description = "Operative"
 				}
 				If (statuscode=3){
 					set oReason.StatusType.Description = "Standby"
 				}
 				If (statuscode=4){
-					set oReason.StatusType.Description = "Operative"
+					set oReason.StatusType.Description = "Delay"
 				}
 				If (statuscode>4){
 					set oReason.StatusType.Description = "Otro"
@@ -402,9 +401,8 @@ Method ProcessNewCompleteDumps()
 	Set tLastKey = ..Adapter.GetPersistentValue(..%ConfigName, "LastDumpKey")
 	$$$TRACE("Next dump event key "_tLastKey_"...")
 	
-	set maxShift = 35070
 	/// Gets all the new received events where equipment is involved, infer form here which ones are new
-	Set tQueryStatement="SELECT CONCAT(shiftindex, ddbkey) AS index2, ddbkey, shiftindex, truck, excav, loc, grade, bay, loadrec, measureton, dumptons, timearrive, timedump, timeempty, calctravti, dumptons  FROM dbo.hist_dumps WHERE shiftindex < "_maxShift_" AND CONCAT(shiftindex, ddbkey)>? ORDER BY shiftindex, ddbkey ASC"
+	Set tQueryStatement="SELECT CONCAT(shiftindex, ddbkey) AS index2, ddbkey, shiftindex, truck, excav, loc, grade, bay, loadrec, measureton, dumptons, timearrive, timedump, timeempty, calctravti, dumptons  FROM dbo.hist_dumps WHERE shiftindex < '35100' AND CONCAT(shiftindex, ddbkey)>? ORDER BY shiftindex, ddbkey ASC"
 	//SELECT MIN(ddbkey) as ddbkey, eqmtid, MAX(size) as size, MAX(eqmttype#) as eqmttype#, MAX(eqmttype) as eqmttype, MAX(unit) as unit FROM dbo.hist_eqmtlist GROUP BY eqmtid
 
 	Set sc = ..Adapter.ExecuteQuery(.oRS, tQueryStatement, tLastKey)
