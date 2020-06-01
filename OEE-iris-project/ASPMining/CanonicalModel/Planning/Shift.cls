@@ -14,6 +14,7 @@ Property ShiftType As ShiftType;
 Property Crew As ASPMining.CanonicalModel.Personnel.Crew;
 	
 index ShiftIndex on Id [unique ];
+index CrewIndex on Crew [type = bitmap];
 	
 Storage Default
 {

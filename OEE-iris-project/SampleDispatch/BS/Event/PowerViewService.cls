@@ -15,6 +15,7 @@ Method OnProcessInput(pInput As EnsLib.SQL.Snapshot, Output pOutput As %Register
 	try 
 	{		
 		//Do ..ProcessEnums()
+		Do ##class(ASPMining.CanonicalModel.Production.ProductionStatusType).CreateTypes()
 		Do ..ProcessNewEquipments()
 		Do ..ProcessNewShifts()
 		Do ..ProcessNewReasons()

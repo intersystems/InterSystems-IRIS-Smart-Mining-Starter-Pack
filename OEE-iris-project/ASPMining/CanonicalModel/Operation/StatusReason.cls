@@ -9,6 +9,7 @@ Property StatusType As StatusType;
 Property Description As %String;
 
 index ReasonIndex on Reason [unique ];
+index StatusTypeIndex on StatusType [type = bitmap];
 
 Storage Default
 {
