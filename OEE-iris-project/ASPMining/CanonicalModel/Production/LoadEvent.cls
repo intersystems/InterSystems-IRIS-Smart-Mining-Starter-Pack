@@ -12,8 +12,6 @@ Property TimeLoad As %DateTime;
 Property TimeFull As %DateTime;
 /// Calculated Travel Time of the vehicle to arrive at the load point
 Property TravelTime As %Integer;
-/// Next DumpEvent assigned to this Truck
-Property DumpEvent As DumpEvent;
 /// Location where the Dump happened
 Property Location As ASPMining.CanonicalModel.Mine.Location;
 /// Truck Link
@@ -81,6 +79,9 @@ Storage Default
 </Value>
 <Value name="16">
 <Value>TravelTime</Value>
+</Value>
+<Value name="17">
+<Value>LoadEvent</Value>
 </Value>
 </Data>
 <DataLocation>^ASPMining.Canoni4037.LoadEventD</DataLocation>

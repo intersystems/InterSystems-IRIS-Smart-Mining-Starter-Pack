@@ -12,8 +12,6 @@ Property TimeDump As %DateTime;
 Property TimeEmpty As %DateTime;
 /// Calculated Travel Time of the vehicle to arrive at the dump point
 Property TravelTime As %Integer;
-/// Next LoadEvent assigned to this Truck
-Property LoadEvent As LoadEvent;
 /// Location where the Dump happened
 Property Location As ASPMining.CanonicalModel.Mine.Location;
 /// Truck Link

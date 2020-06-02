@@ -14,6 +14,9 @@ Class ASPMining.CanonicalModel.Equipment.Equipment Extends %Persistent
 	/// Capacity of Vehicle ASSIGNED BY USERS
 	Property Capacity As %Float;
 	
+	/// Used to keep track of travel/unkown times in the production cycle
+	Property LastProductionUpdate As ASPMining.CanonicalModel.Production.ProductionEventSliced;
+	
 	index EquipmentIndex on Id [Unique];
 	
 Storage Default
@@ -36,6 +39,9 @@ Storage Default
 </Value>
 <Value name="6">
 <Value>Id</Value>
+</Value>
+<Value name="7">
+<Value>LastProductionUpdate</Value>
 </Value>
 </Data>
 <DataLocation>^ASPMining.CanoniF845.EquipmentD</DataLocation>

@@ -286,6 +286,25 @@ Method NewDump(pInput As ASPMining.CanonicalModel.Production.DumpEvent, Output p
 	Quit sc
 }
 
+Method NewLoad(pInput As ASPMining.CanonicalModel.Production.LoadEvent, Output pOutput As Ens.Response) As %Status
+{
+
+	Set sc=$$$OK
+	
+	Try
+	{		
+		If '##class(ASPMining.CanonicalModel.Production.LoadEvent).LoadIndexExists(pInput.LoadId) {
+			Set sc = pInput.%Save()
+		}
+	}
+	Catch (oException)
+	{
+		Set sc = oException.AsStatus()
+	}
+	
+	Quit sc
+}
+
 Method NewOEMEvent(pInput As ASPMining.CanonicalModel.HWMonitoring.OEMEvent, Output pOutput As Ens.Response) As %Status
 {
 
@@ -383,6 +402,33 @@ Method NewSlicedEvent(pInput As SampleDispatch.BO.Event.SlicedEvent, Output pOut
 	Quit sc
 }
 
+Method NewProductionEventSliced(pInput As ASPMining.CanonicalModel.Production.ProductionEventSliced, Output pOutput As Ens.Response) As %Status
+{
+
+	Set sc=$$$OK
+	
+	Try
+	{		
+		//If '##class(ASPMining.CanonicalModel.Production.ProductionEventSliced).IndexExists(pInput.Id) {
+		
+			// Saves the slice and updates the truck and excav last slice
+			Set sc = pInput.%Save()
+			//set truck = ##class(ASPMining.CanonicalModel.Equipment.Equipment).EquipmentIndexOpen(pInput.EquipmentTruck.Id)
+			//set truck.LastProductionUpdate = pInput
+			//Set sc2 = truck.%Save()
+			//set excav = ##class(ASPMining.CanonicalModel.Equipment.Equipment).EquipmentIndexOpen(pInput.EquipmentExcav.Id)
+			//set excav.LastProductionUpdate = pInput
+			//Set sc3 = excav.%Save()
+		//}
+	}
+	Catch (oException)
+	{
+		Set sc = oException.AsStatus()
+	}
+	
+	Quit sc
+}
+
 XData MessageMap {
 <MapItems>
     <MapItem MessageType="SampleDispatch.BO.Event.StatusChangeEvent">
@@ -411,6 +457,9 @@ XData MessageMap {
     </MapItem>
     <MapItem MessageType="SampleDispatch.BO.Event.SlicedEvent">
         <Method>NewSlicedEvent</Method>
+    </MapItem>
+    <MapItem MessageType="ASPMining.CanonicalModel.Production.ProductionEventSliced">
+        <Method>NewProductionEventSliced</Method>
     </MapItem>
 </MapItems>
 }

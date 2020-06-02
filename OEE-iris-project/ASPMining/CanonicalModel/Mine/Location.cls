@@ -2,9 +2,15 @@
 Class ASPMining.CanonicalModel.Mine.Location Extends %Persistent
 {
 /// Grade of the material in this location
-Property Grade As %Float;
+Property Grade As %String;
+/// Site to which this Location belongs
+Property Name As %String;
 /// Site to which this Location belongs
 Property Site As Site;
+
+index NameIndex on Name [unique];
+index GradeIndex on Grade;
+
 Storage Default
 {
 <Data name="LocationDefaultData">
@@ -16,6 +22,9 @@ Storage Default
 </Value>
 <Value name="3">
 <Value>Site</Value>
+</Value>
+<Value name="4">
+<Value>Name</Value>
 </Value>
 </Data>
 <DataLocation>^ASPMining.Canonica2AE.LocationD</DataLocation>
