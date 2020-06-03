@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2016.1 (Build 656U)" ts="2016-07-30 12:25:42">
-<Routine name="MDX2JSON.MDX2JSON" type="INC" timestamp="64128,34461.753456"><![CDATA[
+ROUTINE MDX2JSON [Type=INC]
 #include %occErrors
 #include %ZEN.Utils
 #include %DeepSee
@@ -43,5 +41,3 @@
 #endif
 #define IsNewJSON ##Expression($$$comClassDefined("%Library.AbstractObject"))
 #define JSONEnabled ($get($$$Global($$$Features))["newjson")
-]]></Routine>
-</Export>

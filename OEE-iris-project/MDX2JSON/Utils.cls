@@ -1,38 +1,27 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25">
-<Class name="MDX2JSON.Utils">
-<Description><![CDATA[
-Utility class, wrappers for processing of MDX queries in <b>MDX2JSON.ResultSet</b>.
-Outputs JSON, JSONP and XML/A.<br>
-Also has functionality for getting information about cubes, dashboards and widgets.]]></Description>
-<IncludeCode>MDX2JSON.MDX2JSON</IncludeCode>
-<TimeCreated>63165,65653.547419</TimeCreated>
+Include MDX2JSON
 
-<Method name="GetResultSet">
-<Description><![CDATA[
-Transforms MDX query into executed <b>MDX2JSON.ResultSet</b>.<br>
-<b>MDX</b> - String containing MDX query.<br>
-<b>Status</b> - Status of query execution.<br>]]></Description>
-<ClassMethod>1</ClassMethod>
-<FormalSpec>MDX:%String,*Status</FormalSpec>
-<ReturnType>MDX2JSON.ResultSet</ReturnType>
-<Implementation><![CDATA[
+/// Utility class, wrappers for processing of MDX queries in <b>MDX2JSON.ResultSet</b>.
+/// Outputs JSON, JSONP and XML/A.<br>
+/// Also has functionality for getting information about cubes, dashboards and widgets.
+Class MDX2JSON.Utils
+{
+
+/// Transforms MDX query into executed <b>MDX2JSON.ResultSet</b>.<br>
+/// <b>MDX</b> - String containing MDX query.<br>
+/// <b>Status</b> - Status of query execution.<br>
+ClassMethod GetResultSet(MDX As %String, Output Status) As MDX2JSON.ResultSet
+{
 	set Status = $$$OK
 	set RS = ##class(MDX2JSON.ResultSet).%New()
 	set Status = RS.%PrepareMDX(MDX)
 	return RS
-]]></Implementation>
-</Method>
+}
 
-<Method name="GetResultSetFromQuery">
-<Description><![CDATA[
-Transforms MDX query into executed <b>MDX2JSON.ResultSet</b>.<br>
-<b>MDX</b> - String containing MDX query.<br>
-<b>Status</b> - Status of query execution.<br>]]></Description>
-<ClassMethod>1</ClassMethod>
-<FormalSpec>CubeKey:%String,QueryKey:%String,*Status</FormalSpec>
-<ReturnType>MDX2JSON.ResultSet</ReturnType>
-<Implementation><![CDATA[
+/// Transforms MDX query into executed <b>MDX2JSON.ResultSet</b>.<br>
+/// <b>MDX</b> - String containing MDX query.<br>
+/// <b>Status</b> - Status of query execution.<br>
+ClassMethod GetResultSetFromQuery(CubeKey As %String, QueryKey As %String, Output Status) As MDX2JSON.ResultSet
+{
 	set Status = $$$OK
 	set RS = ##class(MDX2JSON.ResultSet).%New()
 	set Status = RS.%PrepareKey(CubeKey, QueryKey)
@@ -40,14 +29,10 @@ Transforms MDX query into executed <b>MDX2JSON.ResultSet</b>.<br>
 	
 	do:$$$ISOK(Status) RS.%GetQueryText()
 	return RS
-]]></Implementation>
-</Method>
+}
 
-<Method name="ExecuteResultSet">
-<ClassMethod>1</ClassMethod>
-<FormalSpec>RS:MDX2JSON.ResultSet,QueryKey:%String="",Timeout:%Integer=0</FormalSpec>
-<ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[
+ClassMethod ExecuteResultSet(RS As MDX2JSON.ResultSet, QueryKey As %String = "", Timeout As %Integer = 0) As %Status
+{
 	set Params = ""
 	set Status = $$$OK
 	
@@ -66,17 +51,12 @@ Transforms MDX query into executed <b>MDX2JSON.ResultSet</b>.<br>
 	}
 	
 	quit Status
-]]></Implementation>
-</Method>
+}
 
-<Method name="WriteJSONfromMDX">
-<Description><![CDATA[
-Automatic processing of MDX query and outputting resulting JSON.<br>
-<b>MDX</b> - String containing MDX query.<br>]]></Description>
-<ClassMethod>1</ClassMethod>
-<FormalSpec>MDX:%String,Timeout:%Integer=0</FormalSpec>
-<ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[
+/// Automatic processing of MDX query and outputting resulting JSON.<br>
+/// <b>MDX</b> - String containing MDX query.<br>
+ClassMethod WriteJSONfromMDX(MDX As %String, Timeout As %Integer = 0) As %Status
+{
 	#dim RS As MDX2JSON.ResultSet
 	set RS = ..GetResultSet(MDX, .st)
 	return:$$$ISERR(st) st
@@ -89,17 +69,12 @@ Automatic processing of MDX query and outputting resulting JSON.<br>
 	$$$DynObjToJSON(obj)
 	
 	return $$$OK
-]]></Implementation>
-</Method>
+}
 
-<Method name="WriteJSONfromQuery">
-<Description><![CDATA[
-Automatic processing of MDX query and outputting resulting JSON.<br>
-<b>MDX</b> - String containing MDX query.<br>]]></Description>
-<ClassMethod>1</ClassMethod>
-<FormalSpec>CubeKey:%String,QueryKey:%String,Timeout:%Integer=0</FormalSpec>
-<ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[
+/// Automatic processing of MDX query and outputting resulting JSON.<br>
+/// <b>MDX</b> - String containing MDX query.<br>
+ClassMethod WriteJSONfromQuery(CubeKey As %String, QueryKey As %String, Timeout As %Integer = 0) As %Status
+{
 	#dim RS As MDX2JSON.ResultSet
 	set RS = ..GetResultSetFromQuery(CubeKey, QueryKey, .st)
 	return:$$$ISERR(st) st
@@ -112,17 +87,12 @@ Automatic processing of MDX query and outputting resulting JSON.<br>
 	$$$DynObjToJSON(obj)
 	
 	return $$$OK
-]]></Implementation>
-</Method>
+}
 
-<Method name="WriteJSONPfromMDX">
-<Description><![CDATA[
-Automatic processing of MDX query and outputting resulting JSONP.<br>
-<b>pMDX</b> - String containing MDX query.<br>]]></Description>
-<ClassMethod>1</ClassMethod>
-<FormalSpec>pMDX:%String</FormalSpec>
-<ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[
+/// Automatic processing of MDX query and outputting resulting JSONP.<br>
+/// <b>pMDX</b> - String containing MDX query.<br>
+ClassMethod WriteJSONPfromMDX(pMDX As %String) As %Status
+{
 	set RS = ..GetResultSet(pMDX,.st)
 	return:$$$ISERR(st) st
 	set st = ..ExecuteResultSet(RS)
@@ -132,17 +102,12 @@ Automatic processing of MDX query and outputting resulting JSONP.<br>
 	set CurrPage = 1
 	set st = RS.%OutputJSON(PageSize,CurrPage,,PageSize)
 	return st
-]]></Implementation>
-</Method>
+}
 
-<Method name="WriteJSONfromMDXNew">
-<Description><![CDATA[
-Automatic processing of MDX query and outputting resulting JSON.<br>
-<b>pMDX</b> - String containing MDX query.<br>]]></Description>
-<ClassMethod>1</ClassMethod>
-<FormalSpec>pMDX:%String</FormalSpec>
-<ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[
+/// Automatic processing of MDX query and outputting resulting JSON.<br>
+/// <b>pMDX</b> - String containing MDX query.<br>
+ClassMethod WriteJSONfromMDXNew(pMDX As %String) As %Status
+{
 	#if $$$comClassDefined("%ZEN.Auxiliary.jsonMDXProvider")
 		set Provider = ##class(%ZEN.Auxiliary.jsonMDXProvider).%New()
 		set Provider.mdxQuery = pMDX
@@ -151,17 +116,12 @@ Automatic processing of MDX query and outputting resulting JSON.<br>
 		set st = $$$ERROR($$$GeneralError,"Class %ZEN.Auxiliary.jsonMDXProvider does not exist")
 	#endif
 	return st
-]]></Implementation>
-</Method>
+}
 
-<Method name="WriteDrillthroughJSON">
-<Description><![CDATA[
-Automatic processing of MDX Drillthrough query and outputting resulting listing as JSON.<br>
-<b>pMDX</b> - String containing MDX Drillthrough query.<br>]]></Description>
-<ClassMethod>1</ClassMethod>
-<FormalSpec>pMDX:%String</FormalSpec>
-<ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[
+/// Automatic processing of MDX Drillthrough query and outputting resulting listing as JSON.<br>
+/// <b>pMDX</b> - String containing MDX Drillthrough query.<br>
+ClassMethod WriteDrillthroughJSON(pMDX As %String) As %Status
+{
 	set RS = ..GetResultSet(pMDX,.st)
 	return:$$$ISERR(st) st
 	set st = ..ExecuteResultSet(RS)
@@ -171,17 +131,12 @@ Automatic processing of MDX Drillthrough query and outputting resulting listing 
 	do ##class(%ZEN.Auxiliary.jsonSQLProvider).%WriteJSONFromSQL(,SQL,,$$$MaxCacheInt)
 
 	return $$$OK
-]]></Implementation>
-</Method>
+}
 
-<Method name="WriteXMLAfromMDX">
-<Description><![CDATA[
-Automatic processing of MDX query and outputting resulting XML/A.<br>
-<b>pMDX</b> - String containing MDX query.<br>]]></Description>
-<ClassMethod>1</ClassMethod>
-<FormalSpec>pMDX:%String</FormalSpec>
-<ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[
+/// Automatic processing of MDX query and outputting resulting XML/A.<br>
+/// <b>pMDX</b> - String containing MDX query.<br>
+ClassMethod WriteXMLAfromMDX(pMDX As %String) As %Status
+{
 	set RS = ..GetResultSet(pMDX,.st)
 	return:$$$ISERR(st) st
 	set st = ..ExecuteResultSet(RS)
@@ -190,17 +145,12 @@ Automatic processing of MDX query and outputting resulting XML/A.<br>
 	set st = RS.%OutputXMLA()
 
 	return st
-]]></Implementation>
-</Method>
+}
 
-<Method name="WriteFiltersForMDX">
-<Description><![CDATA[
-Gets filters for MDX expression.<br>
-<b>pMDX</b> - String containing MDX query.<br>]]></Description>
-<ClassMethod>1</ClassMethod>
-<FormalSpec>pMDX:%String</FormalSpec>
-<ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[
+/// Gets filters for MDX expression.<br>
+/// <b>pMDX</b> - String containing MDX query.<br>
+ClassMethod WriteFiltersForMDX(pMDX As %String) As %Status
+{
 	set RS = ..GetResultSet(pMDX,.st)
 	return:$$$ISERR(st) st
 	set st = ..ExecuteResultSet(RS)
@@ -209,18 +159,13 @@ Gets filters for MDX expression.<br>
 	set st=RS.%GetFiltersForCellRange(.filters,0,0,RS.%GetAxisSize(2),RS.%GetAxisSize(1),.measure)
 
 	return st
-]]></Implementation>
-</Method>
+}
 
-<Method name="WriteFiltersForDataSource">
-<Description><![CDATA[
-Get all filters for DeepSee DataSource in JSON format.<br>
-<b>pDataSource</b> - name of DeepSee datasource (cube, pivot, kpi, metric).<br>
-<b>pValues</b> - write all filters' values. Takes time.]]></Description>
-<ClassMethod>1</ClassMethod>
-<FormalSpec><![CDATA[pDataSource:%String,pValues:%Boolean=0,pSearchKey:%String="",&pRelatedFilters,pRequestedFilters:%ListOfDataTypes]]></FormalSpec>
-<ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[
+/// Get all filters for DeepSee DataSource in JSON format.<br>
+/// <b>pDataSource</b> - name of DeepSee datasource (cube, pivot, kpi, metric).<br>
+/// <b>pValues</b> - write all filters' values. Takes time.
+ClassMethod WriteFiltersForDataSource(pDataSource As %String, pValues As %Boolean = 0, pSearchKey As %String = "", ByRef pRelatedFilters, pRequestedFilters As %ListOfDataTypes) As %Status
+{
 	set st = ##class(%DeepSee.Dashboard.Utils).%GetFiltersForDataSource(pDataSource, .tFilters)
 	return:$$$ISERR(st) st
 	return:($d(tFilters)=0) $$$ERROR($$$GeneralError,"Empty Filter values array. DataSource does not exist?")
@@ -247,16 +192,12 @@ Get all filters for DeepSee DataSource in JSON format.<br>
    	set st = ##class(%ZEN.Auxiliary.jsonProvider).%ArrayToJSON($lb("name","path","info"),.tFilters)
 
 	return st
-]]></Implementation>
-</Method>
+}
 
-<Method name="GetDataSource">
-<Description><![CDATA[
-Get information about pivot. <br>
-<b>pDataSource</b> - pivot fullName.]]></Description>
-<ClassMethod>1</ClassMethod>
-<FormalSpec>pDataSource:%String</FormalSpec>
-<Implementation><![CDATA[
+/// Get information about pivot. <br>
+/// <b>pDataSource</b> - pivot fullName.
+ClassMethod GetDataSource(pDataSource As %String)
+{
 	
 	set st = $$$OK
 	try {
@@ -280,18 +221,13 @@ Get information about pivot. <br>
 	}
 	
 	return st
-]]></Implementation>
-</Method>
+}
 
-<Method name="OpenPivotByName">
-<Description><![CDATA[
-Opens DeepSee pivot by it's name. Returns status of atempt to locate and open pivot.
-<b>PivotName</b> - fullName property of %DeepSee.Dashboard.Pivotn class.<br>
-<b>Pivot</b> - OREF to opened dashboard would be passed here upon successfull execution.]]></Description>
-<ClassMethod>1</ClassMethod>
-<FormalSpec>PivotName:%Integer,*Pivot:%DeepSee.Dashboard.Pivot</FormalSpec>
-<ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[
+/// Opens DeepSee pivot by it's name. Returns status of atempt to locate and open pivot.
+/// <b>PivotName</b> - fullName property of %DeepSee.Dashboard.Pivotn class.<br>
+/// <b>Pivot</b> - OREF to opened dashboard would be passed here upon successfull execution.
+ClassMethod OpenPivotByName(PivotName As %Integer, Output Pivot As %DeepSee.Dashboard.Pivot) As %Status
+{
 	 kill Pivot
 	 
 	 set id = ""
@@ -312,28 +248,20 @@ Opens DeepSee pivot by it's name. Returns status of atempt to locate and open pi
 	 return:id="" $$$ERROR($$$GeneralError,"Pivot " _ PivotName _ " does not exist")
 	 set Pivot = ##class(%DeepSee.Dashboard.Pivot).%OpenId(id,,.st)
 	 return st
-]]></Implementation>
-</Method>
+}
 
-<Method name="GetPivotFullName">
-<Description>
-Get Pivot full name by id</Description>
-<ClassMethod>1</ClassMethod>
-<FormalSpec>id:%String</FormalSpec>
-<Implementation><![CDATA[
+/// Get Pivot full name by id
+ClassMethod GetPivotFullName(id As %String)
+{
 	set folder = ##class(%DeepSee.UserLibrary.FolderItem).folderGetStored(id)
     set name = ##class(%DeepSee.UserLibrary.FolderItem).nameGetStored(id)
     return ##class(%DeepSee.Dashboard.Pivot).fullNameCompute(id, folder, name)
-]]></Implementation>
-</Method>
+}
 
-<Method name="GetTermList">
-<Description><![CDATA[
-Get information about TermList. <br>
-<b>pTermList</b> - TermList full name (eg.: Patients Pivots) without .termlist extension.]]></Description>
-<ClassMethod>1</ClassMethod>
-<FormalSpec>pTermList:%String</FormalSpec>
-<Implementation><![CDATA[
+/// Get information about TermList. <br>
+/// <b>pTermList</b> - TermList full name (eg.: Patients Pivots) without .termlist extension.
+ClassMethod GetTermList(pTermList As %String)
+{
 	set st = $$$OK
 	try {
 		do ##class(%DeepSee.TermList).%GetValueArray(pTermList,.pArray)
@@ -344,17 +272,12 @@ Get information about TermList. <br>
 		set st = ex.AsStatus()
 	}
 	return st
-]]></Implementation>
-</Method>
+}
 
-<Method name="GetWidgetsList">
-<Description><![CDATA[
-Using dashboard name get JSON representation (array of ("type","title","mdx")) of all its' widgets.<br>
-<b>pDashName</b> - fullname of dashboard. Eg: "KPIs & Plugins/KPI with Listing.dashboard". Case insensitive.]]></Description>
-<ClassMethod>1</ClassMethod>
-<FormalSpec>pDashName:%String</FormalSpec>
-<ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[
+/// Using dashboard name get JSON representation (array of ("type","title","mdx")) of all its' widgets.<br>
+/// <b>pDashName</b> - fullname of dashboard. Eg: "KPIs & Plugins/KPI with Listing.dashboard". Case insensitive.
+ClassMethod GetWidgetsList(pDashName As %String) As %Status
+{
 	try {
 		set st = ##class(MDX2JSON.Dashboard).OpenDashboardByName(pDashName, .dash)
 		return:($$$ISERR(st)) st
@@ -371,17 +294,12 @@ Using dashboard name get JSON representation (array of ("type","title","mdx")) o
 		do ex.Log()
 	}
 	return st
-]]></Implementation>
-</Method>
+}
 
-<Method name="GetDashboard">
-<Description><![CDATA[
-Using dashboard name get JSON representation of all its' widgets and filters.<br>
-<b>pDashName</b> - fullname of dashboard. Eg: "KPIs & Plugins/KPI with Listing.dashboard". Case insensitive.]]></Description>
-<ClassMethod>1</ClassMethod>
-<FormalSpec>pDashName:%String</FormalSpec>
-<ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[
+/// Using dashboard name get JSON representation of all its' widgets and filters.<br>
+/// <b>pDashName</b> - fullname of dashboard. Eg: "KPIs & Plugins/KPI with Listing.dashboard". Case insensitive.
+ClassMethod GetDashboard(pDashName As %String) As %Status
+{
 	try {
 		set st = ##class(MDX2JSON.DashboardFilters).OpenDashboardByName(pDashName, .dash)
 		return:($$$ISERR(st)) st
@@ -395,15 +313,11 @@ Using dashboard name get JSON representation of all its' widgets and filters.<br
 		do ex.Log()
 	}
 	return st
-]]></Implementation>
-</Method>
+}
 
-<Method name="GetFormat">
-<Description>
-Get format defaults.</Description>
-<ClassMethod>1</ClassMethod>
-<ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[
+/// Get format defaults.
+ClassMethod GetFormat() As %Status
+{
 	set st = $$$OK
 	set datelist="DD Mmm [YY]YY^MM/DD/[YY]^DD Mmm [YY]YY^YYYY-MM-DD^DD/MM/[YY]YY^Mmm D, YYYY^Mmm D YYYY^Mmm DD [YY]YY^YYYYMMDD^Mmmmmm D, YYYY^W^Www^Wwwwww^[D]D/[M]M/YYYY^nnn"	
 	set timelist="hh:mm:ss,hh:mm,hh:mm:ss[AM/PM],hh:mm[AM/PM]" // lists taken from %CSP.UI.Portal.NLSEdit - DrawProperties
@@ -425,14 +339,10 @@ Get format defaults.</Description>
 		set st = ex.AsStatus()
 	}
 	return st
-]]></Implementation>
-</Method>
+}
 
-<Method name="ExecuteAction">
-<ClassMethod>1</ClassMethod>
-<FormalSpec>Cube:%String,Action:%String,Context:%ZEN.proxyObject=##class(%ZEN.proxyObject).%New()</FormalSpec>
-<ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[
+ClassMethod ExecuteAction(Cube As %String, Action As %String, Context As %ZEN.proxyObject = {##class(%ZEN.proxyObject).%New()}) As %Status
+{
 	set st = $$$OK
 	set Cube = $$$UPPER(Cube)
 	set ActionClass = $G($$$DeepSeeMetaGLVN("cubes",Cube,"actionClass"), $G($$$DeepSeeMetaGLVN("kpis",Cube)))
@@ -440,17 +350,12 @@ Get format defaults.</Description>
 		set st = $classmethod(ActionClass,"%OnDashboardAction",Action,Context)
 	}
 	return st
-]]></Implementation>
-</Method>
+}
 
-<Method name="WritePivotVariablesForCube">
-<Description><![CDATA[
-Return a list of available pivot variables for <var>Cupe</var>.
-See correspontding method from DeepSee.REST.v1.InfoServer ]]></Description>
-<ClassMethod>1</ClassMethod>
-<FormalSpec>Cube:%String</FormalSpec>
-<ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[
+/// Return a list of available pivot variables for <var>Cupe</var>.
+/// See correspontding method from DeepSee.REST.v1.InfoServer 
+ClassMethod WritePivotVariablesForCube(Cube As %String) As %Status
+{
 	set st = $$$OK
 	try {
 		quit:'##class(%DeepSee.Utils).%CubeExists(Cube, .st) 
@@ -469,14 +374,10 @@ See correspontding method from DeepSee.REST.v1.InfoServer ]]></Description>
 	}
 	
 	quit st
-]]></Implementation>
-</Method>
+}
 
-<Method name="CreateAddons">
-<ClassMethod>1</ClassMethod>
-<FormalSpec>Addons:%ListOfDataTypes</FormalSpec>
-<ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[
+ClassMethod CreateAddons(Addons As %ListOfDataTypes) As %Status
+{
 	#dim sc,sc1 As %Status = $$$OK
 	set base = "DSW.Addons."
 	for i=1:1:$$$ListSize(Addons) {
@@ -512,17 +413,12 @@ See correspontding method from DeepSee.REST.v1.InfoServer ]]></Description>
 		set sc = $$$ADDSC(sc, sc1)
 	}
 	quit sc
-]]></Implementation>
-</Method>
+}
 
-<Method name="CreateAddonClass">
-<Description>
-Create class for an addon
-w ##class(MDX2JSON.Utils).CreateAddonClass("DSW.Addon.A")</Description>
-<ClassMethod>1</ClassMethod>
-<FormalSpec>Class:%Dictionary.CacheClassname</FormalSpec>
-<ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[
+/// Create class for an addon
+/// w ##class(MDX2JSON.Utils).CreateAddonClass("DSW.Addon.A")
+ClassMethod CreateAddonClass(Class As %Dictionary.CacheClassname) As %Status
+{
 	quit:$$$defClassDefined(Class) $$$OK
 	
 	set classObj = ##class(%Dictionary.ClassDefinition).%New(Class)
@@ -550,7 +446,6 @@ w ##class(MDX2JSON.Utils).CreateAddonClass("DSW.Addon.A")</Description>
 	do classObj.Methods.Insert(methodObj)
 	
 	quit classObj.%Save()
-]]></Implementation>
-</Method>
-</Class>
-</Export>
+}
+
+}

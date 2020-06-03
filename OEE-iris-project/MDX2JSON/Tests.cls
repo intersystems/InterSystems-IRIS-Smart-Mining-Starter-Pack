@@ -1,29 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25">
-<Class name="MDX2JSON.Tests">
-<Description>
-Classes with support methods for testing MDX2JSON</Description>
-<IncludeCode>MDX2JSON.MDX2JSON</IncludeCode>
-<TimeCreated>63636,71862.541637</TimeCreated>
+Include MDX2JSON
 
-<Parameter name="LastCommit">
-<Type>%String</Type>
-<Default>57ad7052f14c03ab631526905533f80b42674c08</Default>
-</Parameter>
+/// Classes with support methods for testing MDX2JSON
+Class MDX2JSON.Tests
+{
 
-<Parameter name="LastCommitTS">
-<Type>%TimeStamp</Type>
-<Default>2018-03-27 08:46:22.021</Default>
-</Parameter>
+Parameter LastCommit As %String = "57ad7052f14c03ab631526905533f80b42674c08";
 
-<Method name="ProjectLength">
-<Description>
-Count project length in loc
-do ##class(MDX2JSON.Tests).ProjectLength()</Description>
-<ClassMethod>1</ClassMethod>
-<FormalSpec>Mask:%String="MDX2JSON"</FormalSpec>
-<ReturnType>%String</ReturnType>
-<Implementation><![CDATA[
+Parameter LastCommitTS As %TimeStamp = "2018-03-27 08:46:22.021";
+
+/// Count project length in loc
+/// do ##class(MDX2JSON.Tests).ProjectLength()
+ClassMethod ProjectLength(Mask As %String = "MDX2JSON") As %String
+{
 	 Set rset = ##class(%ResultSet).%New("%DynamicQuery:SQL")
 	 Do rset.Prepare("SELECT Name FROM %Dictionary.ClassDefinition WHERE NOT Name %STARTSWITH '%sqlcq' AND Name [ '"_Mask_"'")
 	 Do rset.Execute()
@@ -37,17 +25,12 @@ do ##class(MDX2JSON.Tests).ProjectLength()</Description>
 		 Set count = count + lines
 	 }
 	 Write "Total ", $JUSTIFY("",24), $J(count,5)
-]]></Implementation>
-</Method>
+}
 
-<Method name="MoveFoldersIntoMobile">
-<Description><![CDATA[
-Entry point to move dashboards into mobile folder<br>
-Moves all DeepSee folders into Mobile folder (creates folder, if required)]]></Description>
-<ClassMethod>1</ClassMethod>
-<FormalSpec>Namespace=$Namespace</FormalSpec>
-<ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[
+/// Entry point to move dashboards into mobile folder<br>
+/// Moves all DeepSee folders into Mobile folder (creates folder, if required)
+ClassMethod MoveFoldersIntoMobile(Namespace = {$Namespace}) As %Status
+{
 	Set mobileid =..CreateMobileFolder(Namespace)
 	Set ns =$namespace
 	Zn Namespace
@@ -55,16 +38,11 @@ Moves all DeepSee folders into Mobile folder (creates folder, if required)]]></D
 	Zn ns
 	Do ##class(MDX2JSON.Tests).MoveWidgetsDSIntoMobile(Namespace)
 	Return SQLCODE
-]]></Implementation>
-</Method>
+}
 
-<Method name="CreateMobileFolder">
-<Description><![CDATA[
-Creates DeepSee folder Mobile in <b>Namespace</b><br>]]></Description>
-<ClassMethod>1</ClassMethod>
-<FormalSpec>Namespace=$Namespace</FormalSpec>
-<ReturnType>%Integer</ReturnType>
-<Implementation><![CDATA[
+/// Creates DeepSee folder Mobile in <b>Namespace</b><br>
+ClassMethod CreateMobileFolder(Namespace = {$Namespace}) As %Integer
+{
 	Set ns =$namespace
 	Zn Namespace
 	&sql(SELECT ID into :ID FROM %DeepSee_UserLibrary.Folder WHERE folder is null AND name = 'Mobile')
@@ -76,16 +54,11 @@ Creates DeepSee folder Mobile in <b>Namespace</b><br>]]></Description>
 	W $System.Status.GetErrorText(folder.%Save())
 
 	Return folder.%Id()
-]]></Implementation>
-</Method>
+}
 
-<Method name="MoveWidgetsDSIntoMobile">
-<Description>
-Moves widgets datasources into Mobile folder</Description>
-<ClassMethod>1</ClassMethod>
-<FormalSpec>Namespace=$Namespace</FormalSpec>
-<ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[
+/// Moves widgets datasources into Mobile folder
+ClassMethod MoveWidgetsDSIntoMobile(Namespace = {$Namespace}) As %Status
+{
 	Set ns =$namespace
 	Zn Namespace
 		&sql(DECLARE sql1 CURSOR FOR
@@ -110,14 +83,11 @@ Moves widgets datasources into Mobile folder</Description>
 
 	Zn ns
 	Return $$$OK
-]]></Implementation>
-</Method>
+}
 
-<Method name="DynamicObjects">
-<Description>
-do ##class(MDX2JSON.Tests).DynamicObjects()</Description>
-<ClassMethod>1</ClassMethod>
-<Implementation><![CDATA[
+/// do ##class(MDX2JSON.Tests).DynamicObjects()
+ClassMethod DynamicObjects()
+{
 	set obj = $$$NewDynObj
 	set obj.prop = "val"
 	$$$DynObjToJSON(obj)
@@ -127,15 +97,11 @@ do ##class(MDX2JSON.Tests).DynamicObjects()</Description>
 	$$$Insert(dtList,a)
 	$$$Insert(dtList,"a")
 	$$$ListToJSON(dtList)
-]]></Implementation>
-</Method>
+}
 
-<Method name="RenderSpeed">
-<Description>
-do ##class(MDX2JSON.Tests).RenderSpeed()</Description>
-<ClassMethod>1</ClassMethod>
-<FormalSpec>MDX:%String,Count:%Integer(MINVAL=1)=10</FormalSpec>
-<Implementation><![CDATA[
+/// do ##class(MDX2JSON.Tests).RenderSpeed()
+ClassMethod RenderSpeed(MDX As %String, Count As %Integer(MINVAL=1) = 10)
+{
 	Set:$d(MDX)'=1 MDX = "SELECT NON EMPTY [Product].[P1].[Product Category].Members ON 0,NON EMPTY [Outlet].[H1].[Region].Members ON 1 FROM [HoleFoods]"
 	Set RS = ##class(MDX2JSON.Utils).GetResultSet(MDX,.st)
 	Write $System.Status.GetErrorText(st)
@@ -158,15 +124,12 @@ do ##class(MDX2JSON.Tests).RenderSpeed()</Description>
 	Write "Iterations: ",Count,!
 	Write "Time Total ",time,!
 	Write "Time Average: ",time/Count
-]]></Implementation>
-</Method>
+}
 
-<Method name="MakeWidgetKeyUnique">
-<Description>
-Iterate over all dashboards in a namespace, for each iterate over widgets.
-Changes widget key if previously encountered</Description>
-<ClassMethod>1</ClassMethod>
-<Implementation><![CDATA[
+/// Iterate over all dashboards in a namespace, for each iterate over widgets.
+/// Changes widget key if previously encountered
+ClassMethod MakeWidgetKeyUnique()
+{
 	set rs = ##class(%DeepSee.Dashboard.Definition).ExtentFunc()
 	set WidgetKeyList=""
 	while rs.%Next() {
@@ -188,17 +151,12 @@ Changes widget key if previously encountered</Description>
 			 }
 		 }
    }
-]]></Implementation>
-</Method>
+}
 
-<Method name="OnCommit">
-<Description><![CDATA[
-Hook for Cache-Tort-Git source-control plug-in.<br>
-Sets LastCommit parameter to last successful commit and exports this class.]]></Description>
-<ClassMethod>1</ClassMethod>
-<FormalSpec>Command,InternalName</FormalSpec>
-<ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[
+/// Hook for Cache-Tort-Git source-control plug-in.<br>
+/// Sets LastCommit parameter to last successful commit and exports this class.
+ClassMethod OnCommit(Command, InternalName) As %Status
+{
 	return:Command'="commit" $$$OK
 	set Status = ..SetParameter(, "LastCommit", ..GetLastCommitHash())
 	return:$$$ISERR(Status) Status
@@ -206,19 +164,14 @@ Sets LastCommit parameter to last successful commit and exports this class.]]></
 	return:$$$ISERR(Status) Status
 	do ##class(%SourceControl.Git.Utils).UpdateRoutineTSH("MDX2JSON.Tests.cls")
 	return ##class(%SourceControl.Git.Utils).ExportItem("MDX2JSON.Tests.cls")
-]]></Implementation>
-</Method>
+}
 
-<Method name="GetLastCommitHash">
-<Description><![CDATA[
-This method returns last commit SHA-1 hash of <var>Branch</var>
-in Git repository in <var>RepoFolder</var>.<br>
-To get current namespace repository you need to use
-Cache-Tort-Git source-control plug-in]]></Description>
-<ClassMethod>1</ClassMethod>
-<FormalSpec>RepoFolder:%String=##class(%SourceControl.Git.Utils).TempFolder(),Branch="master"</FormalSpec>
-<ReturnType>%String</ReturnType>
-<Implementation><![CDATA[
+/// This method returns last commit SHA-1 hash of <var>Branch</var>
+/// in Git repository in <var>RepoFolder</var>.<br>
+/// To get current namespace repository you need to use
+/// Cache-Tort-Git source-control plug-in
+ClassMethod GetLastCommitHash(RepoFolder As %String = {##class(%SourceControl.Git.Utils).TempFolder()}, Branch = "master") As %String
+{
 	set GitDir = ##class(%File).SubDirectoryName(RepoFolder,".git")
 	set RefDir = ##class(%File).SubDirectoryName(GitDir,"refs")
 	set HeadRefDir = ##class(%File).SubDirectoryName(RefDir, "heads", 1)
@@ -228,20 +181,14 @@ Cache-Tort-Git source-control plug-in]]></Description>
 	set SHAHash = HeadRefFile.ReadLine()
 	do HeadRefFile.Close()
 	return SHAHash
-]]></Implementation>
-</Method>
+}
 
-<Method name="SetParameter">
-<Description><![CDATA[
-Set Class Parameter equal to Value<]]></Description>
-<ClassMethod>1</ClassMethod>
-<FormalSpec>Class:%String=$classname(),Parameter:%String,Value:%String</FormalSpec>
-<ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[
+/// Set Class Parameter equal to Value<
+ClassMethod SetParameter(Class As %String = {$classname()}, Parameter As %String, Value As %String) As %Status
+{
 	set Parameter = ##class(%Dictionary.ParameterDefinition).IDKEYOpen(Class, Parameter)
 	set Parameter.Default = Value
 	return Parameter.%Save()
-]]></Implementation>
-</Method>
-</Class>
-</Export>
+}
+
+}

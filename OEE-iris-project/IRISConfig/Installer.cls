@@ -108,6 +108,8 @@ XData Install [ XMLNamespace = INSTALLER ]
 		<Arg name="pNamespace" Value="${Namespace}"/>
 	</Invoke>
 	
+	
+	
 </Manifest>
 }
 }
