@@ -1,0 +1,9 @@
+habilitar el usuario IAM y ponerle clave
+habilitar aplicacion web IAM
+
+setear variables de entorno: ISC_IRIS_URL, ISC_IAM_IMAGE
+
+
+Servicio
+	Ruta
+		Consumer (user)

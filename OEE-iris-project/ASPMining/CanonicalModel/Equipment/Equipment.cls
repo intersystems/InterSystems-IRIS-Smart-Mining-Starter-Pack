@@ -5,6 +5,7 @@ Class ASPMining.CanonicalModel.Equipment.Equipment Extends %Persistent
 	
 	/// Category of Equipment, eg: Truck, Excav.
 	Property EquipmentCategory As EquipmentCategory;
+	
 	/// Model of Equipment: e.g: CAT 770
 	Property EquipmentModel As EquipmentModel;
 	
@@ -14,10 +15,15 @@ Class ASPMining.CanonicalModel.Equipment.Equipment Extends %Persistent
 	/// Capacity of Vehicle ASSIGNED BY USERS
 	Property Capacity As %Float;
 	
-	/// Used to keep track of travel/unkown times in the production cycle
+	/// Used to keep track of travel/uknown times in the production cycle, for production slices only
 	Property LastProductionUpdate As ASPMining.CanonicalModel.Production.ProductionEventSliced;
 	
+	/// Used to check Last production DumpEvent
+	Property LastUnifiedEvent As ASPMining.CanonicalModel.Operation.UnifiedEvents;
+	
+	
 	index EquipmentIndex on Id [Unique];
+	index NameIndex on Name;
 	
 Storage Default
 {
@@ -42,6 +48,15 @@ Storage Default
 </Value>
 <Value name="7">
 <Value>LastProductionUpdate</Value>
+</Value>
+<Value name="8">
+<Value>LastProductionDumpEvent</Value>
+</Value>
+<Value name="9">
+<Value>LastProductionLoadEvent</Value>
+</Value>
+<Value name="10">
+<Value>LastUnifiedEvent</Value>
 </Value>
 </Data>
 <DataLocation>^ASPMining.CanoniF845.EquipmentD</DataLocation>

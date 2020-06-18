@@ -181,7 +181,7 @@ ClassMethod GetOrigins() As %String
 {
 	set url = %request.GetCgiEnv("HTTP_REFERER")
 	//return $p(url,"/",1,3) // get http(s)://origin.com:port
-	return "all"
+	return "http://localhost:5000"
 }
 
 /// Called for a REST page in the event of a login being required

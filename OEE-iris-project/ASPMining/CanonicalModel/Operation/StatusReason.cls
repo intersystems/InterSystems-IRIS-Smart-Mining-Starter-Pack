@@ -1,6 +1,8 @@
 /// List of all possible status change code reasons
 Class ASPMining.CanonicalModel.Operation.StatusReason Extends %Persistent
 {
+/// Reason Unique Id = Concat StatusType+Reason
+Property Id As %String;
 /// Reason code, e.g: "112"
 Property Reason As %String;
 /// Link to Status Type
@@ -8,7 +10,8 @@ Property StatusType As StatusType;
 /// Description for the Reason, e.g: "operator went to restroom"
 Property Description As %String;
 
-index ReasonIndex on Reason [unique ];
+index IdIndex on Id [unique ];
+index ReasonIndex on Reason;
 index StatusTypeIndex on StatusType [type = bitmap];
 
 Storage Default
@@ -25,6 +28,9 @@ Storage Default
 </Value>
 <Value name="4">
 <Value>StatusType</Value>
+</Value>
+<Value name="5">
+<Value>Id</Value>
 </Value>
 </Data>
 <DataLocation>^ASPMining.CanB953.StatusReasonD</DataLocation>

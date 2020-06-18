@@ -8,7 +8,7 @@ Class ASPMining.CanonicalModel.Production.ProductionEventSliced Extends %Persist
 	/// Start date of the event
 	Property SliceStartDate As %DateTime;
 	/// Calculated duration of the event
-	Property PartialDuration As %Float;
+	Property PartialDuration As %Double;
 	/// Event Start Date INSIDE this time slot
 	Property EventStartDate As %DateTime;
 	/// Real End date of the event
@@ -18,7 +18,7 @@ Class ASPMining.CanonicalModel.Production.ProductionEventSliced Extends %Persist
 	Property ddbkey As %String;
 	
 	/// Measured tons of the Dump (if available)
-	Property MeasuredTons As %Float;
+	Property MeasuredTons As %Double;
 	/// Truck Link
 	Property EquipmentTruck As ASPMining.CanonicalModel.Equipment.Equipment;
 	/// Excavator Link
