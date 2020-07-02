@@ -1,6 +1,7 @@
 Include DEMOMACROS
 
-Class SampleDispatch.BO.Event.Operation extends Ens.BusinessOperation {
+Class SampleDispatch.BO.Event.Operation Extends Ens.BusinessOperation
+{
 
 Parameter INVOCATION = "Queue";
 
@@ -90,7 +91,6 @@ ClassMethod CreateTimesliceChangeEvent(pChangeEvent As OEE.Data.EventChange, pTi
 	
 	Set sc = timesliceChangeEvent.%Save()
 	$$$ThrowStatusExceptionIfError(sc, "FragmentChangeEventException")
-	
 }
 
 Method CompletedDumpEvent(pInput As SampleDispatch.BO.Event.CompletedDumpEvent, Output pOutput As Ens.Response) As %Status
@@ -490,7 +490,8 @@ Method NewProductionEventSliced(pInput As ASPMining.CanonicalModel.Production.Pr
 	Quit sc
 }
 
-XData MessageMap {
+XData MessageMap
+{
 <MapItems>
     <MapItem MessageType="SampleDispatch.BO.Event.StatusChangeEvent">
         <Method>StatusChangeEvent</Method>
@@ -512,6 +513,9 @@ XData MessageMap {
     </MapItem>
     <MapItem MessageType="ASPMining.CanonicalModel.Production.DumpEvent">
         <Method>NewDump</Method>
+    </MapItem>
+    <MapItem MessageType="ASPMining.CanonicalModel.Production.LoadEvent">
+        <Method>NewLoad</Method>
     </MapItem>
     <MapItem MessageType="ASPMining.CanonicalModel.HWMonitoring.OEMEvent">
         <Method>NewOEMEvent</Method>

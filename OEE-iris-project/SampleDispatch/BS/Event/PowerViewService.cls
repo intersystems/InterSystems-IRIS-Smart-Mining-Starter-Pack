@@ -1,5 +1,6 @@
 Class SampleDispatch.BS.Event.PowerViewService Extends Ens.BusinessService
 {
+
 /// We are using this custom adapter that is based on EnsLib.SQL.InboundAdapter to hide some properties we don't
 /// want people to change.
 Parameter ADAPTER = "SampleDispatch.Adapter.SQL.PeriodicInboundAdapterMC";
@@ -31,6 +32,7 @@ Method OnProcessInput(pInput As EnsLib.SQL.Snapshot, Output pOutput As %Register
 	
 	Quit sc
 }
+
 Method ProcessNewShifts()
 {
 	#Dim oRS As EnsLib.SQL.GatewayResultSet
@@ -98,12 +100,11 @@ Method ProcessNewShifts()
 		
 		Do ..Adapter.SetPersistentValue(..%ConfigName, "LastShiftKey", tLastKey)
 	}
-	
-	
 }
+
 /// Will get data from TABLE: hist_statusevents, convert field names to canonical names and send messages to the right operation to save them properly.
 /// Only complete events are parsed (start+endtime)
-Method ProcessNewCompleteEvents(shiftToQuery as %Integer)
+Method ProcessNewCompleteEvents(shiftToQuery As %Integer)
 {
 	#Dim oRS As EnsLib.SQL.GatewayResultSet
 	
@@ -264,8 +265,6 @@ Method ProcessNewCompleteEvents(shiftToQuery as %Integer)
 		
 		Do ..Adapter.SetPersistentValue(..%ConfigName, "LastEventKey", tLastKey)
 	}
-	
-	
 }
 
 Method ProcessNewReasons()
@@ -331,8 +330,6 @@ Method ProcessNewReasons()
 		
 		//Do ..Adapter.SetPersistentValue(..%ConfigName, "LastReasonKey", tLastKey)
 	}
-	
-	
 }
 
 Method ProcessNewEquipments()
@@ -361,7 +358,7 @@ Method ProcessNewEquipments()
 			set oEquipment.Id = oRS.Get("eqmtid")
 			set oEquipment.Name = oRS.Get("unit")_" - "_oEquipment.Id
 			set oEquipment.Capacity = oRS.Get("size")
-			set oEquipment.LastUnifiedEvent = ##class(ASPMining.CanonicalModel.Operation.UnifiedEvents).%New()
+			//set oEquipment.LastUnifiedEvent = ##class(ASPMining.CanonicalModel.Operation.UnifiedEvents).%New()
 			
 			If '##class(ASPMining.CanonicalModel.Equipment.EquipmentCategory).EquipmentCategoryIndexExists(oRS.Get("unit")){
 				set oEquipment.EquipmentCategory = ##class(ASPMining.CanonicalModel.Equipment.EquipmentCategory).%New() //TODO: obtener antes las eqmttype
@@ -387,11 +384,10 @@ Method ProcessNewEquipments()
 		
 		Do ..Adapter.SetPersistentValue(..%ConfigName, "LastEquipmentKey", tLastKey)
 	}
-	
-	
 }
 
-Method ProcessAllEvents(shiftToQuery as %Integer){
+Method ProcessAllEvents(shiftToQuery As %Integer)
+{
 	#Dim oRS As EnsLib.SQL.GatewayResultSet
 	
 	Set tDumpLastKey = ..Adapter.GetPersistentValue(..%ConfigName, "UnifiedLastDumpKey")
@@ -434,24 +430,26 @@ Method ProcessAllEvents(shiftToQuery as %Integer){
 	// Evento nuevo es un nuevo UnifiedEvent
 	// Evento nuevo clona los campos del ultimo UnifiedEvent del Equipment excepto lo q sea nuevo
 	// Se debe modificar el campo "Duration" del ultimo UnifiedEvent del Equipment y %Save al UnifiedEvent
-	// Se actualiza el último UnifiedEvent del Equipment y se le hace %Save al Equipment
+	// Se actualiza el ï¿½ltimo UnifiedEvent del Equipment y se le hace %Save al Equipment
 	// next
 	
 	
 	While oRS.Next()
 	{
-		$$$TRACE("Analyzing query")
+		$$$TRACE("Analyzing query: "_oRS.Get("index2"))
+		Set ..%SessionId=""
 		
 		$$$TRACE("timedump:"_oRS.Get("timedump")_" timeload:"_oRS.Get("timeload")_" eqmt:"_oRS.Get("eqmt"))
+		
+		set uniqueId = oRS.Get("index2")
+
 		If (oRS.Get("timedump") '= ""){
 			Set tDumpLastKey = oRS.Get("index2")
 			
-			Set ..%SessionId=""
 			$$$TRACE("Processing Dump last key "_oRS.Get("index2"))
 			
 			If '##class(ASPMining.CanonicalModel.Production.DumpEvent).DumpIndexExists(oRS.Get("index2")){
 				$$$TRACE("Dump event does not exists "_oRS.Get("index2")_"...")
-				set uniqueId = oRS.Get("index2")
 				set shiftindex = oRS.Get("shiftindex")
 				set truck = oRS.Get("truck")
 				set excav = oRS.Get("excav")
@@ -512,8 +510,6 @@ Method ProcessAllEvents(shiftToQuery as %Integer){
 					set oDump.Location = ##class(ASPMining.CanonicalModel.Mine.Location).NameIndexOpen(location)
 				}
 				
-				Set ..%SessionId=""
-				
 				set sc = ..SendRequestAsync("PowerView Event Operation", oDump)
 				
 				// Hasta aqui todo tablas estandard
@@ -522,8 +518,6 @@ Method ProcessAllEvents(shiftToQuery as %Integer){
 				
 				// Se supone q el truck existe y
 				// se obtiene su ultimo lastunified event
-				set lastUnifiedEventIndex = ##class(ASPMining.CanonicalModel.Equipment.Equipment).EquipmentIndexOpen(truck).LastUnifiedEvent.Id //this requipment last unified event
-				set lastUnifiedEvent = ##class(ASPMining.CanonicalModel.Operation.UnifiedEvents).IdIndexOpen(lastUnifiedEventIndex)
 				
 				// Eventos produccion: 1-> actualizo el evento transit anterior. 2-> genero el evento waiting actual ,3-> genero el evento dumping actual 4-> genero evento transit nuevo (incompleto)
 				
@@ -535,38 +529,34 @@ Method ProcessAllEvents(shiftToQuery as %Integer){
 				set productionEvent1.Equipment = equipment
 				set productionEvent1.ProductionStatusType = ##class(ASPMining.CanonicalModel.Production.ProductionStatusType).TypeIndexOpen(2) //waiting to dump
 				set productionEvent1.Location = ##class(ASPMining.CanonicalModel.Mine.Location).NameIndexOpen(location)
-				set productionEvent1.PreviousLocation = lastUnifiedEvent.ProductionEvent.Location
 				set productionEvent1.Shift = shift
 				set productionEvent1.StartTime = ..ShiftOffsetToDateTime(timearrive, shiftindex)
-				// Fix last production event duration -> should always be a Transit, but checks again here
-				If (lastUnifiedEvent.ProductionEvent.ProductionStatusType = 1 || lastUnifiedEvent.ProductionEvent.ProductionStatusType = 4){
-					set lastUnifiedEvent.ProductionEvent.Duration = $System.SQL.DATEDIFF("second", lastUnifiedEvent.ProductionEvent.StartTime , productionEvent1.StartTime)
-				}
-				set sc = ..SendRequestAsync("PowerView Event Operation", productionEvent1)
+				set productionEvent1.MeasuredTons = measuretons
 				
 				set productionEvent2 = ##class(ASPMining.CanonicalModel.Production.ProductionEvent).%New()
 				set productionEvent2.Id = uniqueId+1
 				set productionEvent2.Equipment = equipment
 				set productionEvent2.ProductionStatusType = ##class(ASPMining.CanonicalModel.Production.ProductionStatusType).TypeIndexOpen(3) //dumping
 				set productionEvent2.Location = ##class(ASPMining.CanonicalModel.Mine.Location).NameIndexOpen(location)
-				set productionEvent2.PreviousLocation = lastUnifiedEvent.ProductionEvent.Location
 				set productionEvent2.Shift = shift
-				set productionEvent2.StartTime = ..ShiftOffsetToDateTime(timearrive, shiftindex)
-				set productionEvent2.Duration = $System.SQL.DATEDIFF("second", productionEvent1.StartTime , productionEvent2.StartTime)
+				set productionEvent2.StartTime = ..ShiftOffsetToDateTime(timedump, shiftindex)
+				set productionEvent2.MeasuredTons = measuretons
+				//update previous production event
+				set productionEvent1.Duration = $System.SQL.DATEDIFF("second", productionEvent1.StartTime , productionEvent2.StartTime)
 				
-				set sc = ..SendRequestAsync("PowerView Event Operation", productionEvent2)
 				
 				set productionEvent3 = ##class(ASPMining.CanonicalModel.Production.ProductionEvent).%New()
 				set productionEvent3.Id = uniqueId+2
 				set productionEvent3.Equipment = equipment
 				set productionEvent3.ProductionStatusType = ##class(ASPMining.CanonicalModel.Production.ProductionStatusType).TypeIndexOpen(4) //transit to load
 				set productionEvent3.Location = ##class(ASPMining.CanonicalModel.Mine.Location).NameIndexOpen(location)
-				set productionEvent3.PreviousLocation = lastUnifiedEvent.ProductionEvent.Location
 				set productionEvent3.Shift = shift
-				set productionEvent3.StartTime = ..ShiftOffsetToDateTime(timearrive, shiftindex)
+				set productionEvent3.StartTime = ..ShiftOffsetToDateTime(timeempty, shiftindex)
+				set productionEvent3.MeasuredTons = measuretons
+				//update previous production event
+				set productionEvent2.Duration = $System.SQL.DATEDIFF("second", productionEvent2.StartTime , productionEvent3.StartTime)
 				
-				set sc = ..SendRequestAsync("PowerView Event Operation", productionEvent3)
-				
+
 				$$$TRACE("DUMP: Generating New Unified Events")
 				
 				set unifiedEvent1 = ##class(ASPMining.CanonicalModel.Operation.UnifiedEvents).%New()
@@ -574,29 +564,64 @@ Method ProcessAllEvents(shiftToQuery as %Integer){
 				set unifiedEvent1.Equipment = equipment
 				set unifiedEvent1.Shift = shift
 				set unifiedEvent1.ProductionEvent = productionEvent1 
-				set unifiedEvent1.StatusEvent = lastUnifiedEvent.StatusEvent 
 				set unifiedEvent1.EventDateTime = productionEvent1.StartTime 
-				set unifiedEvent1.Duration = $System.SQL.DATEDIFF("second", lastUnifiedEvent.EventDateTime, unifiedEvent1.EventDateTime)
-				set sc = ..SendRequestAsync("PowerView Event Operation", unifiedEvent1)
+				set unifiedEvent1.Duration = 0 
+				//update previous unifiedEvent event
+				
 				
 				set unifiedEvent2 = ##class(ASPMining.CanonicalModel.Operation.UnifiedEvents).%New()
 				set unifiedEvent2.Id = uniqueId + 1
 				set unifiedEvent2.Equipment = equipment
 				set unifiedEvent2.Shift = shift
-				set unifiedEvent2.ProductionEvent = productionEvent1 
-				set unifiedEvent2.StatusEvent = lastUnifiedEvent.StatusEvent 
-				set unifiedEvent2.EventDateTime = productionEvent1.StartTime 
-				set unifiedEvent2.Duration = $System.SQL.DATEDIFF("second", unifiedEvent1.EventDateTime, unifiedEvent2.EventDateTime)
-				set sc = ..SendRequestAsync("PowerView Event Operation", unifiedEvent2)
+				set unifiedEvent2.ProductionEvent = productionEvent2
+				set unifiedEvent2.EventDateTime = productionEvent2.StartTime 
+				set unifiedEvent2.Duration = 0 
+				//update previous unifiedEvent event
+				set unifiedEvent1.Duration = $System.SQL.DATEDIFF("second", unifiedEvent1.EventDateTime, unifiedEvent2.EventDateTime)
+				
 				
 				set unifiedEvent3 = ##class(ASPMining.CanonicalModel.Operation.UnifiedEvents).%New()
 				set unifiedEvent3.Id = uniqueId + 2
 				set unifiedEvent3.Equipment = equipment
 				set unifiedEvent3.Shift = shift
-				set unifiedEvent3.ProductionEvent = productionEvent1 
-				set unifiedEvent3.StatusEvent = lastUnifiedEvent.StatusEvent 
-				set unifiedEvent3.EventDateTime = productionEvent1.StartTime 
-				set unifiedEvent3.Duration = $System.SQL.DATEDIFF("second", unifiedEvent2.EventDateTime, unifiedEvent3.EventDateTime)
+				set unifiedEvent3.ProductionEvent = productionEvent3 
+				set unifiedEvent3.EventDateTime = productionEvent3.StartTime 
+				set unifiedEvent3.Duration = 0 
+				//update previous unifiedEvent event
+				set unifiedEvent2.Duration = $System.SQL.DATEDIFF("second", unifiedEvent2.EventDateTime, unifiedEvent3.EventDateTime)
+				
+								
+				set lastTrackUEvent = ##class(ASPMining.CanonicalModel.Equipment.Equipment).EquipmentIndexOpen(truck).LastUnifiedEvent
+				If ( lastTrackUEvent '= ""){
+
+					set lastUnifiedEvent = ##class(ASPMining.CanonicalModel.Operation.UnifiedEvents).IdIndexOpen(lastTrackUEvent.Id)
+					
+					If (lastUnifiedEvent.ProductionEvent '= ""){
+						set lastUnifiedEvent.ProductionEvent.Duration = $System.SQL.DATEDIFF("second", lastUnifiedEvent.ProductionEvent.StartTime , productionEvent1.StartTime)
+					}
+
+					set productionEvent1.PreviousLocation = lastUnifiedEvent.ProductionEvent.Location
+					set productionEvent2.PreviousLocation = lastUnifiedEvent.ProductionEvent.Location
+					set productionEvent3.PreviousLocation = lastUnifiedEvent.ProductionEvent.Location
+					
+					
+					If (lastUnifiedEvent.EventDateTime '= ""){
+						set lastUnifiedEvent.Duration = $System.SQL.DATEDIFF("second", lastUnifiedEvent.EventDateTime, unifiedEvent1.EventDateTime)
+					}
+					set unifiedEvent1.StatusEvent = lastUnifiedEvent.StatusEvent 
+					set unifiedEvent2.StatusEvent = lastUnifiedEvent.StatusEvent 
+					set unifiedEvent3.StatusEvent = lastUnifiedEvent.StatusEvent 
+					
+					set sc = lastUnifiedEvent.%Save()
+				}
+				set equipment.LastUnifiedEvent = unifiedEvent3
+				set sc = equipment.%Save()
+
+				set sc = ..SendRequestAsync("PowerView Event Operation", productionEvent1)
+				set sc = ..SendRequestAsync("PowerView Event Operation", productionEvent2)
+				set sc = ..SendRequestAsync("PowerView Event Operation", productionEvent3)
+				set sc = ..SendRequestAsync("PowerView Event Operation", unifiedEvent1)
+				set sc = ..SendRequestAsync("PowerView Event Operation", unifiedEvent2)
 				set sc = ..SendRequestAsync("PowerView Event Operation", unifiedEvent3)		
 											
 			}else{
@@ -605,10 +630,8 @@ Method ProcessAllEvents(shiftToQuery as %Integer){
 		}elseif (oRS.Get("timeload") '= "") {
 			//$$$TRACE("Processing Loads events not implemented yet")
 			Set tLoadLastKey = oRS.Get("index2")
-			Set ..%SessionId=""
 			
 			If '##class(ASPMining.CanonicalModel.Production.LoadEvent).LoadIndexExists(oRS.Get("index2")){
-				set uniqueId = oRS.Get("index2")
 				set shiftindex = oRS.Get("shiftindex")
 				set truck = oRS.Get("truck")
 				set excav = oRS.Get("excav")
@@ -616,8 +639,9 @@ Method ProcessAllEvents(shiftToQuery as %Integer){
 				set location = oRS.Get("loc")
 				
 				set timearrive = oRS.Get("timearrive")
-				set timedump = oRS.Get("timedump")
-				set timeempty = oRS.Get("timeempty")
+				set timeload = oRS.Get("timeload")
+				set timefull = oRS.Get("timefull")
+				set measuretons = oRS.Get("measureton")
 				
 				set shift = ##class(ASPMining.CanonicalModel.Planning.Shift).ShiftIndexOpen(shiftindex)
 				set equipment = ##class(ASPMining.CanonicalModel.Equipment.Equipment).EquipmentIndexOpen(truck)
@@ -685,12 +709,7 @@ Method ProcessAllEvents(shiftToQuery as %Integer){
 				// ************************
 				// Desde Aqui nuevo unified para oee
 				
-				// Se supone q el truck existe y
-				set lastUnifiedEventIndex = ##class(ASPMining.CanonicalModel.Equipment.Equipment).EquipmentIndexOpen(truck).LastUnifiedEvent.Id //this requipment last unified event
-				set lastUnifiedEvent = ##class(ASPMining.CanonicalModel.Operation.UnifiedEvents).IdIndexOpen(lastUnifiedEventIndex)
-							//set lastUnifiedEvent = ##class(ASPMining.CanonicalModel.Operation.UnifiedEvents).%OpenId(lastUnifiedEventIndex)
-				// Eventos produccion: 1-> actualizo el evento transit anterior. 2-> genero el evento waiting actual ,3-> genero el evento dumping actual 4-> genero evento transit nuevo (incompleto)
-				
+	
 				$$$TRACE("LOAD: Generating New Production Events")
 				//TODO: add "grade" to location if it doesnt exists
 				// debo crear 3  productionevent con tipo transit to dump, waiting to dump, dump con su correspondiente unified event.
@@ -699,37 +718,34 @@ Method ProcessAllEvents(shiftToQuery as %Integer){
 				set productionEvent1.Equipment = equipment
 				set productionEvent1.ProductionStatusType = ##class(ASPMining.CanonicalModel.Production.ProductionStatusType).TypeIndexOpen(5) //waiting to load
 				set productionEvent1.Location = ##class(ASPMining.CanonicalModel.Mine.Location).NameIndexOpen(location)
-				set productionEvent1.PreviousLocation = lastUnifiedEvent.ProductionEvent.Location
 				set productionEvent1.Shift = shift
 				set productionEvent1.StartTime = ..ShiftOffsetToDateTime(timearrive, shiftindex)
-				// Fix last production event duration -> should always be a Transit, but checks again here
-				If (lastUnifiedEvent.ProductionEvent.ProductionStatusType = 1 || lastUnifiedEvent.ProductionEvent.ProductionStatusType = 4){
-					set lastUnifiedEvent.ProductionEvent.Duration = $System.SQL.DATEDIFF("second", lastUnifiedEvent.ProductionEvent.StartTime , productionEvent1.StartTime)
-				}
-				set sc = ..SendRequestAsync("PowerView Event Operation", productionEvent1)
+				set productionEvent1.MeasuredTons = measuretons
+				
 				
 				set productionEvent2 = ##class(ASPMining.CanonicalModel.Production.ProductionEvent).%New()
 				set productionEvent2.Id = uniqueId+4
 				set productionEvent2.Equipment = equipment
 				set productionEvent2.ProductionStatusType = ##class(ASPMining.CanonicalModel.Production.ProductionStatusType).TypeIndexOpen(6) //loading
 				set productionEvent2.Location = ##class(ASPMining.CanonicalModel.Mine.Location).NameIndexOpen(location)
-				set productionEvent2.PreviousLocation = lastUnifiedEvent.ProductionEvent.Location
 				set productionEvent2.Shift = shift
-				set productionEvent2.StartTime = ..ShiftOffsetToDateTime(timearrive, shiftindex)
-				set productionEvent2.Duration = $System.SQL.DATEDIFF("second", productionEvent1.StartTime , productionEvent2.StartTime)
+				set productionEvent2.StartTime = ..ShiftOffsetToDateTime(timeload, shiftindex)
+				set productionEvent2.MeasuredTons = measuretons
+				//update previous production event
+				set productionEvent1.Duration = $System.SQL.DATEDIFF("second", productionEvent1.StartTime , productionEvent2.StartTime)
 				
-				set sc = ..SendRequestAsync("PowerView Event Operation", productionEvent2)
 				
 				set productionEvent3 = ##class(ASPMining.CanonicalModel.Production.ProductionEvent).%New()
 				set productionEvent3.Id = uniqueId+5
 				set productionEvent3.Equipment = equipment
 				set productionEvent3.ProductionStatusType = ##class(ASPMining.CanonicalModel.Production.ProductionStatusType).TypeIndexOpen(1) //transit to dump
 				set productionEvent3.Location = ##class(ASPMining.CanonicalModel.Mine.Location).NameIndexOpen(location)
-				set productionEvent3.PreviousLocation = lastUnifiedEvent.ProductionEvent.Location
 				set productionEvent3.Shift = shift
-				set productionEvent3.StartTime = ..ShiftOffsetToDateTime(timearrive, shiftindex)
+				set productionEvent3.StartTime = ..ShiftOffsetToDateTime(timefull, shiftindex)
+				set productionEvent3.MeasuredTons = measuretons
+				//update previous production event
+				set productionEvent2.Duration = $System.SQL.DATEDIFF("second", productionEvent2.StartTime , productionEvent3.StartTime)
 				
-				set sc = ..SendRequestAsync("PowerView Event Operation", productionEvent3)
 				
 				$$$TRACE("LOAD: Generating New Unified Events")
 				
@@ -738,40 +754,69 @@ Method ProcessAllEvents(shiftToQuery as %Integer){
 				set unifiedEvent1.Equipment = equipment
 				set unifiedEvent1.Shift = shift
 				set unifiedEvent1.ProductionEvent = productionEvent1 
-				set unifiedEvent1.StatusEvent = lastUnifiedEvent.StatusEvent 
 				set unifiedEvent1.EventDateTime = productionEvent1.StartTime 
-				set unifiedEvent1.Duration = $System.SQL.DATEDIFF("second", lastUnifiedEvent.EventDateTime, unifiedEvent1.EventDateTime)
-				set sc = ..SendRequestAsync("PowerView Event Operation", unifiedEvent1)
+				//update previous unified event
 				
 				set unifiedEvent2 = ##class(ASPMining.CanonicalModel.Operation.UnifiedEvents).%New()
 				set unifiedEvent2.Id = uniqueId+4
 				set unifiedEvent2.Equipment = equipment
 				set unifiedEvent2.Shift = shift
-				set unifiedEvent2.ProductionEvent = productionEvent1 
-				set unifiedEvent2.StatusEvent = lastUnifiedEvent.StatusEvent 
-				set unifiedEvent2.EventDateTime = productionEvent1.StartTime 
-				set unifiedEvent2.Duration = $System.SQL.DATEDIFF("second", unifiedEvent1.EventDateTime, unifiedEvent2.EventDateTime)
-				set sc = ..SendRequestAsync("PowerView Event Operation", unifiedEvent2)
+				set unifiedEvent2.ProductionEvent = productionEvent2 
+				set unifiedEvent2.EventDateTime = productionEvent2.StartTime 
+				//update previous unified event
+				set unifiedEvent1.Duration = $System.SQL.DATEDIFF("second", unifiedEvent1.EventDateTime, unifiedEvent2.EventDateTime)
 				
 				set unifiedEvent3 = ##class(ASPMining.CanonicalModel.Operation.UnifiedEvents).%New()
 				set unifiedEvent3.Id = uniqueId+5
 				set unifiedEvent3.Equipment = equipment
 				set unifiedEvent3.Shift = shift
-				set unifiedEvent3.ProductionEvent = productionEvent1 
-				set unifiedEvent3.StatusEvent = lastUnifiedEvent.StatusEvent 
-				set unifiedEvent3.EventDateTime = productionEvent1.StartTime 
-				set unifiedEvent3.Duration = $System.SQL.DATEDIFF("second", unifiedEvent2.EventDateTime, unifiedEvent3.EventDateTime)
+				set unifiedEvent3.ProductionEvent = productionEvent3 
+				set unifiedEvent3.EventDateTime = productionEvent3.StartTime 
+				set unifiedEvent3.Duration = 0 
+				//update previous unified event
+				set unifiedEvent2.Duration = $System.SQL.DATEDIFF("second", unifiedEvent2.EventDateTime, unifiedEvent3.EventDateTime)
+
+								
+				set lastTrackUEvent = ##class(ASPMining.CanonicalModel.Equipment.Equipment).EquipmentIndexOpen(truck).LastUnifiedEvent
+				If ( lastTrackUEvent '= ""){
+
+					set lastUnifiedEvent = ##class(ASPMining.CanonicalModel.Operation.UnifiedEvents).IdIndexOpen(lastTrackUEvent.Id)
+					
+					If (lastUnifiedEvent.ProductionEvent '= ""){
+						set lastUnifiedEvent.ProductionEvent.Duration = $System.SQL.DATEDIFF("second", lastUnifiedEvent.ProductionEvent.StartTime , productionEvent1.StartTime)
+					}
+
+					set productionEvent1.PreviousLocation = lastUnifiedEvent.ProductionEvent.Location
+					set productionEvent2.PreviousLocation = lastUnifiedEvent.ProductionEvent.Location
+					set productionEvent3.PreviousLocation = lastUnifiedEvent.ProductionEvent.Location
+
+					If (lastUnifiedEvent.EventDateTime '= ""){
+						set lastUnifiedEvent.Duration = $System.SQL.DATEDIFF("second", lastUnifiedEvent.EventDateTime, unifiedEvent1.EventDateTime)
+					}
+					set unifiedEvent1.StatusEvent = lastUnifiedEvent.StatusEvent 
+					set unifiedEvent2.StatusEvent = lastUnifiedEvent.StatusEvent 
+					set unifiedEvent3.StatusEvent = lastUnifiedEvent.StatusEvent 
+					
+					set sc = lastUnifiedEvent.%Save()
+				}
+				set equipment.LastUnifiedEvent = unifiedEvent3
+				set sc = equipment.%Save()
+
+
+				set sc = ..SendRequestAsync("PowerView Event Operation", productionEvent1)
+				set sc = ..SendRequestAsync("PowerView Event Operation", productionEvent2)
+				set sc = ..SendRequestAsync("PowerView Event Operation", productionEvent3)
+				set sc = ..SendRequestAsync("PowerView Event Operation", unifiedEvent1)
+				set sc = ..SendRequestAsync("PowerView Event Operation", unifiedEvent2)
 				set sc = ..SendRequestAsync("PowerView Event Operation", unifiedEvent3)	
-			}else{
-				$$$TRACE("Load event already exists "_oRS.Get("index2")_"...")
-			}
+
+
+			
 			
 		}elseif (oRS.Get("eqmt") '= ""){
 			$$$TRACE("Processing Status Only Unified WITHOUT Slicing")
 			Set tStatusLastKey = oRS.Get("index2")
-			Set ..%SessionId=""
 			
-			set uniqueId = oRS.Get("index2")
 			set shiftindex = oRS.Get("shiftindex")
 			set truck = oRS.Get("eqmt")
 			set reason = oRS.Get("reason")
@@ -779,12 +824,8 @@ Method ProcessAllEvents(shiftToQuery as %Integer){
 			set timearrive = oRS.Get("timearrive") //en relaidad se llamaba starttime pero se rneombro en la query para tener menos columnas
 			set duration = oRS.Get("delta") //en relaidad se llamaba duration pero se renombro en la query para tener menos columnas
 
-			//set lastUnifiedEventIndex = ##class(ASPMining.CanonicalModel.Equipment.Equipment).EquipmentIndexOpen(truck).LastUnifiedEvent.%ID //this requipment last unified event
-			//set lastUnifiedEvent = ##class(ASPMining.CanonicalModel.Operation.UnifiedEvents).%OpenId(lastUnifiedEventIndex)
-			set lastUnifiedEventIndex = ##class(ASPMining.CanonicalModel.Equipment.Equipment).EquipmentIndexOpen(truck).LastUnifiedEvent.Id //this requipment last unified event
-			set lastUnifiedEvent = ##class(ASPMining.CanonicalModel.Operation.UnifiedEvents).IdIndexOpen(lastUnifiedEventIndex)
-						
-			
+					
+		
 			set shift = ##class(ASPMining.CanonicalModel.Planning.Shift).ShiftIndexOpen(shiftindex)
 			set equipment = ##class(ASPMining.CanonicalModel.Equipment.Equipment).EquipmentIndexOpen(truck)
 			
@@ -801,7 +842,8 @@ Method ProcessAllEvents(shiftToQuery as %Integer){
 			set statusEvent.StartDate = ..ShiftOffsetToDateTime(timearrive, shiftindex)
 			//TODO: Verificar que timearrive + duration no se pasa del dia
 			set statusEvent.EndDate = ..ShiftOffsetToDateTime(timearrive + duration, shiftindex)
-			set statusEvent.Duration = duration
+			//status events duration comes in same row so dont need to update the previous one also
+			set statusEvent.Duration = duration 
 			
 			set sc = ..SendRequestAsync("PowerView Event Operation", statusEvent)
 			
@@ -811,10 +853,28 @@ Method ProcessAllEvents(shiftToQuery as %Integer){
 			set unifiedEvent1.Id = uniqueId+6
 			set unifiedEvent1.Equipment = equipment
 			set unifiedEvent1.Shift = shift
-			set unifiedEvent1.ProductionEvent = lastUnifiedEvent.ProductionEvent 
 			set unifiedEvent1.StatusEvent = statusEvent
 			set unifiedEvent1.EventDateTime = statusEvent.StartDate 
-			set unifiedEvent1.Duration = $System.SQL.DATEDIFF("second", lastUnifiedEvent.EventDateTime, unifiedEvent1.EventDateTime)
+			set unifiedEvent1.Duration = 0 
+
+			set lastTrackUEvent = ##class(ASPMining.CanonicalModel.Equipment.Equipment).EquipmentIndexOpen(truck).LastUnifiedEvent
+			If ( lastTrackUEvent '= ""){
+
+				set lastUnifiedEvent = ##class(ASPMining.CanonicalModel.Operation.UnifiedEvents).IdIndexOpen(lastTrackUEvent.Id)
+				
+				set unifiedEvent1.ProductionEvent = lastUnifiedEvent.ProductionEvent 
+
+				// Update duration
+				If (lastUnifiedEvent.EventDateTime '= ""){
+					set lastUnifiedEvent.Duration = $System.SQL.DATEDIFF("second", lastUnifiedEvent.EventDateTime, unifiedEvent1.EventDateTime)
+				}
+
+				set sc = lastUnifiedEvent.%Save()
+			}
+
+			set equipment.LastUnifiedEvent = unifiedEvent1
+			set sc = equipment.%Save()
+
 			set sc = ..SendRequestAsync("PowerView Event Operation", unifiedEvent1)
 		}else{
 			$$$TRACE("Invalid event received, not valid timedump, or timeload, or eqmt")
@@ -826,8 +886,8 @@ Method ProcessAllEvents(shiftToQuery as %Integer){
 	}
 }
 
-
-Method ProcessDumpAndLoadEvents(shiftToQuery as %Integer){
+Method ProcessDumpAndLoadEvents(shiftToQuery As %Integer)
+{
 	#Dim oRS As EnsLib.SQL.GatewayResultSet
 	
 	Set tDumpLastKey = ..Adapter.GetPersistentValue(..%ConfigName, "LastDumpSliceKey")
@@ -1180,7 +1240,8 @@ Method ProcessDumpAndLoadEvents(shiftToQuery as %Integer){
 }
 
 /// Slices an object with source of DumpEvent, takes an startseconds and a event duration
-Method GenerateSliceDumpEvents(dumpEvent as ASPMining.CanonicalModel.Production.DumpEvent, statusType as ASPMining.CanonicalModel.Production.ProductionStatusType,startday as %Integer, newstartseconds as %Integer, eventduration as %Integer){
+Method GenerateSliceDumpEvents(dumpEvent As ASPMining.CanonicalModel.Production.DumpEvent, statusType As ASPMining.CanonicalModel.Production.ProductionStatusType, startday As %Integer, newstartseconds As %Integer, eventduration As %Integer)
+{
 	If (eventduration = 0){
 		$$$TRACE("Duration of type "_statusType.Type_" is 0 For DUMP "_dumpEvent.DumpId)
 		Quit
@@ -1280,7 +1341,9 @@ Method GenerateSliceDumpEvents(dumpEvent as ASPMining.CanonicalModel.Production.
 		do ..SaveLastSliceOfTruck(dumpEvent.EquipmentTruck.Id, oSliceEvent)
 	}
 }
-Method GenerateSliceLoadEvents(dumpEvent as ASPMining.CanonicalModel.Production.LoadEvent, statusType as ASPMining.CanonicalModel.Production.ProductionStatusType,startday as %Integer, newstartseconds as %Integer, eventduration as %Integer){
+
+Method GenerateSliceLoadEvents(dumpEvent As ASPMining.CanonicalModel.Production.LoadEvent, statusType As ASPMining.CanonicalModel.Production.ProductionStatusType, startday As %Integer, newstartseconds As %Integer, eventduration As %Integer)
+{
 	If (eventduration = 0){
 		$$$TRACE("Duration of type "_statusType.Type_" is 0 For LOAD "_dumpEvent.LoadId)
 		Quit
@@ -1381,13 +1444,15 @@ Method GenerateSliceLoadEvents(dumpEvent as ASPMining.CanonicalModel.Production.
 	}
 }
 
-Method SaveLastSliceOfTruck(truckId as %String, lastUpdateSlice as ASPMining.CanonicalModel.Production.ProductionEventSliced){
+Method SaveLastSliceOfTruck(truckId As %String, lastUpdateSlice As ASPMining.CanonicalModel.Production.ProductionEventSliced)
+{
 	set truck = ##class(ASPMining.CanonicalModel.Equipment.Equipment).EquipmentIndexOpen(truckId)
 	set truck.LastProductionUpdate = lastUpdateSlice
 	Set sc2 = truck.%Save()
 }
 
-Method ShiftOffsetToDateTime(offset as %Integer, shiftindex as %Integer){
+Method ShiftOffsetToDateTime(offset As %Integer, shiftindex As %Integer)
+{
 	if '##class(ASPMining.CanonicalModel.Planning.Shift).ShiftIndexExists(shiftindex){
 		$$$TRACE("SHIFT DOES NOT EXISTS: "_shiftindex)
 		Return $ZDateTime("0,0")
@@ -1432,6 +1497,5 @@ Method OnInit() As %Status
    /// Do ..Adapter.InitializePersistentValue(..%ConfigName, "LastCompletedDumpKey",0)
    Quit $$$OK
 }
-
 
 }

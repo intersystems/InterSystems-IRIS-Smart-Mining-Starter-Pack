@@ -3,3 +3,5 @@
 **/.buildpath
 **/.project
 Docs/
+*/.vscode/
+*/.settings/
