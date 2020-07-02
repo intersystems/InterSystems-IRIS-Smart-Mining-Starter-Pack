@@ -74,6 +74,8 @@ XData Cube [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
   </dimension>
   <measure name="PartialDuration" disabled="false" sourceProperty="PartialDuration" aggregate="SUM" type="number" hidden="false" searchable="false">
   </measure>
+  <measure name="PartialDurationAVG" disabled="false" sourceProperty="PartialDuration" aggregate="AVG" type="number" hidden="false" searchable="false">
+  </measure>
   <listing name="ListingDetails" displayName="Equipment Name" description="Partial Duration" disabled="false" listingType="table" fieldList="Equipment-&gt;Name Equipment, PartialDuration, SliceStartDate, ddbkey, Shift-&gt;DateTime Shift">
   </listing>
 </cube>

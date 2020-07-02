@@ -1,0 +1,17 @@
+1. perspectiva 1: Informacion Por Fechas: 
+sirve para ver y comparar comportamiento de turnos en rangos de tiempo largos independiente de q los turnos no pertenezcan a 1 solo dia.
+SELECT NON EMPTY NONEMPTYCROSSJOIN(NONEMPTYCROSSJOIN([ShiftInfo].[H2].[ShiftType].Members,[StatusType].[H1].[StatusType].Members),[Measures].[PartialDuration]) ON 0,NON EMPTY [SliceStartDate].[H1].[SliceStartDateDay].Members ON 1 FROM [ASPMINING.ANALYTICS.STATUSEVENTSLICEDCUBE] %FILTER NONEMPTYCROSSJOIN([EQUIPMENT].[H1].[CATEGORY].&[Camion],%OR([SLICESTARTDATE].[H1].[SLICESTARTDATEDAY].&[64649]:&[64650]))
+
+Nota: El valor a mostrar en el grafico debe ser: operativo/(todos los estados). Para q de el % del tiempo q estuvo en estado operativo.
+Zoom en 1 Dia
+SELECT NON EMPTY NONEMPTYCROSSJOIN(NONEMPTYCROSSJOIN([ShiftInfo].[H2].[ShiftType].Members,[StatusType].[H1].[StatusType].Members),[Measures].[PartialDuration]) ON 0,NON EMPTY [SliceStartDate].[H1].[SliceStartDateDay].&[64649].children ON 1 FROM [ASPMINING.ANALYTICS.STATUSEVENTSLICEDCUBE] %FILTER NONEMPTYCROSSJOIN([EQUIPMENT].[H1].[CATEGORY].&[Camion],%OR([SLICESTARTDATE].[H1].[SLICESTARTDATEDAY].&[64649]:&[64650]))
+
+2.  perspectiva 2: Informacion Por Turno: 
+el verdadero filtro los hace el ShiftId. (extra: tener un buscador por fecha o id que ayude a buscar un shiftId especifico)
+La idea es ver informacion sobre el turno completo, independiente de los dias a los que pertenece.
+
+Todos los shift:
+SELECT NON EMPTY NONEMPTYCROSSJOIN([StatusType].[H1].[StatusType].Members,[Measures].[PartialDuration]) ON 0,NON EMPTY [ShiftInfo].[H1].[ShiftId].Members ON 1 FROM [ASPMINING.ANALYTICS.STATUSEVENTSLICEDCUBE] %FILTER [SHIFTDATE].[H1].[DATETIMEDAY].&[64649]
+
+Zoom en 1 shift
+SELECT NON EMPTY NONEMPTYCROSSJOIN([StatusType].[H1].[StatusType].Members,[Measures].[PartialDuration]) ON 0,NON EMPTY [ShiftInfo].[H1].[ShiftId].Members ON 1 FROM [ASPMINING.ANALYTICS.STATUSEVENTSLICEDCUBE] %FILTER NONEMPTYCROSSJOIN([SHIFTDATE].[H1].[DATETIMEDAY].&[64649],[SHIFTINFO].[H1].[SHIFTID].&[35064])

@@ -1,6 +1,8 @@
 /// History of status changes of equipment or other elements
 Class ASPMining.CanonicalModel.Operation.StatusEvent Extends %Persistent
 {
+/// Unique Id
+Property Id As %BigInt;
 /// Shift where this event happened
 Property Shift As ASPMining.CanonicalModel.Planning.Shift;
 /// Equipment that generated this event
@@ -18,6 +20,7 @@ Property Duration As %Integer;
 
 Parameter DSTIME = "AUTO";
 
+index IdIndex on Id[unique];
 index StartTimeIndex on StartDate;
 index EndTimeIndex on EndDate;
 index StatusReasonIndex on StatusReason [type = bitmap];  //Para mejorar performance al agrupar/buscar por reason
@@ -68,6 +71,9 @@ Storage Default
 </Value>
 <Value name="10">
 <Value>EndDate</Value>
+</Value>
+<Value name="11">
+<Value>Id</Value>
 </Value>
 </Data>
 <DataLocation>^ASPMining.CanoB953.StatusEventD</DataLocation>

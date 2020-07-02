@@ -5,7 +5,9 @@
 /// LoadEvents + DumpEvents + StatusEvents
 /// 
 Class ASPMining.CanonicalModel.Operation.UnifiedEvents Extends %Persistent
-{
+{	
+	/// Unique Id
+	Property Id As %BigInt;
 	/// Related Equipment has to exist
 	Property Equipment As ASPMining.CanonicalModel.Equipment.Equipment;
 	
@@ -18,14 +20,19 @@ Class ASPMining.CanonicalModel.Operation.UnifiedEvents Extends %Persistent
 	/// Status Event
 	Property StatusEvent As ASPMining.CanonicalModel.Operation.StatusEvent;
 	
+	/// Saves the datetime of the received event to simplify the Duration calculation of next event
+	Property EventDateTime As %DateTime;
+	
 	/// Duration in seconds of this state, is the time between this interval and the next
 	Property Duration As %Integer;
 	
 	
+	index IdIndex on Id [unique];
 	index EquipmentIndex on Equipment;
 	index ShiftIndex on Shift;
 	index ProductionEventIndex on ProductionEvent;
 	index StatusEventIndex on StatusEvent;
+	index EventDateTimeIndex on EventDateTime;
 	
 Storage Default
 {
@@ -47,6 +54,12 @@ Storage Default
 </Value>
 <Value name="6">
 <Value>ProductionEvent</Value>
+</Value>
+<Value name="7">
+<Value>EventDateTime</Value>
+</Value>
+<Value name="8">
+<Value>Id</Value>
 </Value>
 </Data>
 <DataLocation>^ASPMining.CaB953.UnifiedEventsD</DataLocation>

@@ -32,4 +32,3 @@ else
      -p 52773:52773 -p 51773:51773 \
      ${DOCKER_REPO}:oee-version-${VERSION}
 fi
-# 

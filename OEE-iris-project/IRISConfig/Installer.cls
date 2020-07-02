@@ -102,6 +102,29 @@ ClassMethod InstallMDX2JSON(pNamespace As %String, pSetupDir as %String, pUser a
 	Quit tSC 
 }
 
+ClassMethod EnableIAM(pPass as %String) As %Status
+{
+	Set tSC = $$$OK
+	Try
+	{
+		ZN "%SYS"
+		// set iam User pass to pPass
+		// set iam User Enabled
+		// set iam Application enabled
+		
+		//Set tSC = ##class(MDX2JSON.Installer).setup(.pVars)
+		Quit:$$$ISERR(tSC)
+	}
+	Catch (oException)
+	{
+		Set tSC = oException.AsStatus()
+	}
+	
+	ZN "%SYS"
+	
+	Quit tSC 
+}
+
 /// You can customize this to run code during docker build
 XData Install [ XMLNamespace = INSTALLER ]
 {
@@ -140,6 +163,11 @@ XData Install [ XMLNamespace = INSTALLER ]
 		<Arg name="pUser" Value="MDXuser"/>
 		<Arg name="pPass" Value="sys"/>
 		<Arg name="pImport" Value="1"/>
+	</Invoke>
+	
+	<Log Text="Enabling IAM..." Level="0"/>
+	<Invoke Class="IRISConfig.Installer" Method="EnableIAM" CheckStatus="true">
+		<Arg name="pPass" Value="sys"/>
 	</Invoke>
 	
 	
