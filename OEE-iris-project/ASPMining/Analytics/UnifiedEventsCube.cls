@@ -46,7 +46,7 @@ XData Cube [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
       </level>
     </hierarchy>
     <hierarchy name="H3" disabled="false" hidden="false">
-      <level name="StatusType" disabled="false" sourceProperty="StatusEvent.StatusType" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      <level name="StatusType" disabled="false" sourceProperty="StatusEvent.StatusType.Description" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
       </level>
     </hierarchy>
   </dimension>
@@ -70,7 +70,7 @@ XData Cube [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
   </dimension>
   <dimension name="Crew" disabled="false" hasAll="false" allCaption="All Crew" allDisplayName="Crew" type="data" hidden="false" showHierarchies="default">
     <hierarchy name="H1" disabled="false" hidden="false">
-      <level name="CrewName" disabled="false" sourceProperty="Shift.Crew" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      <level name="CrewName" disabled="false" sourceProperty="Shift.Crew.Name" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
       </level>
     </hierarchy>
   </dimension>
@@ -104,10 +104,11 @@ XData Cube [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
   </measure>
   <measure name="StatusEventDuration" disabled="false" sourceProperty="StatusEvent.Duration" aggregate="SUM" type="number" hidden="false" searchable="false">
   </measure>
-  <listing name="Listado1" disabled="false" listingType="table" fieldList="Id, Duration, ProductionEvent-&gt;Duration as LastProductionEventDuration,StatusEvent-&gt;Duration as LastStatusEventDuration, Equipment-&gt;Id as Equipment, EventDateTime, ProductionEvent-&gt;ProductionStatusType-&gt;Description as ProductionStatus, ProductionEvent-&gt;Location-&gt;Name as Location, ProductionEvent-&gt;PreviousLocation-&gt;Name as PreviousLocation, Shift-&gt;Id as Shift, StatusEvent-&gt;StatusType-&gt;Description as OperationalStatus, StatusEvent-&gt;StatusReason-&gt;Description as OperationalStatus,
-ProductionEvent-&gt;MeasuredTons as MeasuredTons,
-Equipment-&gt;Capacity as EquipmentCapacity,
-cast(ProductionEvent-&gt;MeasuredTons/Equipment-&gt;Capacity*100 as int) as LoadFactor">
+  <measure name="Capacity" disabled="false" sourceProperty="Equipment.Capacity" aggregate="SUM" type="number" hidden="false" searchable="false">
+  </measure>
+  <calculatedMember name="LoadFactor" disabled="false" dimension="memberDimension" valueExpression="[Measures].[MeasuredTons]/ [Measures].[Capacity]" hidden="false">
+  </calculatedMember>
+  <listing name="Listado1" disabled="false" listingType="table" fieldList="Id, Duration, ProductionEvent-&gt;Duration as LastProductionEventDuration,StatusEvent-&gt;Duration as LastStatusEventDuration, Equipment-&gt;Id as Equipment, EventDateTime, ProductionEvent-&gt;ProductionStatusType-&gt;Description as ProductionStatus, ProductionEvent-&gt;Location-&gt;Name as Location, ProductionEvent-&gt;PreviousLocation-&gt;Name as PreviousLocation, Shift-&gt;Id as Shift, StatusEvent-&gt;StatusType-&gt;Description as OperationalStatus, StatusEvent-&gt;StatusReason-&gt;Description as OperationalStatus, ProductionEvent-&gt;MeasuredTons as MeasuredTons, Equipment-&gt;Capacity as EquipmentCapacity, cast(ProductionEvent-&gt;MeasuredTons/Equipment-&gt;Capacity*100 as int) as LoadFactor">
   </listing>
 </cube>
 }

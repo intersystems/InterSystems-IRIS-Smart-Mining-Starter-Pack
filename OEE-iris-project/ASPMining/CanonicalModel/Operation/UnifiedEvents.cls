@@ -25,6 +25,9 @@ Property StatusEvent As ASPMining.CanonicalModel.Operation.StatusEvent;
 /// Saves the datetime of the received event to simplify the Duration calculation of next event
 Property EventDateTime As %DateTime;
 
+/// Trip Id
+Property Trip As ASPMining.CanonicalModel.Mine.Trip;
+
 /// Duration in seconds of this state, is the time between this interval and the next
 Property Duration As %Double;
 

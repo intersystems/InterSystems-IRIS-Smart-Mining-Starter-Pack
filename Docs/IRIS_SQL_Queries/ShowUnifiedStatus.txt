@@ -2,6 +2,7 @@ SELECT
 Id, Duration, ProductionEvent->Duration as LastProductionEventDuration,StatusEvent->Duration as LastStatusEventDuration, Equipment->Id as Equipment, EventDateTime, ProductionEvent->ProductionStatusType->Description as ProductionStatus, ProductionEvent->Location->Name as ProdCycleCurrentLocation, ProductionEvent->PreviousLocation->Name as ProdCyclePreviousLocation, Shift->Id as Shift, StatusEvent->StatusType->Description as OperationalStatus, StatusEvent->StatusReason->Description as OperationalStatus,
 ProductionEvent->MeasuredTons as MeasuredTons,
 Equipment->Capacity as EquipmentCapacity,
+Trip->Name as Trip, Trip->ReferenceTravelTime AS Reference, Trip->MinTravelTime AS Minimum, Trip->MaxTravelTime AS Maximum,
 cast(ProductionEvent->MeasuredTons/Equipment->Capacity*100 as int) as LoadFactor
 FROM ASPMining_CanonicalModel_Operation.UnifiedEvents
 WHERE Equipment->Id = 'CA101'
