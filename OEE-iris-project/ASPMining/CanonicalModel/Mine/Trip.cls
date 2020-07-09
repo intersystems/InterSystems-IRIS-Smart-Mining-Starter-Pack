@@ -14,8 +14,8 @@ Property OriginLocation As Location;
 /// Site to which this Location belongs
 Property DestinationLocation As Location;
 
-/// Reference Time Used to Compare data
-Property ReferenceTravelTime As %Double;
+/// Reference Time Used to Compare data. //
+Property ReferenceTravelTime As %Double; 
 
 /// Minimum Registered Time
 Property MinTravelTime As %Double;

@@ -98,15 +98,31 @@ XData Cube [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
       </level>
     </hierarchy>
   </dimension>
-  <measure name="UnifiedEventDuration" disabled="false" sourceProperty="Duration" aggregate="SUM" type="number" hidden="false" searchable="false">
-  </measure>
+  <dimension name="Trip" disabled="false" hasAll="false" allCaption="All Trip" allDisplayName="Trip" type="data" hidden="false" showHierarchies="default">
+    <hierarchy name="H1" disabled="false" hidden="false">
+      <level name="TripName" disabled="false" sourceProperty="Trip.Name" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
+    </hierarchy>
+  </dimension>
   <measure name="MeasuredTons" disabled="false" sourceProperty="ProductionEvent.MeasuredTons" aggregate="SUM" type="number" hidden="false" searchable="false">
   </measure>
   <measure name="StatusEventDuration" disabled="false" sourceProperty="StatusEvent.Duration" aggregate="SUM" type="number" hidden="false" searchable="false">
   </measure>
   <measure name="Capacity" disabled="false" sourceProperty="Equipment.Capacity" aggregate="SUM" type="number" hidden="false" searchable="false">
   </measure>
-  <calculatedMember name="LoadFactor" disabled="false" dimension="memberDimension" valueExpression="[Measures].[MeasuredTons]/ [Measures].[Capacity]" hidden="false">
+  <measure name="Duration" disabled="false" sourceProperty="Duration" aggregate="SUM" type="number" hidden="false" searchable="false">
+  </measure>
+  <measure name="ReferenceTravelTime" disabled="false" sourceProperty="Trip.ReferenceTravelTime" aggregate="SUM" type="number" hidden="false" searchable="false">
+  </measure>
+  <calculatedMember name="CapacityPerformance" disabled="false" dimension="memberDimension" valueExpression="[Measures].[MeasuredTons]/ [Measures].[Capacity]" hidden="false">
+  </calculatedMember>
+  <calculatedMember name="Utilization" disabled="false" dimension="memberDimension" valueExpression="[Measures].[Duration]/ [Measures].[StatusEventDuration]" hidden="false">
+    <additionalDescription> </additionalDescription>
+  </calculatedMember>
+  <calculatedMember name="TimePerformance" disabled="false" dimension="memberDimension" valueExpression="[Measures].[Duration]/ [Measures].[ReferenceTravelTime]" hidden="false">
+    <additionalDescription>Has to be applied ONLY WHEN statusEvent = Operative</additionalDescription>
+  </calculatedMember>
+  <calculatedMember name="OEE" disabled="false" dimension="memberDimension" valueExpression="[MEMBERDIMENSION].[Utilization]* [MEMBERDIMENSION].[CapacityPerformance]* [MEMBERDIMENSION].[TimePerformance]" hidden="false">
   </calculatedMember>
   <listing name="Listado1" disabled="false" listingType="table" fieldList="Id, Duration, ProductionEvent-&gt;Duration as LastProductionEventDuration,StatusEvent-&gt;Duration as LastStatusEventDuration, Equipment-&gt;Id as Equipment, EventDateTime, ProductionEvent-&gt;ProductionStatusType-&gt;Description as ProductionStatus, ProductionEvent-&gt;Location-&gt;Name as Location, ProductionEvent-&gt;PreviousLocation-&gt;Name as PreviousLocation, Shift-&gt;Id as Shift, StatusEvent-&gt;StatusType-&gt;Description as OperationalStatus, StatusEvent-&gt;StatusReason-&gt;Description as OperationalStatus, ProductionEvent-&gt;MeasuredTons as MeasuredTons, Equipment-&gt;Capacity as EquipmentCapacity, cast(ProductionEvent-&gt;MeasuredTons/Equipment-&gt;Capacity*100 as int) as LoadFactor">
   </listing>
