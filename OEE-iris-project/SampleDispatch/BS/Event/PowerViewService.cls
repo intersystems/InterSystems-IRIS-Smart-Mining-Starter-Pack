@@ -579,6 +579,7 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 				set unifiedEvent2.Duration = 0 
 				//update previous unifiedEvent event
 				set unifiedEvent1.Duration = $System.SQL.DATEDIFF("second", unifiedEvent1.EventDateTime, unifiedEvent2.EventDateTime)
+				set unifiedEvent1.OperativeDuration = unifiedEvent1.Duration
 				
 				
 				set unifiedEvent3 = ##class(ASPMining.CanonicalModel.Operation.UnifiedEvents).%New()
@@ -590,6 +591,7 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 				set unifiedEvent3.Duration = 0 
 				//update previous unifiedEvent event
 				set unifiedEvent2.Duration = $System.SQL.DATEDIFF("second", unifiedEvent2.EventDateTime, unifiedEvent3.EventDateTime)
+				set unifiedEvent2.OperativeDuration = unifiedEvent2.Duration
 				
 								
 				set lastTrackUEvent = ##class(ASPMining.CanonicalModel.Equipment.Equipment).EquipmentIndexOpen(truck).LastUnifiedEvent
@@ -623,6 +625,7 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 						set trip.MaxTravelTime = travelTime
 						set trip.TravelCount = 1
 						set trip.TotalTravelTime = travelTime
+						set trip.AvgTravelTime = trip.TotalTravelTime / trip.TravelCount
 					} else {
 						set travelTime = productionEvent1.Duration 
 
@@ -637,6 +640,7 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 						}
 						set trip.TravelCount = trip.TravelCount + 1
 						set trip.TotalTravelTime = trip.TotalTravelTime + travelTime
+						set trip.AvgTravelTime = trip.TotalTravelTime / trip.TravelCount
 					}
 					// save the trip right now to dont wait for the operation
 					// add this trip to the unified event
@@ -644,9 +648,17 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 					set unifiedEvent1.Trip = trip
 					set unifiedEvent2.Trip = trip
 					set unifiedEvent3.Trip = trip
+					set unifiedEvent1.TripTime = travelTime
+					set unifiedEvent2.TripTime = travelTime
+					set unifiedEvent3.TripTime = travelTime
 					
 					If (lastUnifiedEvent.EventDateTime '= ""){
 						set lastUnifiedEvent.Duration = $System.SQL.DATEDIFF("second", lastUnifiedEvent.EventDateTime, unifiedEvent1.EventDateTime)
+						If (lastUnifiedEvent.StatusEvent.StatusType.Description '= "Operative"){
+							set lastUnifiedEvent.OperativeDuration = 0
+						} else {
+							set lastUnifiedEvent.OperativeDuration = lastUnifiedEvent.Duration
+						}
 					}
 					set unifiedEvent1.StatusEvent = lastUnifiedEvent.StatusEvent 
 					set unifiedEvent2.StatusEvent = lastUnifiedEvent.StatusEvent 
@@ -806,6 +818,7 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 				set unifiedEvent2.EventDateTime = productionEvent2.StartTime 
 				//update previous unified event
 				set unifiedEvent1.Duration = $System.SQL.DATEDIFF("second", unifiedEvent1.EventDateTime, unifiedEvent2.EventDateTime)
+				set unifiedEvent1.OperativeDuration = unifiedEvent1.Duration
 				
 				set unifiedEvent3 = ##class(ASPMining.CanonicalModel.Operation.UnifiedEvents).%New()
 				set unifiedEvent3.Id = uniqueId+5
@@ -816,6 +829,7 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 				set unifiedEvent3.Duration = 0 
 				//update previous unified event
 				set unifiedEvent2.Duration = $System.SQL.DATEDIFF("second", unifiedEvent2.EventDateTime, unifiedEvent3.EventDateTime)
+				set unifiedEvent2.OperativeDuration = unifiedEvent2.Duration
 
 								
 				set lastTrackUEvent = ##class(ASPMining.CanonicalModel.Equipment.Equipment).EquipmentIndexOpen(truck).LastUnifiedEvent
@@ -849,6 +863,7 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 						set trip.MaxTravelTime = travelTime
 						set trip.TravelCount = 1
 						set trip.TotalTravelTime = travelTime
+						set trip.AvgTravelTime = trip.TotalTravelTime / trip.TravelCount
 					} else {
 						set travelTime = productionEvent1.Duration 
 
@@ -863,6 +878,7 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 						}
 						set trip.TravelCount = trip.TravelCount + 1
 						set trip.TotalTravelTime = trip.TotalTravelTime + travelTime
+						set trip.AvgTravelTime = trip.TotalTravelTime / trip.TravelCount
 					}
 					// save the trip right now to dont wait for the operation
 					// add this trip to the unified event
@@ -870,9 +886,18 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 					set unifiedEvent1.Trip = trip
 					set unifiedEvent2.Trip = trip
 					set unifiedEvent3.Trip = trip
+					set unifiedEvent1.TripTime = travelTime
+					set unifiedEvent2.TripTime = travelTime
+					set unifiedEvent3.TripTime = travelTime
 
 					If (lastUnifiedEvent.EventDateTime '= ""){
 						set lastUnifiedEvent.Duration = $System.SQL.DATEDIFF("second", lastUnifiedEvent.EventDateTime, unifiedEvent1.EventDateTime)
+						
+						If (lastUnifiedEvent.StatusEvent.StatusType.Description '= "Operative"){
+							set lastUnifiedEvent.OperativeDuration = 0
+						} else {
+							set lastUnifiedEvent.OperativeDuration = lastUnifiedEvent.Duration
+						}
 					}
 					set unifiedEvent1.StatusEvent = lastUnifiedEvent.StatusEvent 
 					set unifiedEvent2.StatusEvent = lastUnifiedEvent.StatusEvent 
@@ -944,10 +969,25 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 				
 				set unifiedEvent1.ProductionEvent = lastUnifiedEvent.ProductionEvent 
 				set unifiedEvent1.Trip = lastUnifiedEvent.Trip
+				set unifiedEvent1.TripTime = lastUnifiedEvent.TripTime
+
+				// TODO: check if we can remove this check here and do this directly into the cube
+				If (unifiedEvent1.StatusEvent.StatusType.Description '= "Operative"){
+					set unifiedEvent1.OperativeDuration = 0
+				} else {
+					set unifiedEvent1.OperativeDuration = unifiedEvent1.Duration
+				}
+
 
 				// Update duration
 				If (lastUnifiedEvent.EventDateTime '= ""){
 					set lastUnifiedEvent.Duration = $System.SQL.DATEDIFF("second", lastUnifiedEvent.EventDateTime, unifiedEvent1.EventDateTime)
+
+					If (lastUnifiedEvent.StatusEvent.StatusType.Description '= "Operative"){
+						set lastUnifiedEvent.OperativeDuration = 0
+					} else {
+						set lastUnifiedEvent.OperativeDuration = lastUnifiedEvent.Duration
+					}
 				}
 
 				set sc = lastUnifiedEvent.%Save()

@@ -31,6 +31,12 @@ Property Trip As ASPMining.CanonicalModel.Mine.Trip;
 /// Duration in seconds of this state, is the time between this interval and the next
 Property Duration As %Double;
 
+/// Only Operative Duration of this state, will basically be 0 for any statusevent with Non Operative StatusType, and Duration if statustype is operative. It could exists an equivalent way to do this in the Cube.
+Property OperativeDuration As %Double;
+
+/// Trip Time of the most Recent Trip Made by this Truck
+Property TripTime As %Double;
+
 Index IdIndex On Id [ Unique ];
 
 Index EquipmentIndex On Equipment;
@@ -69,6 +75,21 @@ Storage Default
 </Value>
 <Value name="8">
 <Value>Id</Value>
+</Value>
+<Value name="9">
+<Value>Trip</Value>
+</Value>
+<Value name="10">
+<Value>TripTime</Value>
+</Value>
+<Value name="11">
+<Value>LastTripTime</Value>
+</Value>
+<Value name="12">
+<Value>OperativeDuration</Value>
+</Value>
+<Value name="13">
+<Value>IsOperative</Value>
 </Value>
 </Data>
 <DataLocation>^ASPMining.CaB953.UnifiedEventsD</DataLocation>

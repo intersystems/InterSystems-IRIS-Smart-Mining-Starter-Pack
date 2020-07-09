@@ -15,13 +15,16 @@ Property OriginLocation As Location;
 Property DestinationLocation As Location;
 
 /// Reference Time Used to Compare data. //
-Property ReferenceTravelTime As %Double; 
+Property ReferenceTravelTime As %Double;
 
 /// Minimum Registered Time
 Property MinTravelTime As %Double;
 
 /// Maximum Registered Time
 Property MaxTravelTime As %Double;
+
+/// Average Registered Time
+Property AvgTravelTime As %Double;
 
 /// Sum of all times of this trip, useful for calculations
 Property TotalTravelTime As %BigInt;
@@ -69,6 +72,9 @@ Storage Default
 </Value>
 <Value name="10">
 <Value>TotalTravelTime</Value>
+</Value>
+<Value name="11">
+<Value>AvgTravelTime</Value>
 </Value>
 </Data>
 <DataLocation>^ASPMining.CanonicalMod2AE.TripD</DataLocation>

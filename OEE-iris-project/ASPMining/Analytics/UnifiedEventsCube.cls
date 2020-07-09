@@ -8,7 +8,7 @@ XData Cube [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
 <cube xmlns="http://www.intersystems.com/deepsee" name="UnifiedEventsCube" displayName="UnifiedEventsCube" description="Cube for unified production and operatin events" disabled="false" abstract="false" sourceClass="ASPMining.CanonicalModel.Operation.UnifiedEvents" countMeasureName="%COUNT" bucketSize="8" bitmapChunkInMemory="false" precompute="0" disableListingGroups="false" enableSqlRestrict="false">
   <dimension name="Equipment" disabled="false" hasAll="false" allCaption="All Equipment" allDisplayName="Equipment" type="data" hidden="false" showHierarchies="default">
     <hierarchy name="H1" disabled="false" hidden="false">
-      <level name="EquipmentCategory" disabled="false" sourceProperty="Equipment.EquipmentCategory" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      <level name="EquipmentCategory" disabled="false" sourceProperty="Equipment.EquipmentCategory.Name" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
       </level>
       <level name="EquipmentName" disabled="false" sourceProperty="Equipment.Name" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
       </level>
@@ -29,8 +29,6 @@ XData Cube [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
       <level name="EventDateTimeMonth" disabled="false" timeFunction="MonthYear" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
       </level>
       <level name="EventDateTimeDay" disabled="false" timeFunction="DayMonthYear" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
-      </level>
-      <level name="EventDateTimeHour" disabled="false" timeFunction="HourNumber" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
       </level>
       <level name="EventDateTimeMinute" disabled="false" timeFunction="MinuteNumber" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
       </level>
@@ -114,12 +112,17 @@ XData Cube [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
   </measure>
   <measure name="ReferenceTravelTime" disabled="false" sourceProperty="Trip.ReferenceTravelTime" aggregate="SUM" type="number" hidden="false" searchable="false">
   </measure>
+  <measure name="TripTime" disabled="false" sourceProperty="TripTime" aggregate="SUM" type="number" hidden="false" searchable="false">
+  </measure>
+  <measure name="OperativeDuration" disabled="false" sourceProperty="OperativeDuration" aggregate="SUM" type="number" hidden="false" searchable="false">
+  </measure>
+  <measure name="AvgTravelTime" disabled="false" sourceProperty="Trip.AvgTravelTime" aggregate="SUM" type="number" hidden="false" searchable="false">
+  </measure>
   <calculatedMember name="CapacityPerformance" disabled="false" dimension="memberDimension" valueExpression="[Measures].[MeasuredTons]/ [Measures].[Capacity]" hidden="false">
   </calculatedMember>
-  <calculatedMember name="Utilization" disabled="false" dimension="memberDimension" valueExpression="[Measures].[Duration]/ [Measures].[StatusEventDuration]" hidden="false">
-    <additionalDescription> </additionalDescription>
+  <calculatedMember name="Utilization" disabled="false" dimension="memberDimension" valueExpression="[Measures].[OperativeDuration] / [Measures].[Duration] " hidden="false">
   </calculatedMember>
-  <calculatedMember name="TimePerformance" disabled="false" dimension="memberDimension" valueExpression="[Measures].[Duration]/ [Measures].[ReferenceTravelTime]" hidden="false">
+  <calculatedMember name="TimePerformance" disabled="false" dimension="memberDimension" valueExpression="[Measures].[AvgTravelTime]/[Measures].[TripTime]" hidden="false">
     <additionalDescription>Has to be applied ONLY WHEN statusEvent = Operative</additionalDescription>
   </calculatedMember>
   <calculatedMember name="OEE" disabled="false" dimension="memberDimension" valueExpression="[MEMBERDIMENSION].[Utilization]* [MEMBERDIMENSION].[CapacityPerformance]* [MEMBERDIMENSION].[TimePerformance]" hidden="false">
