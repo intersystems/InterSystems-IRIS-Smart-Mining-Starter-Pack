@@ -21,7 +21,7 @@ Method OnProcessInput(pInput As EnsLib.SQL.Snapshot, Output pOutput As %Register
 		Do ..ProcessNewShifts()
 		Do ..ProcessNewReasons()
 		//Do ..ProcessNewCompleteEvents(35066) //this is still here because sliced are still generated here
-		Do ..ProcessAllEvents(35086)
+		Do ..ProcessAllEvents(36000)
 		//Do ..ProcessDumpAndLoadEvents(35066) //need to remove the splicing on this
 		
 	}
@@ -631,13 +631,13 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 
 						set trip = ##class(ASPMining.CanonicalModel.Mine.Trip).IdIndexOpen(tripId)
 						#Dim trip as ASPMining.CanonicalModel.Mine.Trip
-						set trip.ReferenceTravelTime = (trip.ReferenceTravelTime * 0.9) + (travelTime * 0.1)
 						If (travelTime < trip.MinTravelTime){
 							set trip.MinTravelTime = travelTime
 						}
 						If (travelTime > trip.MaxTravelTime){
 							set trip.MaxTravelTime = travelTime
 						}
+						set trip.ReferenceTravelTime = (trip.MinTravelTime  + trip.MaxTravelTime) / 2
 						set trip.TravelCount = trip.TravelCount + 1
 						set trip.TotalTravelTime = trip.TotalTravelTime + travelTime
 						set trip.AvgTravelTime = trip.TotalTravelTime / trip.TravelCount
@@ -869,13 +869,13 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 
 						set trip = ##class(ASPMining.CanonicalModel.Mine.Trip).IdIndexOpen(tripId)
 						#Dim trip as ASPMining.CanonicalModel.Mine.Trip
-						set trip.ReferenceTravelTime = (trip.ReferenceTravelTime * 0.9) + (travelTime * 0.1)
 						If (travelTime < trip.MinTravelTime){
 							set trip.MinTravelTime = travelTime
 						}
 						If (travelTime > trip.MaxTravelTime){
 							set trip.MaxTravelTime = travelTime
 						}
+						set trip.ReferenceTravelTime = (trip.MinTravelTime  + trip.MaxTravelTime) / 2
 						set trip.TravelCount = trip.TravelCount + 1
 						set trip.TotalTravelTime = trip.TotalTravelTime + travelTime
 						set trip.AvgTravelTime = trip.TotalTravelTime / trip.TravelCount
