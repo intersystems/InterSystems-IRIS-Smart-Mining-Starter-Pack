@@ -21,7 +21,7 @@ Method OnProcessInput(pInput As EnsLib.SQL.Snapshot, Output pOutput As %Register
 		Do ..ProcessNewShifts()
 		Do ..ProcessNewReasons()
 		//Do ..ProcessNewCompleteEvents(35066) //this is still here because sliced are still generated here
-		Do ..ProcessAllEvents(35066)
+		Do ..ProcessAllEvents(35086)
 		//Do ..ProcessDumpAndLoadEvents(35066) //need to remove the splicing on this
 		
 	}

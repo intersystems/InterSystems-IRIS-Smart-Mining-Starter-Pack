@@ -30,6 +30,8 @@ XData Cube [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
       </level>
       <level name="EventDateTimeDay" disabled="false" timeFunction="DayMonthYear" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
       </level>
+      <level name="EventDateTimeHour" disabled="false" timeFunction="HourNumber" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
       <level name="EventDateTimeMinute" disabled="false" timeFunction="MinuteNumber" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
       </level>
     </hierarchy>
