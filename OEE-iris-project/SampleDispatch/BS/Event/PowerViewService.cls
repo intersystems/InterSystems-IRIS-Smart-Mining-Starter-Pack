@@ -157,7 +157,7 @@ Method ProcessNewCompleteEvents(shiftToQuery As %Integer)
 				set newstartseconds = startseconds
 				set oEvent.StartDate = $ZDateTime(shift.StartDay_","_startseconds)
 			}
-			$$$TRACE("EVENT StartTimeDT "_oEvent.StartDate_",StartTime: "_oRS.Get("starttime")_ " Duration: "_oEvent.Duration_" EndTime: "_oRS.Get("endtime"))
+			$$$TRACE("EVENT StartTimeDT "_oEvent.StartDate_",StartTime: "_oRS.Get("starttime")_ " Duration: "_oEvent.Duration)
 			
 			
 			//Checking if endtime is within same day or next day, just like with start time
@@ -180,9 +180,7 @@ Method ProcessNewCompleteEvents(shiftToQuery As %Integer)
 			set oEvent.StatusTypeId = oRS.Get("status")
 			
 			$$$TRACE("StatusReasonId "_oEvent.StatusReasonId_"...")
-						
-			Set ..%SessionId=""
-			
+									
 			set sc = ..SendRequestAsync("PowerView Event Operation", oEvent)
 			
 			// SLICING OF THE EVENT
@@ -430,7 +428,7 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 	// Evento nuevo es un nuevo UnifiedEvent
 	// Evento nuevo clona los campos del ultimo UnifiedEvent del Equipment excepto lo q sea nuevo
 	// Se debe modificar el campo "Duration" del ultimo UnifiedEvent del Equipment y %Save al UnifiedEvent
-	// Se actualiza el �ltimo UnifiedEvent del Equipment y se le hace %Save al Equipment
+	// Se actualiza el ultimo UnifiedEvent del Equipment y se le hace %Save al Equipment
 	// next
 	
 	
@@ -478,13 +476,13 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 					set shift = ##class(ASPMining.CanonicalModel.Planning.Shift).ShiftIndexOpen(shiftindex)	
 					set oDump.Shift = shift	
 					$$$TRACE("Dump Shift StartSeconds "_shift.StartSeconds)
-					$$$TRACE("Dump TimeArrive "_oRS.Get("timearrive"))	
-					$$$TRACE("Dump TimeDump "_oRS.Get("timedump"))	
-					$$$TRACE("Dump TimeEmpty "_oRS.Get("timeempty"))	
+					$$$TRACE("Dump TimeArrive "_timearrive)	
+					$$$TRACE("Dump TimeDump "_timedump)	
+					$$$TRACE("Dump TimeEmpty "_timeempty)	
 					
-					set oDump.TimeArrive = ..ShiftOffsetToDateTime(oRS.Get("timearrive"), shiftindex)
-					set oDump.TimeDump = ..ShiftOffsetToDateTime(oRS.Get("timedump"), shiftindex)
-					set oDump.TimeEmpty = ..ShiftOffsetToDateTime(oRS.Get("timeempty"), shiftindex)
+					set oDump.TimeArrive = ..ShiftOffsetToDateTime(timearrive, shiftindex)
+					set oDump.TimeDump = ..ShiftOffsetToDateTime(timedump, shiftindex)
+					set oDump.TimeEmpty = ..ShiftOffsetToDateTime(timeempty, shiftindex)
 					$$$TRACE("DUMP TimeArrive: "_oDump.TimeArrive)
 				}
 				
@@ -718,13 +716,13 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 					set shift = ##class(ASPMining.CanonicalModel.Planning.Shift).ShiftIndexOpen(shiftindex)	
 					set oLoad.Shift = shift	
 					$$$TRACE("Load Shift StartSeconds "_shift.StartSeconds)
-					$$$TRACE("Load TimeArrive "_oRS.Get("timearrive"))	
-					$$$TRACE("Load TimeLoad "_oRS.Get("timeload"))	
-					$$$TRACE("Load TimeFull "_oRS.Get("timefull"))	
+					$$$TRACE("Load TimeArrive "_timearrive)	
+					$$$TRACE("Load TimeLoad "_timeload)	
+					$$$TRACE("Load TimeFull "_timefull)	
 					
-					set oLoad.TimeArrive = ..ShiftOffsetToDateTime(oRS.Get("timearrive"), shiftindex)
-					set oLoad.TimeLoad = ..ShiftOffsetToDateTime(oRS.Get("timeload"), shiftindex)
-					set oLoad.TimeFull = ..ShiftOffsetToDateTime(oRS.Get("timefull"), shiftindex)
+					set oLoad.TimeArrive = ..ShiftOffsetToDateTime(timearrive, shiftindex)
+					set oLoad.TimeLoad = ..ShiftOffsetToDateTime(timeload, shiftindex)
+					set oLoad.TimeFull = ..ShiftOffsetToDateTime(timefull, shiftindex)
 					$$$TRACE("LOAD TimeArrive: "_oLoad.TimeArrive)
 				}
 				
@@ -1001,14 +999,13 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 			//
 			// JUST FOR GETTING THE SPLICES
 			// OLD FUNCTIONALITY COMPLETE EVENTS
-			Set tLastKey = oRS.Get("ddbkey")
-			$$$TRACE("Processing event ddbkey "_tLastKey_"...")
+			$$$TRACE("Processing event index2 "_tStatusLastKey_"...")
 			
 			/// oRS.Get Names must match SQL query var names
 			set oEvent = ##class(SampleDispatch.BO.Event.CompleteEvent).%New()
 			#Dim oEvent As SampleDispatch.BO.Event.CompleteEvent
 			
-			set oEvent.EquipmentId = oRS.Get("eqmt") // TODO: Asegurar que se tiene este id en la table Equipment
+			set oEvent.EquipmentId = truck // TODO: Asegurar que se tiene este id en la table Equipment
 			//ASK Amir how to do this. if('##class(ASPMining.CanonicalModel.Planning.Shift).ShiftIndexExists(oEvent.ShiftId))
 			
 			// TODO: MISSING HIST_SHIFT_INDEX. Hardcoded time provided for testing, should consider the initial offset time provided by the shift index table.
@@ -1017,10 +1014,10 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 			
 			if ##class(ASPMining.CanonicalModel.Planning.Shift).ShiftIndexExists(oEvent.ShiftId){
 				set shift = ##class(ASPMining.CanonicalModel.Planning.Shift).ShiftIndexOpen(oEvent.ShiftId)		
-				$$$TRACE("LOG1 StartSeconds "_shift.StartSeconds_",starttime: "_oRS.Get("timearrive"))	
+				$$$TRACE("LOG1 StartSeconds "_shift.StartSeconds_",starttime: "_timearrive)	
 				
 				//Checking if starttime is within same day or next day, this could happen since shifts belong to more than 1 day
-				set startseconds = shift.StartSeconds + oRS.Get("timearrive")
+				set startseconds = shift.StartSeconds + timearrive
 				set startday = 0 //used for slicing only
 				set newstartseconds = 0 //used for slicing only
 				$$$TRACE("startseconds: "_startseconds)
@@ -1035,11 +1032,11 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 					set newstartseconds = startseconds
 					set oEvent.StartDate = $ZDateTime(shift.StartDay_","_startseconds)
 				}
-				$$$TRACE("EVENT StartTimeDT "_oEvent.StartDate_",StartTime: "_oRS.Get("starttime")_ " Duration: "_oEvent.Duration_" EndTime: "_oRS.Get("endtime"))
+				$$$TRACE("EVENT StartTimeDT "_oEvent.StartDate_",StartTime: "_timearrive_ " Duration: "_oEvent.Duration)
 				
 				
 				//Checking if endtime is within same day or next day, just like with start time
-				set endseconds = shift.StartSeconds + oRS.Get("timearrive") + oEvent.Duration
+				set endseconds = shift.StartSeconds + timearrive + oEvent.Duration
 				set endday = 0 //used for splicing only
 				$$$TRACE("endseconds: "_endseconds)
 				If (endseconds) >= 86400 {
@@ -1054,8 +1051,8 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 				}
 				$$$TRACE("EVENT EndTime "_oEvent.EndDate_"...")
 				
-				set oEvent.StatusReasonId = oRS.Get("reason")
-				set oEvent.StatusTypeId = oRS.Get("status")
+				set oEvent.StatusReasonId = reason
+				set oEvent.StatusTypeId = statustype
 				
 				$$$TRACE("StatusReasonId "_oEvent.StatusReasonId_"...")
 							
@@ -1069,8 +1066,8 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 				
 				set firstSliceSlotOffset = newstartseconds # SliceDuration // ej: if i'm at seconds 1534, returns 34 sobran 60
 				set firstSliceSlot = newstartseconds - firstSliceSlotOffset // gets the start of the slice slot, e.g: 1500
-				set lastSliceSlotOffset = (newstartseconds + oRS.Get("duration") ) # SliceDuration // sobran 154
-				set lastSliceSlot = (newstartseconds + oRS.Get("duration") ) - lastSliceSlotOffset
+				set lastSliceSlotOffset = (newstartseconds + duration ) # SliceDuration // sobran 154
+				set lastSliceSlot = (newstartseconds + duration ) - lastSliceSlotOffset
 				
 				set firstSliceRemainingTime = SliceDuration - firstSliceSlotOffset
 				set lastSliceRemainingTime = SliceDuration - lastSliceSlotOffset
@@ -1084,11 +1081,11 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 
 					//send fraction of first slot
 					set oSliceEvent = ##class(SampleDispatch.BO.Event.SlicedEvent).%New()
-					set oSliceEvent.ddbkey = oRS.Get("ddbkey")
-					set oSliceEvent.EquipmentId = oRS.Get("eqmt")
-					set oSliceEvent.ShiftId = oRS.Get("shiftindex")
-					set oSliceEvent.StatusReasonId = oRS.Get("reason")
-					set oSliceEvent.StatusTypeId = oRS.Get("status")
+					set oSliceEvent.ddbkey = tStatusLastKey
+					set oSliceEvent.EquipmentId = truck
+					set oSliceEvent.ShiftId = shiftindex
+					set oSliceEvent.StatusReasonId = statustype_ "-" _reason
+					set oSliceEvent.StatusTypeId = statustype
 					set oSliceEvent.SliceStartDate = $ZDateTime(startday_","_firstSliceSlot)
 					set oSliceEvent.PartialDuration = firstSliceRemainingTime / SliceDuration //this event is longer than a single slot so is has the whole remaining time of the first slot
 
@@ -1098,11 +1095,11 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 					For i=1:1:extraSliceCount {
 						//$$$TRACE("EXTRA SLICE i: "_i) //
 						set oSliceEvent = ##class(SampleDispatch.BO.Event.SlicedEvent).%New()
-						set oSliceEvent.ddbkey = oRS.Get("ddbkey")
-						set oSliceEvent.EquipmentId = oRS.Get("eqmt")
-						set oSliceEvent.ShiftId = oRS.Get("shiftindex")
-						set oSliceEvent.StatusReasonId = oRS.Get("status")_ "-" _oRS.Get("reason")
-						set oSliceEvent.StatusTypeId = oRS.Get("status")
+						set oSliceEvent.ddbkey = tStatusLastKey
+						set oSliceEvent.EquipmentId = truck
+						set oSliceEvent.ShiftId = shiftindex
+						set oSliceEvent.StatusReasonId = statustype_ "-" _reason
+						set oSliceEvent.StatusTypeId = statustype
 						// validate the day we are before anything
 						set thisSlotSeconds = firstSliceSlot + (i * SliceDuration)
 						If (thisSlotSeconds >= 84600) {
@@ -1126,11 +1123,11 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 					
 				} else {
 					set oSliceEvent = ##class(SampleDispatch.BO.Event.SlicedEvent).%New()
-					set oSliceEvent.ddbkey = oRS.Get("ddbkey")
-					set oSliceEvent.EquipmentId = oRS.Get("eqmt")
-					set oSliceEvent.ShiftId = oRS.Get("shiftindex")
-					set oSliceEvent.StatusReasonId = oRS.Get("status")_ "-" _oRS.Get("reason")
-					set oSliceEvent.StatusTypeId = oRS.Get("status")
+					set oSliceEvent.ddbkey = tStatusLastKey
+					set oSliceEvent.EquipmentId = truck
+					set oSliceEvent.ShiftId = shiftindex
+					set oSliceEvent.StatusReasonId = statustype_ "-" _reason
+					set oSliceEvent.StatusTypeId = statustype
 					set oSliceEvent.SliceStartDate = $ZDateTime(startday_","_firstSliceSlot)
 					set oSliceEvent.PartialDuration = (firstSliceRemainingTime - lastSliceRemainingTime) / SliceDuration
 					$$$TRACE("SINGLE SLICE ddbkey: "_oSliceEvent.ddbkey_" PartialDuration: "_oSliceEvent.PartialDuration) //
@@ -1138,7 +1135,7 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 				}
 				
 			} else {
-				$$$TRACE("Skipping event due to: ShiftIndex "_oEvent.ShiftId_" Does not exists for StatusEventId ddbkey: "_oRS.Get("ddbkey"))
+				$$$TRACE("Skipping event due to: ShiftIndex "_oEvent.ShiftId_" Does not exists for StatusEventId tStatusLastKey: "_tStatusLastKey)
 			}
 
 		} else {
