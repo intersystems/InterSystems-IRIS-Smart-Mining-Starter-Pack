@@ -1,0 +1,21 @@
+EquipmentCategories y Models:
+
+MC utiliza los IDs
+Pview Usa los textos
+
+Problema, los Ids no coinciden el tipo de dato entre uno y otro sistema y puede que estemos duplicando algunos modelos.
+
+Mejora:
+Utilizar 2 indices Id y Name por separado, 
+
+En minecare, al agregar los modelos, primero revisar si el NOMBRE EXISTE, sino, crear la nueva entrada con su Id y Name diferenciados.
+
+
+Se necesita igual verificar, por ejemplo, en MC, la BD tiene categoria "Camiones" y power view como "Camion"
+Por lo tanto, si se agrupa por categorias quedaran en categorias distintas.
+
+Pero la busqueda por nombre correcto deberia utilizar solo 1 categoria.
+
+Esto puede generar conflicto en caso de que 1 camion se genere desde Minecare, y otro desde PowerView, lo q los podria dejar en categorias distintas.
+Para evitar esto, las categorias y modelos deben ser tomadas en orden, o desde solo 1 servicio y no de ambos.
+Evaluar esto con cliente quisas previo a implementacion? para ver convencion de nombres.

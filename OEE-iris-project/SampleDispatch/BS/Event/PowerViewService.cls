@@ -361,6 +361,7 @@ Method ProcessNewEquipments()
 			If '##class(ASPMining.CanonicalModel.Equipment.EquipmentCategory).EquipmentCategoryIndexExists(oRS.Get("unit")){
 				set oEquipment.EquipmentCategory = ##class(ASPMining.CanonicalModel.Equipment.EquipmentCategory).%New() //TODO: obtener antes las eqmttype
 				set oEquipment.EquipmentCategory.Name = oRS.Get("unit")
+				set oEquipment.EquipmentCategory.Description = oRS.Get("unit")
 			}else{
 				set oEquipment.EquipmentCategory = ##class(ASPMining.CanonicalModel.Equipment.EquipmentCategory).EquipmentCategoryIndexOpen(oRS.Get("unit"),2)
 			}
@@ -368,6 +369,7 @@ Method ProcessNewEquipments()
 			If '##class(ASPMining.CanonicalModel.Equipment.EquipmentModel).EquipmentModelIndexExists(oRS.Get("eqmttype")){
 				set oEquipment.EquipmentModel = ##class(ASPMining.CanonicalModel.Equipment.EquipmentModel).%New() //TODO: obtener antes las eqmttype
 				set oEquipment.EquipmentModel.Model = oRS.Get("eqmttype")
+				set oEquipment.EquipmentModel.Description = oRS.Get("eqmttype")
 			}else{
 				set oEquipment.EquipmentModel = ##class(ASPMining.CanonicalModel.Equipment.EquipmentModel).EquipmentModelIndexOpen(oRS.Get("eqmttype"),2)
 			}

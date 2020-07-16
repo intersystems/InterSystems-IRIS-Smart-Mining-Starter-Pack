@@ -490,6 +490,44 @@ Method NewProductionEventSliced(pInput As ASPMining.CanonicalModel.Production.Pr
 	Quit sc
 }
 
+Method NewCategory(pInput As ASPMining.CanonicalModel.Equipment.EquipmentCategory, Output pOutput As Ens.Response) As %Status
+{
+
+	Set sc=$$$OK
+	
+	Try
+	{		
+		If '##class(ASPMining.CanonicalModel.Equipment.EquipmentCategory).EquipmentCategoryIndexExists(pInput.Name) {
+			Set sc = pInput.%Save()
+		}
+	}
+	Catch (oException)
+	{
+		Set sc = oException.AsStatus()
+	}
+	
+	Quit sc
+}
+
+Method NewModel(pInput As ASPMining.CanonicalModel.Equipment.EquipmentModel, Output pOutput As Ens.Response) As %Status
+{
+
+	Set sc=$$$OK
+	
+	Try
+	{		
+		If '##class(ASPMining.CanonicalModel.Equipment.EquipmentModel).EquipmentModelIndexExists(pInput.Model) {
+			Set sc = pInput.%Save()
+		}
+	}
+	Catch (oException)
+	{
+		Set sc = oException.AsStatus()
+	}
+	
+	Quit sc
+}
+
 XData MessageMap
 {
 <MapItems>
@@ -534,6 +572,12 @@ XData MessageMap
     </MapItem>
     <MapItem MessageType="ASPMining.CanonicalModel.Operation.StatusEvent">
         <Method>NewStatusEvent</Method>
+    </MapItem>
+    <MapItem MessageType="ASPMining.CanonicalModel.Equipment.EquipmentCategory">
+        <Method>NewCategory</Method>
+    </MapItem>
+    <MapItem MessageType="ASPMining.CanonicalModel.Equipment.EquipmentModel">
+        <Method>NewModel</Method>
     </MapItem>
 </MapItems>
 }

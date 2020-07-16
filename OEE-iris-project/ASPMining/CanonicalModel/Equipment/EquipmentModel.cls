@@ -1,15 +1,21 @@
 /// Information about brand and model of equipment
 Class ASPMining.CanonicalModel.Equipment.EquipmentModel Extends %Persistent
 {
- /// Model of the equipment provided by manufacturer
- Property Model As %String;
- /// Manufacturer's brand name
- Property Brand As %String;
- /// Manufacturer's specified Tonnage of equipment (if applies)
- Property NominalCapacityTons As %Float;
- 
- index EquipmentModelIndex on Model [Unique ];
- 
+
+/// Model of the equipment provided by manufacturer
+Property Model As %String;
+
+/// Manufacturer's brand name
+Property Brand As %String;
+
+/// Model Description
+Property Description As %String;
+
+/// Manufacturer's specified Tonnage of equipment (if applies)
+Property NominalCapacityTons As %Float;
+
+Index EquipmentModelIndex On Model [ Unique ];
+
 Storage Default
 {
 <Data name="EquipmentModelDefaultData">
@@ -24,6 +30,9 @@ Storage Default
 </Value>
 <Value name="4">
 <Value>NominalCapacityTons</Value>
+</Value>
+<Value name="5">
+<Value>Description</Value>
 </Value>
 </Data>
 <DataLocation>^ASPMining.CF845.EquipmentModelD</DataLocation>
