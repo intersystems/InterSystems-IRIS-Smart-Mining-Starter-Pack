@@ -1,5 +1,6 @@
 #FROM store/intersystems/iris-community:2020.2.0.211.0
-FROM intersystemsdc/starterpack-base-irisint:version-1.6
+#FROM intersystemsdc/starterpack-base-irisint:version-1.6
+FROM intersystemsdc/irisdemo-base-irisint-community:version-1.6.0
 
 # Name of the project folder ex.: my-atelier-project
 ARG IRIS_PROJECT_FOLDER_NAME=ASP-Mining-project
