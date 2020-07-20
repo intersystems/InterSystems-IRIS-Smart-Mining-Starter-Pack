@@ -2,9 +2,9 @@ version: '3.7'
 
 services:
 
-  OEE:
-    image: intersystemsdc/mining:oee-version-0.1.2
-    hostname: OEE
+  aspmining:
+    image: intersystemsdc/mining:version-0.1.2
+    hostname: aspmining
     ports:
     - "51773:51773" # 51773 is the superserver default port
     - "52773:52773" # 52773 is the webserver/management portal port
@@ -42,7 +42,7 @@ services:
       target: /shared
 
     environment:
-    - IRIS_MASTER_HOST=OEE # DNS based on the name of the service!
+    - IRIS_MASTER_HOST=aspmining # DNS based on the name of the service!
     - IRIS_MASTER_PORT=51773 
     - IRIS_MASTER_USERNAME=SuperUser 
     - IRIS_MASTER_PASSWORD=sys 
@@ -55,7 +55,7 @@ services:
     environment:
       SPARK_NODE_TYPE: Master
       SPARK_PUBLIC_DNS: localhost
-      IRIS_MASTER_HOST: OEE
+      IRIS_MASTER_HOST: aspmining
       IRIS_MASTER_PORT: 51773
       IRIS_MASTER_USERNAME: SuperUser
       IRIS_MASTER_PASSWORD: sys
@@ -78,7 +78,7 @@ services:
     hostname: worker1
     init: true
     environment:
-      IRIS_MASTER_HOST: OEE
+      IRIS_MASTER_HOST: aspmining
       IRIS_MASTER_PORT: 51773
       IRIS_MASTER_USERNAME: SuperUser
       IRIS_MASTER_PASSWORD: sys
@@ -105,7 +105,7 @@ services:
     hostname: worker2
     init: true
     environment:
-      IRIS_MASTER_HOST: OEE
+      IRIS_MASTER_HOST: aspmining
       IRIS_MASTER_PORT: 51773
       IRIS_MASTER_USERNAME: SuperUser
       IRIS_MASTER_PASSWORD: sys
