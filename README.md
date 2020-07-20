@@ -13,14 +13,26 @@ cd asp-mining
 
 ## Setting up mining dataset in SQL Server
 
-### Option 1 - Linux Local DB
+###  Clone a Linux Local DB
 Run a Docker SQL Server 2019, using the provided MiningDBsV2.tar file and follow the instructions inside the README file. [Download Here](https://devxompass-my.sharepoint.com/:u:/g/personal/andres_xompass_com/EZEqZkotoS1Hgis7J5skeIYBApzKJoxoZVhGnCr5F-J-Gw?e=OX1zvY)
-### Option 2 - Connect to SQL DB
-iris:oee@dev.austekchile.cl:1433
 
-## Enabling the development Production
+## Testing the Production
 The development production is disabled by default to reduce the time spent when relaunching the docker image, and better controlling the excecution of the Business Services in the Package when doing changes in the code.
 
+### 1. Open the Default Production and enable one of the service.
+![](https://github.com/intersystems/asp-mining/blob/master/res/img/i1.png)
+### 2. Run the production for 5 minutes to import a couple days worth of data.
+![](https://github.com/intersystems/asp-mining/blob/master/res/img/i2.png)
+### 3. Go To analytics portal
+![](https://github.com/intersystems/asp-mining/blob/master/res/img/i3.png)
+### 4. Open a Cube
+![](https://github.com/intersystems/asp-mining/blob/master/res/img/i4.png)
+### 5. Build the Cube
+![](https://github.com/intersystems/asp-mining/blob/master/res/img/i7.png)
+### 6. Go To Analyzer to check the results
+![](https://github.com/intersystems/asp-mining/blob/master/res/img/i5.png)
+### 7. Validate the cube output
+![](https://github.com/intersystems/asp-mining/blob/master/res/img/i6.png)
 
 
 
@@ -36,6 +48,7 @@ Here is the list of end points:
 
 ## Where is the Quick ML instructions?
 
+1. Enable the production
 [Here](QUICKML.md).
 
 ## Sample BDs
