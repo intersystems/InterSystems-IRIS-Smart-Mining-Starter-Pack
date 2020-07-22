@@ -13,6 +13,14 @@ cd asp-mining
 
 ## Setting up mining dataset in SQL Server
 
+### Download Docker base image
+[Docker Image] (https://devxompass-my.sharepoint.com/:u:/g/personal/andres_xompass_com/EfeiI2IE6EBPstctf-VtoWkBi4btpubpF5zUQE0R7EjUQg?e=f6HKvO)
+
+Install with:
+```bash
+docker load -i starterpack-base-irisint.tar
+```
+
 ###  Clone a Linux Local DB
 Run a Docker SQL Server 2019, using the provided MiningDBsV2.tar file and follow the instructions inside the README file. [Download Here](https://devxompass-my.sharepoint.com/:u:/g/personal/andres_xompass_com/EZEqZkotoS1Hgis7J5skeIYBApzKJoxoZVhGnCr5F-J-Gw?e=OX1zvY)
 
