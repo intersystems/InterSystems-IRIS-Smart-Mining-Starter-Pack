@@ -14,7 +14,7 @@ Property Description As %String;
 /// Manufacturer's specified Tonnage of equipment (if applies)
 Property NominalCapacityTons As %Float;
 
-Index EquipmentModelIndex On Model [ Unique ];
+Index EquipmentModelIndex On Model [ Unique];
 
 Storage Default
 {

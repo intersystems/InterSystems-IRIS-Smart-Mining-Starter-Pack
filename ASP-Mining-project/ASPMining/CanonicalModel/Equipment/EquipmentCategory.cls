@@ -6,7 +6,7 @@ Class ASPMining.CanonicalModel.Equipment.EquipmentCategory Extends %Persistent
 	/// Description of the Category, e.g: Newest fleet of excavators. 
 	Property Description As %String;
 	
-	index EquipmentCategoryIndex on Name [Unique ];
+	index EquipmentCategoryIndex on Name [Unique];
 
 Storage Default
 {

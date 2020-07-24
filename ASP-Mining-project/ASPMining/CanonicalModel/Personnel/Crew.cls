@@ -4,7 +4,7 @@ Class ASPMining.CanonicalModel.Personnel.Crew Extends %Persistent
 	/// Display Name of the Crew, usually 1 letter, e.g: A,B,C,D,E
 	Property Name As %String;
 	
-	Index CrewIndex On Name [unique];
+	Index CrewIndex On Name [unique ];
 	
 Storage Default
 {

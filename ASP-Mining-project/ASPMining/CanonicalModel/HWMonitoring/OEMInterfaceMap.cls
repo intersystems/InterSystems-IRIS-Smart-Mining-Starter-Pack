@@ -6,7 +6,7 @@ Property OEMInterface As OEMInterface;
 Property Equipment As ASPMining.CanonicalModel.Equipment.Equipment;
 
 index OEMInterfaceIndex on OEMInterface [Unique ];
-index EquipmentIndex on OEMInterface;
+index EquipmentIndex on OEMInterface [type = bitmap];
 Storage Default
 {
 <Data name="OEMInterfaceMapDefaultData">

@@ -4,6 +4,9 @@ Class ASPMining.CanonicalModel.HWMonitoring.OEMInterface Extends %Persistent
 Property Name As %String;
 /// Brand of the Interface (optional)
 Property Brand As %String;
+
+Index NameIndex On Name [type = bitmap];
+Index BrandIndex On Brand [type = bitmap];
 Storage Default
 {
 <Data name="OEMInterfaceDefaultData">

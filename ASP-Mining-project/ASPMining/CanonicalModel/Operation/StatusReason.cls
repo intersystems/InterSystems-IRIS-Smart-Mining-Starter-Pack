@@ -11,7 +11,7 @@ Property StatusType As StatusType;
 Property Description As %String;
 
 index IdIndex on Id [unique ];
-index ReasonIndex on Reason;
+index ReasonIndex on Reason [ Type = bitmap ];
 index StatusTypeIndex on StatusType [type = bitmap];
 
 Storage Default

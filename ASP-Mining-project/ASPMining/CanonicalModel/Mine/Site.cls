@@ -2,6 +2,8 @@ Class ASPMining.CanonicalModel.Mine.Site Extends %Persistent
 {
 /// Display Name of the Site
 Property Name As %String;
+
+Index NameIndex On Name [ type = bitmap];
 Storage Default
 {
 <Data name="SiteDefaultData">

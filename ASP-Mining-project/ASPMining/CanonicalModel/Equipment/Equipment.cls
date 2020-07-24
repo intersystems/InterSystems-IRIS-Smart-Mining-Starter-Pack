@@ -23,7 +23,7 @@ Class ASPMining.CanonicalModel.Equipment.Equipment Extends %Persistent
 	
 	
 	index EquipmentIndex on Id [Unique];
-	index NameIndex on Name;
+	index NameIndex on Name [type = bitmap];
 	
 Storage Default
 {

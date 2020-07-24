@@ -7,6 +7,8 @@ Class ASPMining.CanonicalModel.Personnel.Operator Extends %Persistent
 	/// Operator's last name
 	Property LastName As %String;
 	
+	Index FirstNameIndex On FirstName [type = bitmap];
+	Index LastNameIndex On LastName [type = bitmap];
 Storage Default
 {
 <Data name="OperatorDefaultData">

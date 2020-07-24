@@ -9,7 +9,7 @@ Property Name As %String;
 Property Site As Site;
 
 index NameIndex on Name [unique];
-index GradeIndex on Grade;
+index GradeIndex on Grade [type = bitslice];
 
 Storage Default
 {

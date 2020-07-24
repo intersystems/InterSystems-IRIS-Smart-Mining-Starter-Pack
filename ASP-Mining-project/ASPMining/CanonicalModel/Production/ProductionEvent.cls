@@ -32,10 +32,10 @@ Class ASPMining.CanonicalModel.Production.ProductionEvent Extends %Persistent
 	
 	index IdIndex on Id [unique];
 	index StartTimeIndex on StartTime;
-	index EquipmentIndex on Equipment;
-	index LocationIndex on Location;
-	index PreviousLocationIndex on PreviousLocation;
-	index ShiftIndex on Shift;
+	index EquipmentIndex on Equipment [type = bitmap];
+	index LocationIndex on Location [type = bitmap];
+	index PreviousLocationIndex on PreviousLocation [type = bitmap];
+	index ShiftIndex on Shift [type = bitmap];
 	
 Storage Default
 {

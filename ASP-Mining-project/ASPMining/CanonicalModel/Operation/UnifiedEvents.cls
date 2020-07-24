@@ -39,9 +39,9 @@ Property TripTime As %Double;
 
 Index IdIndex On Id [ Unique ];
 
-Index EquipmentIndex On Equipment;
+Index EquipmentIndex On Equipment [ Type = bitmap ];
 
-Index ShiftIndex On Shift;
+Index ShiftIndex On Shift [ Type = bitmap ];
 
 Index ProductionEventIndex On ProductionEvent;
 

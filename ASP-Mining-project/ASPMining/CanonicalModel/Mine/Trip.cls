@@ -39,9 +39,9 @@ Index IdIndex On Id [ Unique ];
 
 Index NameIndex On Name;
 
-Index OriginLocationIndex On OriginLocation;
+Index OriginLocationIndex On OriginLocation [ type = bitmap];
 
-Index DestinationLocationIndex On DestinationLocation;
+Index DestinationLocationIndex On DestinationLocation [ type = bitmap];
 
 Storage Default
 {
