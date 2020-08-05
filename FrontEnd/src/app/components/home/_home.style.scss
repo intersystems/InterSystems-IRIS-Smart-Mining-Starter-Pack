@@ -1,0 +1,169 @@
+.home-shortcuts {
+  margin: 40px -2.5px 0;
+  padding-bottom: 20px;
+  min-height: 500px;
+
+  &:before, &:after {
+    content: '';
+    display: table;
+  }
+
+  &:after {
+    clear: both;
+  }
+
+  .shortcut {
+    width: 25%;
+    font-size: 13px;
+    float: left;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    padding: 2.5px;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
+
+    &.double {
+      width: 50%
+    }
+
+    &.full {
+      width: 100%;
+    }
+
+    .shortcut-content {
+      background: #58a4b0;
+      height: 230px;
+
+      &:hover {
+        background-color: darken(#58a4b0, 5%);
+      }
+
+      &:active {
+        transform: scale(.95);
+      }
+
+      &.primary {
+        background: #008a74;
+      }
+
+      .link-icon {
+        display: block;
+        font-size: 50px;
+        line-height: 160px;
+
+        i {
+          vertical-align: sub;
+        }
+
+        img {
+          height: 110px;
+          vertical-align: middle;
+        }
+      }
+
+      .link-text-wrapper {
+        height: 40px;
+        margin: 0;
+        font-size: 22px;
+        font-weight: bold;
+        position: relative;
+
+        .link-text {
+          word-wrap: break-word;
+          position: absolute;
+          width: 100%;
+          left: 50%;
+          top: 50%;
+          -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+        }
+      }
+    }
+
+  }
+
+  .important {
+    .shortcut {
+      background-color: #40639b;
+      margin: 0;
+      position: absolute;
+
+      &:hover {
+        background-color: lighten(#40639b, 5%);
+      }
+    }
+
+    .important_description {
+      padding-left: 150px;
+
+      > * {
+        height: 150px;
+      }
+    }
+  }
+}
+
+@media (max-width: $screen-md-max) {
+  .home-shortcuts {
+    text-align: center;
+
+    .shortcut {
+      width: 33.3333%;
+    }
+
+    .important {
+      .shortcut {
+        width: 150px;
+        left: 0;
+      }
+    }
+  }
+}
+
+@media (max-width: $screen-ms-max) {
+  .home-shortcuts {
+    min-height: 0;
+    text-align: center;
+
+    .shortcut {
+      width: 50%;
+    }
+
+    .important {
+      .shortcut {
+        width: 150px;
+        left: 0;
+      }
+    }
+  }
+}
+
+@media (max-width: $screen-ms-min) {
+  .home-shortcuts {
+    min-height: 0;
+
+    .shortcut {
+      width: 100%;
+    }
+
+    .important {
+      .shortcut {
+        position: static;
+        display: block;
+        width: 100%;
+      }
+
+      .important_description {
+        padding: 0;
+
+        > * {
+          height: auto;
+        }
+      }
+    }
+  }
+}

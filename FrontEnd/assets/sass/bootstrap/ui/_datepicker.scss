@@ -1,0 +1,92 @@
+.uib-datepicker-popup, .datetime-picker-dropdown {
+  padding: 5px;
+
+  &:focus, *:focus {
+    outline: none;
+  }
+
+  table {
+    border: none;
+    margin: 0;
+    width: 100%;
+    border-collapse: collapse;
+
+    th, td {
+      padding: 0 !important;
+    }
+    thead {
+      .btn {
+        border: none;
+        background: transparent;
+
+        &.disabled, &[disabled] {
+          opacity: 1;
+        }
+      }
+
+      th {
+        border-color: transparent;
+        border-bottom: 1px solid $gray-lighter;
+      }
+    }
+
+    tbody {
+      td {
+        .btn {
+          background: $gray-lightest !important;
+          border: none;
+
+          &.active {
+            background: $brand-primary !important;
+            color: #fff
+          }
+        }
+      }
+    }
+  }
+
+  .uib-daypicker {
+    table {
+      thead {
+
+        th .day-label {
+          background: $gray-lighter;
+          border-color: $gray-lighter;
+          border-bottom-width: 1px;
+        }
+      }
+    }
+  }
+
+  .uib-daypicker, .uib-monthpicker, .uib-yearpicker {
+    td .btn.active span {
+      color: #fff;
+      font-weight: bold;
+    }
+  }
+
+  .uib-decrement a, .uib-increment a{
+    display: block;
+  }
+
+  .uib-timepicker input {
+    max-width: 105px;
+  }
+}
+
+.datetime-picker-dropdown {
+  min-width: 260px !important;
+
+  table.uib-timepicker {
+    width: 100%;
+    background: $gray-lightest;
+
+    input {
+      float: none;
+      display: block;
+      width: 100%;
+      margin: auto;
+      position: static;
+    }
+  }
+}

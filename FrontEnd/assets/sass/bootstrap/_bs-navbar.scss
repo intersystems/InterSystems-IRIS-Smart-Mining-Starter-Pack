@@ -1,0 +1,34 @@
+.navbar {
+  border-radius: 0 !important;
+  height: 74px;
+  padding-left: $grid-gutter-width / 2;
+  padding-right: $grid-gutter-width / 2;
+}
+
+.navbar-brand {
+  display: block;
+  float: none;
+  width: 220px;
+  overflow: hidden;
+  height: auto;
+  padding: 10px 10px 10px 25px;
+
+  .brand-full {
+    height: 55px;
+
+    vertical-align: top;
+    display: block;
+    background-image: url('/assets/images/logo.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+}
+
+.app-name {
+  line-height: 75px;
+  color: #fff;
+  text-align: center;
+  margin: 0;
+  font-size: 28px;
+  font-weight: bold;
+}

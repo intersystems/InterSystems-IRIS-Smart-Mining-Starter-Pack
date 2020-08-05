@@ -1,0 +1,132 @@
+.nav-tabs {
+  position: relative;
+  background-color: #fff;
+
+  > li {
+    margin-bottom: 0;
+
+    > a {
+      color: $gray-dark;
+      min-width: 80px;
+      text-align: center;
+      border-radius: 0 !important;
+      margin-right: 0;
+      padding: 11px 10px !important;
+      font-size: 12px;
+      outline: none !important;
+
+      &:hover {
+        background: #fdfdfd;
+      }
+
+      h3 {
+        font-size: 24px;
+        margin: 3px 0;
+        font-weight: bold;
+      }
+
+      h4 {
+        font-size: 18px;
+        margin: 3px 0;
+        font-weight: bold;
+      }
+    }
+
+    &.tab-title {
+      a {
+        cursor: default;
+        font-weight: bold;
+        padding: 7px 50px 8px 10px !important;
+      }
+    }
+
+    &.active {
+      > a {
+        color: $brand-info;
+        box-shadow: none;
+        font-weight: 700;
+        border-bottom-color: $brand-info;
+        background-color: lighten($brand-info, 42%);
+
+        &:focus, &:hover {
+          background-color: lighten($brand-info, 42%);
+          color: darken($brand-info, 10%);
+        }
+      }
+
+      &:first-child {
+        > a {
+          &, &.focus, &:hover {
+            border-left: none !important;
+          }
+        }
+      }
+    }
+  }
+
+  &.secondary {
+    > li {
+
+      &.active {
+        > a {
+          color: $gray-darker;
+          border-bottom-color: $gray-light;
+          background-color: $gray-lighter;
+
+          &:focus, &:hover {
+            background-color: $gray-lighter;
+            color: $gray-darker;
+          }
+        }
+
+        &:first-child {
+          > a {
+            &, &.focus, &:hover {
+              border-left: none !important;
+            }
+          }
+        }
+
+      }
+    }
+  }
+
+  &.nav-justified {
+    width: auto;
+    border-left: 1px solid $border-color;
+    border-right: 1px solid $border-color;
+
+    box-shadow: 0 2px 5px 0 #ddd;
+
+    > li {
+      > a {
+        border-bottom: 4px solid transparent;
+      }
+
+      &.active {
+        a {
+          border-bottom: 4px solid $brand-info;
+
+          &, &:focus, &:hover {
+            border-bottom: 4px solid $brand-info;
+          }
+        }
+      }
+    }
+
+    &.secondary {
+      > li {
+        &.active {
+          a {
+            border-bottom: 4px solid $gray-light;
+
+            &, &:focus, &:hover {
+              border-bottom: 4px solid $gray-light;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+

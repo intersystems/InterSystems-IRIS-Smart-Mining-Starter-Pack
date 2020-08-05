@@ -1,0 +1,776 @@
+{
+  "Cols": [
+    {
+      "tuples": [
+        {
+          "caption": "CapacityPerformance", "cellStyle": "", "children": [], "dimension": "", "format": "",
+          "headerStyle": "", "path": "", "title": "", "total": "", "type": "exp", "valueID": "/", "vis": 1
+        }, {
+          "caption": "TimePerformance", "cellStyle": "", "children": [], "dimension": "", "format": "",
+          "headerStyle": "", "path": "", "title": "", "total": "", "type": "exp", "valueID": "/", "vis": 1
+        }, {
+          "caption": "Utilization", "cellStyle": "", "children": [], "dimension": "", "format": "", "headerStyle": "",
+          "path": "", "title": "", "total": "", "type": "exp", "valueID": "/", "vis": 1
+        }, {
+          "caption": "OEE", "cellStyle": "", "children": [], "dimension": "", "format": "", "headerStyle": "",
+          "path": "", "title": "", "total": "", "type": "exp", "valueID": "*", "vis": 1
+        }
+      ]
+    }, {
+      "tuples": [
+        {
+          "caption": "00:37", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[37]", "title": "", "total": "", "type": "mbr",
+          "valueID": 37, "vis": 1
+        }, {
+          "caption": "00:48", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[48]", "title": "", "total": "", "type": "mbr",
+          "valueID": 48, "vis": 1
+        }, {
+          "caption": "00:58", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[58]", "title": "", "total": "", "type": "mbr",
+          "valueID": 58, "vis": 1
+        }, {
+          "caption": "01:16", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[76]", "title": "", "total": "", "type": "mbr",
+          "valueID": 76, "vis": 1
+        }, {
+          "caption": "01:18", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[78]", "title": "", "total": "", "type": "mbr",
+          "valueID": 78, "vis": 1
+        }, {
+          "caption": "01:27", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[87]", "title": "", "total": "", "type": "mbr",
+          "valueID": 87, "vis": 1
+        }, {
+          "caption": "01:28", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[88]", "title": "", "total": "", "type": "mbr",
+          "valueID": 88, "vis": 1
+        }, {
+          "caption": "01:29", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[89]", "title": "", "total": "", "type": "mbr",
+          "valueID": 89, "vis": 1
+        }, {
+          "caption": "01:47", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[107]", "title": "", "total": "", "type": "mbr",
+          "valueID": 107, "vis": 1
+        }, {
+          "caption": "01:48", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[108]", "title": "", "total": "", "type": "mbr",
+          "valueID": 108, "vis": 1
+        }, {
+          "caption": "01:58", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[118]", "title": "", "total": "", "type": "mbr",
+          "valueID": 118, "vis": 1
+        }, {
+          "caption": "02:05", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[125]", "title": "", "total": "", "type": "mbr",
+          "valueID": 125, "vis": 1
+        }, {
+          "caption": "02:06", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[126]", "title": "", "total": "", "type": "mbr",
+          "valueID": 126, "vis": 1
+        }, {
+          "caption": "02:19", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[139]", "title": "", "total": "", "type": "mbr",
+          "valueID": 139, "vis": 1
+        }, {
+          "caption": "02:21", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[141]", "title": "", "total": "", "type": "mbr",
+          "valueID": 141, "vis": 1
+        }, {
+          "caption": "02:32", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[152]", "title": "", "total": "", "type": "mbr",
+          "valueID": 152, "vis": 1
+        }, {
+          "caption": "02:39", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[159]", "title": "", "total": "", "type": "mbr",
+          "valueID": 159, "vis": 1
+        }, {
+          "caption": "02:43", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[163]", "title": "", "total": "", "type": "mbr",
+          "valueID": 163, "vis": 1
+        }, {
+          "caption": "02:44", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[164]", "title": "", "total": "", "type": "mbr",
+          "valueID": 164, "vis": 1
+        }, {
+          "caption": "02:45", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[165]", "title": "", "total": "", "type": "mbr",
+          "valueID": 165, "vis": 1
+        }, {
+          "caption": "02:55", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[175]", "title": "", "total": "", "type": "mbr",
+          "valueID": 175, "vis": 1
+        }, {
+          "caption": "03:04", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[184]", "title": "", "total": "", "type": "mbr",
+          "valueID": 184, "vis": 1
+        }, {
+          "caption": "03:06", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[186]", "title": "", "total": "", "type": "mbr",
+          "valueID": 186, "vis": 1
+        }, {
+          "caption": "03:16", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[196]", "title": "", "total": "", "type": "mbr",
+          "valueID": 196, "vis": 1
+        }, {
+          "caption": "03:20", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[200]", "title": "", "total": "", "type": "mbr",
+          "valueID": 200, "vis": 1
+        }, {
+          "caption": "03:21", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[201]", "title": "", "total": "", "type": "mbr",
+          "valueID": 201, "vis": 1
+        }, {
+          "caption": "03:39", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[219]", "title": "", "total": "", "type": "mbr",
+          "valueID": 219, "vis": 1
+        }, {
+          "caption": "03:41", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[221]", "title": "", "total": "", "type": "mbr",
+          "valueID": 221, "vis": 1
+        }, {
+          "caption": "03:53", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[233]", "title": "", "total": "", "type": "mbr",
+          "valueID": 233, "vis": 1
+        }, {
+          "caption": "04:07", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[247]", "title": "", "total": "", "type": "mbr",
+          "valueID": 247, "vis": 1
+        }, {
+          "caption": "04:12", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[252]", "title": "", "total": "", "type": "mbr",
+          "valueID": 252, "vis": 1
+        }, {
+          "caption": "04:54", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[294]", "title": "", "total": "", "type": "mbr",
+          "valueID": 294, "vis": 1
+        }, {
+          "caption": "05:05", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[305]", "title": "", "total": "", "type": "mbr",
+          "valueID": 305, "vis": 1
+        }, {
+          "caption": "05:09", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[309]", "title": "", "total": "", "type": "mbr",
+          "valueID": 309, "vis": 1
+        }, {
+          "caption": "05:35", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[335]", "title": "", "total": "", "type": "mbr",
+          "valueID": 335, "vis": 1
+        }, {
+          "caption": "05:37", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[337]", "title": "", "total": "", "type": "mbr",
+          "valueID": 337, "vis": 1
+        }, {
+          "caption": "05:41", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[341]", "title": "", "total": "", "type": "mbr",
+          "valueID": 341, "vis": 1
+        }, {
+          "caption": "06:05", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[365]", "title": "", "total": "", "type": "mbr",
+          "valueID": 365, "vis": 1
+        }, {
+          "caption": "06:21", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[381]", "title": "", "total": "", "type": "mbr",
+          "valueID": 381, "vis": 1
+        }, {
+          "caption": "06:23", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[383]", "title": "", "total": "", "type": "mbr",
+          "valueID": 383, "vis": 1
+        }, {
+          "caption": "06:27", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[387]", "title": "", "total": "", "type": "mbr",
+          "valueID": 387, "vis": 1
+        }, {
+          "caption": "06:49", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[409]", "title": "", "total": "", "type": "mbr",
+          "valueID": 409, "vis": 1
+        }, {
+          "caption": "06:50", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[410]", "title": "", "total": "", "type": "mbr",
+          "valueID": 410, "vis": 1
+        }, {
+          "caption": "07:07", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[427]", "title": "", "total": "", "type": "mbr",
+          "valueID": 427, "vis": 1
+        }, {
+          "caption": "07:09", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[429]", "title": "", "total": "", "type": "mbr",
+          "valueID": 429, "vis": 1
+        }, {
+          "caption": "07:14", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[434]", "title": "", "total": "", "type": "mbr",
+          "valueID": 434, "vis": 1
+        }, {
+          "caption": "07:31", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[451]", "title": "", "total": "", "type": "mbr",
+          "valueID": 451, "vis": 1
+        }, {
+          "caption": "07:32", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[452]", "title": "", "total": "", "type": "mbr",
+          "valueID": 452, "vis": 1
+        }, {
+          "caption": "07:52", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[472]", "title": "", "total": "", "type": "mbr",
+          "valueID": 472, "vis": 1
+        }, {
+          "caption": "08:01", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[481]", "title": "", "total": "", "type": "mbr",
+          "valueID": 481, "vis": 1
+        }, {
+          "caption": "08:02", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[482]", "title": "", "total": "", "type": "mbr",
+          "valueID": 482, "vis": 1
+        }, {
+          "caption": "08:19", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[499]", "title": "", "total": "", "type": "mbr",
+          "valueID": 499, "vis": 1
+        }, {
+          "caption": "08:23", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[503]", "title": "", "total": "", "type": "mbr",
+          "valueID": 503, "vis": 1
+        }, {
+          "caption": "08:40", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[520]", "title": "", "total": "", "type": "mbr",
+          "valueID": 520, "vis": 1
+        }, {
+          "caption": "08:41", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[521]", "title": "", "total": "", "type": "mbr",
+          "valueID": 521, "vis": 1
+        }, {
+          "caption": "08:46", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[526]", "title": "", "total": "", "type": "mbr",
+          "valueID": 526, "vis": 1
+        }, {
+          "caption": "08:54", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[534]", "title": "", "total": "", "type": "mbr",
+          "valueID": 534, "vis": 1
+        }, {
+          "caption": "09:07", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[547]", "title": "", "total": "", "type": "mbr",
+          "valueID": 547, "vis": 1
+        }, {
+          "caption": "09:21", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[561]", "title": "", "total": "", "type": "mbr",
+          "valueID": 561, "vis": 1
+        }, {
+          "caption": "09:22", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[562]", "title": "", "total": "", "type": "mbr",
+          "valueID": 562, "vis": 1
+        }, {
+          "caption": "09:43", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[583]", "title": "", "total": "", "type": "mbr",
+          "valueID": 583, "vis": 1
+        }, {
+          "caption": "09:45", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[585]", "title": "", "total": "", "type": "mbr",
+          "valueID": 585, "vis": 1
+        }, {
+          "caption": "10:14", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[614]", "title": "", "total": "", "type": "mbr",
+          "valueID": 614, "vis": 1
+        }, {
+          "caption": "10:20", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[620]", "title": "", "total": "", "type": "mbr",
+          "valueID": 620, "vis": 1
+        }, {
+          "caption": "10:24", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[624]", "title": "", "total": "", "type": "mbr",
+          "valueID": 624, "vis": 1
+        }, {
+          "caption": "10:33", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[633]", "title": "", "total": "", "type": "mbr",
+          "valueID": 633, "vis": 1
+        }, {
+          "caption": "10:35", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[635]", "title": "", "total": "", "type": "mbr",
+          "valueID": 635, "vis": 1
+        }, {
+          "caption": "10:38", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[638]", "title": "", "total": "", "type": "mbr",
+          "valueID": 638, "vis": 1
+        }, {
+          "caption": "10:40", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[640]", "title": "", "total": "", "type": "mbr",
+          "valueID": 640, "vis": 1
+        }, {
+          "caption": "10:55", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[655]", "title": "", "total": "", "type": "mbr",
+          "valueID": 655, "vis": 1
+        }, {
+          "caption": "11:10", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[670]", "title": "", "total": "", "type": "mbr",
+          "valueID": 670, "vis": 1
+        }, {
+          "caption": "11:11", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[671]", "title": "", "total": "", "type": "mbr",
+          "valueID": 671, "vis": 1
+        }, {
+          "caption": "11:12", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[672]", "title": "", "total": "", "type": "mbr",
+          "valueID": 672, "vis": 1
+        }, {
+          "caption": "11:30", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[690]", "title": "", "total": "", "type": "mbr",
+          "valueID": 690, "vis": 1
+        }, {
+          "caption": "11:33", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[693]", "title": "", "total": "", "type": "mbr",
+          "valueID": 693, "vis": 1
+        }, {
+          "caption": "11:46", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[706]", "title": "", "total": "", "type": "mbr",
+          "valueID": 706, "vis": 1
+        }, {
+          "caption": "11:49", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[709]", "title": "", "total": "", "type": "mbr",
+          "valueID": 709, "vis": 1
+        }, {
+          "caption": "11:50", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[710]", "title": "", "total": "", "type": "mbr",
+          "valueID": 710, "vis": 1
+        }, {
+          "caption": "12:08", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[728]", "title": "", "total": "", "type": "mbr",
+          "valueID": 728, "vis": 1
+        }, {
+          "caption": "12:10", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[730]", "title": "", "total": "", "type": "mbr",
+          "valueID": 730, "vis": 1
+        }, {
+          "caption": "12:30", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[750]", "title": "", "total": "", "type": "mbr",
+          "valueID": 750, "vis": 1
+        }, {
+          "caption": "12:31", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[751]", "title": "", "total": "", "type": "mbr",
+          "valueID": 751, "vis": 1
+        }, {
+          "caption": "12:50", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[770]", "title": "", "total": "", "type": "mbr",
+          "valueID": 770, "vis": 1
+        }, {
+          "caption": "12:51", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[771]", "title": "", "total": "", "type": "mbr",
+          "valueID": 771, "vis": 1
+        }, {
+          "caption": "13:01", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[781]", "title": "", "total": "", "type": "mbr",
+          "valueID": 781, "vis": 1
+        }, {
+          "caption": "14:01", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[841]", "title": "", "total": "", "type": "mbr",
+          "valueID": 841, "vis": 1
+        }, {
+          "caption": "14:11", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[851]", "title": "", "total": "", "type": "mbr",
+          "valueID": 851, "vis": 1
+        }, {
+          "caption": "14:21", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[861]", "title": "", "total": "", "type": "mbr",
+          "valueID": 861, "vis": 1
+        }, {
+          "caption": "14:22", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[862]", "title": "", "total": "", "type": "mbr",
+          "valueID": 862, "vis": 1
+        }, {
+          "caption": "14:39", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[879]", "title": "", "total": "", "type": "mbr",
+          "valueID": 879, "vis": 1
+        }, {
+          "caption": "14:41", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[881]", "title": "", "total": "", "type": "mbr",
+          "valueID": 881, "vis": 1
+        }, {
+          "caption": "14:53", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[893]", "title": "", "total": "", "type": "mbr",
+          "valueID": 893, "vis": 1
+        }, {
+          "caption": "14:55", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[895]", "title": "", "total": "", "type": "mbr",
+          "valueID": 895, "vis": 1
+        }, {
+          "caption": "15:13", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[913]", "title": "", "total": "", "type": "mbr",
+          "valueID": 913, "vis": 1
+        }, {
+          "caption": "15:15", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[915]", "title": "", "total": "", "type": "mbr",
+          "valueID": 915, "vis": 1
+        }, {
+          "caption": "15:25", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[925]", "title": "", "total": "", "type": "mbr",
+          "valueID": 925, "vis": 1
+        }, {
+          "caption": "15:26", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[926]", "title": "", "total": "", "type": "mbr",
+          "valueID": 926, "vis": 1
+        }, {
+          "caption": "15:27", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[927]", "title": "", "total": "", "type": "mbr",
+          "valueID": 927, "vis": 1
+        }, {
+          "caption": "15:45", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[945]", "title": "", "total": "", "type": "mbr",
+          "valueID": 945, "vis": 1
+        }, {
+          "caption": "15:47", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[947]", "title": "", "total": "", "type": "mbr",
+          "valueID": 947, "vis": 1
+        }, {
+          "caption": "15:58", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[958]", "title": "", "total": "", "type": "mbr",
+          "valueID": 958, "vis": 1
+        }, {
+          "caption": "15:59", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[959]", "title": "", "total": "", "type": "mbr",
+          "valueID": 959, "vis": 1
+        }, {
+          "caption": "16:26", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[986]", "title": "", "total": "", "type": "mbr",
+          "valueID": 986, "vis": 1
+        }, {
+          "caption": "16:32", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[992]", "title": "", "total": "", "type": "mbr",
+          "valueID": 992, "vis": 1
+        }, {
+          "caption": "16:33", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[993]", "title": "", "total": "", "type": "mbr",
+          "valueID": 993, "vis": 1
+        }, {
+          "caption": "16:50", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1010]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1010, "vis": 1
+        }, {
+          "caption": "16:51", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1011]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1011, "vis": 1
+        }, {
+          "caption": "17:03", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1023]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1023, "vis": 1
+        }, {
+          "caption": "17:04", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1024]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1024, "vis": 1
+        }, {
+          "caption": "17:05", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1025]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1025, "vis": 1
+        }, {
+          "caption": "17:23", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1043]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1043, "vis": 1
+        }, {
+          "caption": "17:25", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1045]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1045, "vis": 1
+        }, {
+          "caption": "17:39", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1059]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1059, "vis": 1
+        }, {
+          "caption": "17:40", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1060]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1060, "vis": 1
+        }, {
+          "caption": "17:57", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1077]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1077, "vis": 1
+        }, {
+          "caption": "17:58", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1078]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1078, "vis": 1
+        }, {
+          "caption": "18:10", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1090]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1090, "vis": 1
+        }, {
+          "caption": "18:13", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1093]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1093, "vis": 1
+        }, {
+          "caption": "18:14", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1094]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1094, "vis": 1
+        }, {
+          "caption": "18:32", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1112]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1112, "vis": 1
+        }, {
+          "caption": "18:49", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1129]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1129, "vis": 1
+        }, {
+          "caption": "18:50", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1130]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1130, "vis": 1
+        }, {
+          "caption": "18:51", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1131]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1131, "vis": 1
+        }, {
+          "caption": "19:44", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1184]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1184, "vis": 1
+        }, {
+          "caption": "19:53", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1193]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1193, "vis": 1
+        }, {
+          "caption": "19:55", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1195]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1195, "vis": 1
+        }, {
+          "caption": "20:14", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1214]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1214, "vis": 1
+        }, {
+          "caption": "20:15", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1215]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1215, "vis": 1
+        }, {
+          "caption": "20:30", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1230]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1230, "vis": 1
+        }, {
+          "caption": "20:34", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1234]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1234, "vis": 1
+        }, {
+          "caption": "20:35", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1235]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1235, "vis": 1
+        }, {
+          "caption": "20:48", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1248]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1248, "vis": 1
+        }, {
+          "caption": "20:51", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1251]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1251, "vis": 1
+        }, {
+          "caption": "21:00", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1260]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1260, "vis": 1
+        }, {
+          "caption": "21:01", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1261]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1261, "vis": 1
+        }, {
+          "caption": "21:02", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1262]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1262, "vis": 1
+        }, {
+          "caption": "21:15", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1275]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1275, "vis": 1
+        }, {
+          "caption": "21:16", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1276]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1276, "vis": 1
+        }, {
+          "caption": "21:23", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1283]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1283, "vis": 1
+        }, {
+          "caption": "21:36", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1296]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1296, "vis": 1
+        }, {
+          "caption": "21:37", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1297]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1297, "vis": 1
+        }, {
+          "caption": "21:47", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1307]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1307, "vis": 1
+        }, {
+          "caption": "21:49", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1309]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1309, "vis": 1
+        }, {
+          "caption": "21:53", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1313]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1313, "vis": 1
+        }, {
+          "caption": "21:54", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1314]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1314, "vis": 1
+        }, {
+          "caption": "21:57", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1317]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1317, "vis": 1
+        }, {
+          "caption": "22:08", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1328]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1328, "vis": 1
+        }, {
+          "caption": "22:11", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1331]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1331, "vis": 1
+        }, {
+          "caption": "22:25", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1345]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1345, "vis": 1
+        }, {
+          "caption": "22:28", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1348]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1348, "vis": 1
+        }, {
+          "caption": "22:30", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1350]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1350, "vis": 1
+        }, {
+          "caption": "22:48", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1368]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1368, "vis": 1
+        }, {
+          "caption": "22:49", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1369]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1369, "vis": 1
+        }, {
+          "caption": "22:51", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1371]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1371, "vis": 1
+        }, {
+          "caption": "22:57", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1377]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1377, "vis": 1
+        }, {
+          "caption": "23:02", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1382]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1382, "vis": 1
+        }, {
+          "caption": "23:05", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1385]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1385, "vis": 1
+        }, {
+          "caption": "23:06", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1386]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1386, "vis": 1
+        }, {
+          "caption": "23:11", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1391]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1391, "vis": 1
+        }, {
+          "caption": "23:17", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1397]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1397, "vis": 1
+        }, {
+          "caption": "23:33", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1413]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1413, "vis": 1
+        }, {
+          "caption": "23:37", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1417]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1417, "vis": 1
+        }, {
+          "caption": "23:40", "cellStyle": "", "dimension": "EventDateTimeMinute", "format": "", "headerStyle": "",
+          "path": "[EventDateTime].[H1].[EventDateTimeMinute].&[1420]", "title": "", "total": "", "type": "mbr",
+          "valueID": 1420, "vis": 1
+        }
+      ]
+    }
+  ], "Data": [
+  1.0615, "", 0.08893740902474527, "", 0.9843, 6.228443903428687, 0.08937409024745269, 0.5479219218580702, 0.9843,
+  5.665449381213228, 0.08129548762736535, 0.4533444351937247, 0.9843, "", 0.007569141193595342, "", 0.9843, "",
+  0.07656477438136827, "", 1.0338333333333334, 0.9289875610140136, 0.00858806404657933, 0.0082481339305489,
+  1.0338333333333334, 1.086443079829948, 0.010043668122270743, 0.011281058788665128, 1.0338333333333334,
+  16.627302786962684, 0.1537117903930131, 2.6422841363908582, 1.0338333333333334, "", 0.006259097525473071, "",
+  1.0338333333333334, "", 0.08326055312954876, "", 0.965, 4.0674874601003195, 0.06491994177583697, 0.2548189123657316,
+  0.965, 0.6931144550843593, 0.01106259097525473, 0.007399274255587614, 0.965, 6.839945280437757, 0.1091703056768559,
+  0.7205837549806152, 0.965, "", 0.01098981077147016, "", 0.965, "", 0.09213973799126637, "", 0.965, "", 1, "", 0.965,
+  "", 0.025022341376228777, "", 0.9971666666666666, 0.3685897435897436, 0.0051385165326184095, 0.0018886381451311076,
+  0.9971666666666666, 0.6089743589743589, 0.008489722966934763, 0.00515537520145429, 0.9971666666666666,
+  4.759615384615385, 0.06635388739946381, 0.3149241628428542, 0.9907333333333334, 1.761682559004531,
+  0.009699880845993446, 0.016929761083035275, 0.9843, "", 0.0061438784629133155, "", 0.9843, "", 0.07015192135835567,
+  "", 0.9360666666666667, 1.6144076917557582, 0.025134048257372654, 0.03798240348515851, 0.9360666666666667,
+  0.6242376408122264, 0.009718498659517426, 0.005678791347736588, 0.9360666666666667, 7.770682356317716,
+  0.12097855227882037, 0.8799830763714386, 0.9360666666666667, "", 0.0041890080428954425, "", 0.9360666666666667, "",
+  0.08567917783735478, "", 0.9264, 2.6524618845288677, 0.09483914209115281, 0.2330425989347167, 0.9264,
+  0.9278930267433142, 0.033176943699731905, 0.0285189041211547, 0.9264, 7.735566108472882, 0.27658623771224305,
+  1.9820801636052112, 0.9264, "", 0.038259606791778374, "", 0.9264, "", 0.0233467381590706, "", 0.9264, "",
+  1.3402662229617304, "", 0.9971666666666666, 1.2504423734811845, 0.08818635607321132, 0.10995951918705216,
+  0.9971666666666666, 2.3475286068184498, 0.16555740432612312, 0.38754956562179177, 0.9971666666666666,
+  17.400023593252328, 1.2271214642262895, 21.291445259107366, 0.9971666666666666, "", 0.26760953965612866, "",
+  0.9360666666666667, 0.7834893942289318, 0.06821963394342762, 0.05003216394443768, 0.9360666666666667,
+  2.48423466462832, 0.21630615640599002, 0.503000339477095, 0.9360666666666667, 12.860691763806612, 1.119800332778702,
+  13.48067696798942, 0.9360666666666667, "", 0.020798668885191347, "", 0.9360666666666667, "", 0.8244592346089851, "",
+  0.9392666666666667, 1.4523218039365564, 0.1264559068219634, 0.17250071037940354, 0.9392666666666667,
+  2.8090961207720238, 0.24459234608985025, 0.6453545447694825, 0.9392666666666667, 9.516529715268488,
+  0.8286189683860233, 7.406659656671329, 0.9392666666666667, "", 0.025790349417637273, "", 0.9392666666666667, "",
+  1.0282861896838602, "", 0.9392666666666667, "", 1.2604651162790699, "", 0.9392666666666667, "", 0.004074074074074074,
+  "", 0.9778666666666667, 10.03248614561437, 0.38917716827279464, 3.8179968402042292, 0.9778666666666667,
+  2.0829352188037453, 0.08080059303187546, 0.1645773077858193, 0.9778666666666667, 10.175807376266004,
+  0.39473684210526316, 3.927861647238678, 0.9778666666666667, "", 0.006300963676797628, "", 0.9778666666666667, "",
+  0.11934766493699037, "", 0.9778666666666667, "", 1, "", 0.9778666666666667, "", 1, "", 0.9778666666666667, "", 1, "",
+  0.9778666666666667, "", 1, "", 0.9778666666666667, "", 1, "", 0.9778666666666667, "", 1, "", 0.9778666666666667, "",
+  1, "", 0.9778666666666667, "", 0.036110833249974994, "", 0.9360666666666667, 2.732919254658385, 0.026407922376713015,
+  0.06755660486965966, 0.9360666666666667, 2.743271221532091, 0.026507952385715714, 0.0680693666346971,
+  0.9360666666666667, "", 0.004401320396118836, "", 0.9167333333333333, 1.39186295503212, 0.016905071521456438,
+  0.02157031620549691, 0.9167333333333333, 0.7082852907264042, 0.008602580774232269, 0.00558573084471325,
+  0.9167333333333333, 7.585241311151376, 0.09212763829148744, 0.6406227579029762, 0.9167333333333333,
+  25.444444444444443, 0.03054249608215798, 0.7124272501503538, 0.9553666666666667, 0.71475843812045,
+  0.005401620486145843, 0.003688531046408562, 0.9553666666666667, 1.0324288550628722, 0.007802340702210663,
+  0.007695824035099345, 0.9553666666666667, 14.2819324950364, 0.10793237971391417, 1.4726814382722053,
+  0.9553666666666667, "", 0.0063519055716715015, "", 0.9553666666666667, "", 0.07942382714814444, "",
+  0.9553666666666667, 2.4446872439224254, 0.017905371611483444, 0.04181929717766281, 0.9553666666666667,
+  0.9013930620049166, 0.006601980594178254, 0.005685367451262421, 0.9553666666666667, 14.722753346080307,
+  0.10783234970491147, 1.5167296944978967, 0.9553666666666667, "", 0.005401620486145843, "", 0.9553666666666667, "",
+  0.11963589076723016, "", 1.0518333333333334, 0.5053264135482108, 0.00370111033309993, 0.0019672110774632736,
+  1.0518333333333334, 15.48757170172084, 0.11343403020906272, 1.8478793924984378, 1.0518333333333334, "",
+  0.004251275382614784, "", 1.0518333333333334, "", 0.056616985095528656, "", 1.0518333333333334, "", 1, "",
+  1.0518333333333334, "", 0.02904996214988645, "", 0.9264, 9.17965674696898, 0.02758327024981075, 0.2345690683222262,
+  0.9264, 1.1809163911195086, 0.003548448145344436, 0.0038820056233432754, 0.9264, 16.532829475673122,
+  0.049678274034822105, 0.7608731021752819, 0.9264, "", 0.002223694171082513, "", 0.9264, "", 0.033591975775927325, "",
+  1.0132666666666668, 0.6847230675593426, 0.0031936033308099924, 0.002215744538571869, 1.0132666666666668,
+  10.925136944613511, 0.050955715367146104, 0.5640836975322094, 1.0132666666666668, "", 0.0022473504920514763, "",
+  1.0132666666666668, "", 0.03070590461771385, "", 0.9971666666666666, 0.16230472712517752, 0.000757002271006813,
+  0.00012251692939565191, 0.9971666666666666, 0.9332521809697707, 0.004352763058289175, 0.004050715978143741,
+  0.9971666666666666, 10.914992899168189, 0.05090840272520818, 0.554090470499923, 0.9971666666666666, "",
+  0.0024602573807721425, "", 0.9971666666666666, "", 0.031273656320968964, "", 0.9971666666666666, 0.4361939541489146,
+  0.00203444360333081, 0.000884897665830314, 0.9971666666666666, 16.39277743964293, 0.07645722937168811,
+  1.2497951967650451, 0.9971666666666666, "", 0.005330557658339642, "", 0.9360666666666667, 0.35504159058632584,
+  0.0016559424678274034, 0.0005503402222741327, 0.9360666666666667, 10.225197808886184, 0.04769114307342922,
+  0.4564741939630566, 0.9360666666666667, "", 0.0022946631339894018, "", 0.9360666666666667, "", 0.033828538985616954,
+  "", 1.0422, 0.36518563603164944, 0.0017032551097653293, 0.0006482528820684454, 1.0422, 0.7810914992899168,
+  0.0036430734292202875, 0.002965656896438127, 1.0422, 10.843984581050924, 0.05057721423164269, 0.5716034813004773,
+  1.0422, "", 0.002223694171082513, "", 1.0422, "", 0.03983724451173354, "", 0.9457, 0.6613131790269249,
+  0.0019871309613928843, 0.0012427594002196272, 0.9457, 16.15493623051488, 0.04854277062831189, 0.7416230126902473,
+  0.9457, "", 0.0011118470855412566, "", 0.9457, "", 0.03363928841786525, "", 0.9360666666666667, 1.8056400892676,
+  0.008421650264950795, 0.014234269063292752, 0.9360666666666667, 1.0042604990870359, 0.004683951551854655,
+  0.004403171035517367, 0.9360666666666667, 10.661391763035098, 0.04972558667676003, 0.4962500896850851,
+  0.9360666666666667, "", 0.016622508200857936, "", 0.9971666666666666, 0.629822075263738, 0.0018925056775170325,
+  0.001188564684677941, 0.9971666666666666, 1.0549519760667612, 0.0031699470098410297, 0.0033346667934495483,
+  0.9971666666666666, 50.0078727759408, 0.1502649507948524, 7.493139655496225, 0.9971666666666666, "",
+  0.008263941458491042, "", 0.9971666666666666, "", 0.32323232323232326, "", 0.9971666666666666, 6.004303784180969,
+  0.9629629629629629, 5.7655400497507605, 0.9296333333333333, "", 0.07196969696969698, "", 0.9296333333333333, "",
+  2.323232323232323, "", 1.0325666666666666, 1.2960511802338408, 0.5934343434343434, 0.7941689975904348,
+  1.0325666666666666, 0.37502757555702626, 0.1717171717171717, 0.06649592475976769, 1.0325666666666666, 4.2797264504743,
+  1.9595959595959596, 8.659656139303172, 1.0325666666666666, "", 0.1691919191919192, "", 1.0325666666666666, "",
+  1.4393939393939394, "", 0.9457, 0.5263157894736842, 0.09848484848484848, 0.049019537480063796, 0.9457,
+  1.0526315789473684, 0.19696969696969696, 0.19607814992025518, 0.9457, 10.229419703103913, 1.9141414141414141,
+  18.517331711173817, 0.9457, "", 0.10606060606060606, "", 0.9457, "", 1.095959595959596, "", 1.0518333333333334,
+  15.09127789046653, 1.878787878787879, 29.822956543118813, 1.0518333333333334, 1.1967545638945234, 0.14898989898989898,
+  0.18754644996277856, 1.0518333333333334, 13.123732251521298, 1.6338383838383839, 22.553470805075776,
+  1.0518333333333334, "", 0.12878787878787878, "", 1.0518333333333334, "", 0.5808080808080808, "", 1.0036,
+  0.29648090061444593, 0.17424242424242425, 0.051845525247751004, 1.0036, 0.6230395737549951, 0.3661616161616162,
+  0.22895445669690503, 1.0036, 3.007777252610321, 1.7676767676767677, 5.33591837248435, 1.0036, "", 0.17676767676767677,
+  "", 1.0036, "", 2.186868686868687, "", 0.9360666666666667, 1.2549830208179535, 0.4292929292929293, 0.5043109126602409,
+  0.9360666666666667, 0.7456075594271372, 0.255050505050505, 0.17800953702585182, 0.9360666666666667, 8.120478369998523,
+  2.7777777777777777, 21.1147475542869, 0.9360666666666667, 0.30267237560903587, 1, 0.2833215217284315,
+  0.9360666666666667, 0.9227816329543777, 1, 0.8637851272208278, 0.9360666666666667, 1.4875239923224568,
+  0.14506839452843773, 0.20199636965703013, 0.9360666666666667, "", 0.04484870317002882, "", 0.9360666666666667, "",
+  0.08537463976945245, "", 0.9071, 0.2512970168612192, 0.0111671469740634, 0.0025455681714118047, 0.9071,
+  2.569714656290532, 0.11419308357348704, 0.2661827263028105, 0.9071, 2.577821011673152, 0.11455331412103746,
+  0.26786476146290045, 0.9071, "", 0.1820965417867435, "", 0.9071, "", 0.07636887608069164, "", 0.9071, "", 1, "",
+  0.9071, "", 1, ""
+], "Info": {
+  "colCount": 163, "colKey": "es3087148123", "cubeClass": "ASPMining.Analytics.UnifiedEventsCube",
+  "cubeKey": "UNIFIEDEVENTSCUBE", "cubeName": "UnifiedEventsCube", "decimalSeparator": ".",
+  "numericGroupSeparator": ",", "numericGroupSize": 3, "percentDone": 100, "queryKey": "es1543641716", "rowCount": 4,
+  "rowKey": "es975102870"
+}
+}

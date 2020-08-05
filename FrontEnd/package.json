@@ -1,7 +1,7 @@
 {
   "name": "intersystem",
   "version": "1.0.0",
-  "description": "## Compilar assets ``npm run compile``",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "dev-server": "node_modules/gulp/bin/gulp.js",
@@ -40,6 +40,6 @@
     "ui-select": "^0.19.8"
   },
   "devDependencies": {
-    "browser-sync": "^2.26.12"
+    "browser-sync": "^2.26.7"
   }
 }

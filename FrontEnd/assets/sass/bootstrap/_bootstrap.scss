@@ -1,0 +1,160 @@
+/*!
+ * Bootstrap v3.3.7 (http://getbootstrap.com)
+ * Copyright 2011-2016 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+// Core variables and mixins
+@import "../variables";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins";
+// Reset and dependencies
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/normalize";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/print";
+// @import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/glyphicons";
+// Core CSS
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/scaffolding";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/type";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/code";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/grid";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/tables";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/forms";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/buttons";
+// Components
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/component-animations";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/dropdowns";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/button-groups";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/input-groups";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/navs";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/navbar";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/breadcrumbs";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/pagination";
+// @import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/pager";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/labels";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/badges";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/jumbotron";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/thumbnails";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/alerts";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/progress-bars";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/media";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/list-group";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/panels";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/responsive-embed";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/wells";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/close";
+// Components w/ JavaScript
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/modals";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/tooltip";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/popovers";
+// @import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/carousel";
+// Utility classes
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/utilities";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/responsive-utilities";
+@import "bs-modal";
+@import "bs-navbar";
+@import "bs-panel";
+@import "bs-tabs";
+@import "bs-forms";
+@import "ui/tooltip";
+@import "ui/datepicker";
+@import "ui/accordion";
+@import "bs-flex-columns";
+
+.row.no-space {
+  margin-left: 0;
+  margin-right: 0;
+
+  .col-lg-1, .col-md-1, .col-sm-1, .col-ms-1, .col-xs-1,
+  .col-lg-2, .col-md-2, .col-sm-2, .col-ms-2, .col-xs-2,
+  .col-lg-3, .col-md-3, .col-sm-3, .col-ms-3, .col-xs-3,
+  .col-lg-4, .col-md-4, .col-sm-4, .col-ms-4, .col-xs-4,
+  .col-lg-5, .col-md-5, .col-sm-5, .col-ms-5, .col-xs-5,
+  .col-lg-6, .col-md-6, .col-sm-6, .col-ms-6, .col-xs-6,
+  .col-lg-7, .col-md-7, .col-sm-7, .col-ms-7, .col-xs-7,
+  .col-lg-8, .col-md-8, .col-sm-8, .col-ms-8, .col-xs-8,
+  .col-lg-9, .col-md-9, .col-sm-9, .col-ms-9, .col-xs-9,
+  .col-lg-10, .col-md-10, .col-sm-10, .col-ms-10, .col-xs-10,
+  .col-lg-11, .col-md-11, .col-sm-11, .col-ms-11, .col-xs-11,
+  .col-lg-12, .col-md-12, .col-sm-12, .col-ms-12, .col-xs-12 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
+@media (max-width: $screen-ms-max) {
+  .nav-tabs li {
+    width: auto !important;
+  }
+}
+
+.well {
+  position: relative;
+  padding: $well-padding;
+  box-shadow: none;
+}
+
+.list-group.list-group-sm {
+  .list-group-item {
+    padding: 7px 10px;
+    font-size: .9em;
+  }
+}
+
+.alert.alert-default {
+  border-color: $border-color;
+}
+
+.container-lg {
+  padding-right: 1.5 * $grid-gutter-width;
+  padding-left: 1.5 * $grid-gutter-width;
+
+  max-width: 1600px;
+  margin: auto;
+}
+
+@media (max-width: $screen-xs-max) {
+  .static-xs {
+    position: static !important;
+    height: auto;
+
+    &.panel.absolute {
+      .panel-body {
+        position: static !important;
+      }
+    }
+  }
+}
+
+@media (max-width: $screen-ms-max) {
+  .static-ms {
+    position: static !important;
+    height: auto;
+
+    &.panel.absolute {
+      .panel-body {
+        position: static !important;
+      }
+    }
+  }
+}
+
+@media (max-width: $screen-sm-max) {
+  .static-sm {
+    position: static !important;
+    height: auto;
+
+    &.panel.absolute {
+      .panel-body {
+        position: static !important;
+      }
+    }
+  }
+}
+
+.btn-white {
+  background: #fff;
+  border: 1px solid $border-color;
+}
+
+
+.dropdown-menu {
+  top: auto;
+}

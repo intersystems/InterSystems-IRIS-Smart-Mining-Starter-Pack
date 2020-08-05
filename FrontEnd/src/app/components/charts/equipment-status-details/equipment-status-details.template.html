@@ -1,0 +1,12 @@
+<div style="position: relative">
+    <div ng-class="{transparent: !ctrl.status || ctrl.loading}">
+        <div class="chart chart-sm bar"></div>
+
+        <hr/>
+        <div class="chart chart-sm pie"></div>
+    </div>
+    <div class="centered-message" ng-show="!ctrl.status">
+        <h4 class="no-margin">No se ha seleccionado un estado</h4>
+    </div>
+    <spinner show="ctrl.loading"></spinner>
+</div>

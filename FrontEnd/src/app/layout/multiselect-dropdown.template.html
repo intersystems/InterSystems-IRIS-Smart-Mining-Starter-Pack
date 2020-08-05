@@ -1,0 +1,50 @@
+<div style="display: block" class="btn-group" uib-dropdown
+     on-toggle="ctrl.onToggle(open)"
+     auto-close="outsideClick">
+    <button class="btn btn-block btn-white" uib-dropdown-toggle ng-disabled="!ctrl.items.length || ctrl.disabled">
+        <span ng-show="ctrl.items.length">
+            <span ng-if="ctrl.selectedItems.length">
+            {{ctrl.selectedItems.length}} Seleccionados
+        </span>
+        <span ng-if="!ctrl.selectedItems.length">
+            {{ctrl.label || 'Seleccionar'}}
+        </span>
+        </span>
+
+        <span ng-show="!ctrl.items.length">
+            No hay elementos disponibles
+        </span>
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" uib-dropdown-menu
+        style="max-height: 300px; overflow-y: auto; width: 100%">
+        <li ng-show="!ctrl.items.length" class="marginTB20 text-center">
+            <strong>No se han encontrado elementos</strong>
+        </li>
+        <li>
+            <a ng-click="ctrl.selectAll()" class="cursor-pointer">
+                <i class="fas fa-fw fa-check"></i> Seleccionar Todo
+            </a>
+        </li>
+        <li>
+            <a ng-click="ctrl.unSelectAll()" class="cursor-pointer">
+                <i class="fas fa-fw fa-times"></i> Deseleccionar Todo
+            </a>
+        </li>
+        <li class="divider"></li>
+
+        <li class="paddingLR10">
+            <input class="form-control input-xs" placeholder="Buscar" ng-model="search.name">
+        </li>
+        <li class="divider"></li>
+
+        <li ng-repeat="item in ctrl.items | filter:search">
+            <label class="checkbox marginLR10 cursor-pointer">
+                <input type="checkbox" ng-model="item.selected"
+                       ng-change="ctrl.toggleItem(item)">
+                <i></i>
+                <span>{{item.name}}</span>
+            </label>
+        </li>
+    </ul>
+</div>

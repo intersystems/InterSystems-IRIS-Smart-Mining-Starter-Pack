@@ -1,0 +1,49 @@
+.panel-accordion {
+  @extend .panel;
+  border: none;
+  box-shadow: none;
+
+  .panel-heading {
+    height: auto;
+    padding: 0;
+    box-shadow: none;
+    border-bottom: 1px solid lighten($border-color, 5%);
+
+    > a {
+      display: block;
+      height: 40px;
+      padding: 0 $spacing*2;
+      text-decoration: none;
+      line-height: 38px;
+      font-size: .9em;
+      color: $text-color;
+      position: relative;
+    }
+  }
+
+  .panel-collapse {
+    .panel-body {
+      position: relative;
+      top: auto;
+      right: auto;
+      bottom: auto;
+      left: auto;
+      padding: $spacing * 2;
+      border: 0 !important;
+    }
+  }
+
+  .accordion-toggle {
+    > div {
+      display: block;
+      padding-right: 20px;
+    }
+
+    .fa-caret-down, .fa-caret-up {
+      position: absolute;
+      right: 0;
+      line-height: 38px;
+      top: 0
+    }
+  }
+}

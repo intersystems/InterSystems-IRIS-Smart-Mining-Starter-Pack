@@ -1,0 +1,14 @@
+<div class="panel panel-light">
+    <div class="panel-heading">Estado de flota - Análisis diario</div>
+    <operation-seagull-chart from="ctrl.from" to="ctrl.to" categories="ctrl.categories"
+                             is-loading="ctrl.loading"></operation-seagull-chart>
+
+    <div class="centered-message" ng-show="!ctrl.category">
+        <h4 class="no-margin">No se ha seleccionado una categoría de equipamiento</h4>
+    </div>
+
+    <div ng-show="ctrl.category && !ctrl.loading" class="ng-hide marginLR20 marginT20 paddingB5">
+        <equipment-ranking-details from="ctrl.from" to="ctrl.to"
+                                   categories="ctrl.categories"></equipment-ranking-details>
+    </div>
+</div>

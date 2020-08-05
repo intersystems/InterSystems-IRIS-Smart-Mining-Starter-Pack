@@ -1,0 +1,56 @@
+@import "../assets/sass/variables";
+@import "../assets/sass/custom/*.scss";
+@import "../assets/sass/bootstrap/bootstrap";
+@import "../assets/sass/fontawesome";
+
+@import "./app/components/**/*.scss";
+
+.side-panel {
+  width: $side-panel-width;
+  display: inline-block;
+  vertical-align: top;
+
+  &.side-panel-right {
+    margin-left: 2 * $grid-gutter-width;
+  }
+}
+
+.left-content {
+  width: calc(100% - #{$side-panel-width + 2* $grid-gutter-width});
+  display: inline-block;
+}
+
+.content {
+  background: #fff;
+  padding: 40px;
+  margin-top: 5px;
+}
+
+.chart {
+  height: 450px;
+
+  &.chart-sm {
+    height: 300px;
+  }
+
+  &.chart-xs {
+    height: 200px;
+  }
+}
+
+#text-tester {
+  top: -5000px;
+  position: fixed;
+}
+
+.ng-hide {
+  display: none;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
+.filters-target {
+  min-height: 200px;
+}

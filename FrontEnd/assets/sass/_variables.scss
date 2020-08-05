@@ -1,0 +1,102 @@
+$fa-font-path: '../fonts'; // FontAwesome dist font path
+
+$font-family-sans-serif: 'Montserrat', sans-serif;
+$font-family-base: $font-family-sans-serif;
+
+$gray-base: #222;
+$gray-darker: #222; // #222
+$gray-dark: #333; // #333
+$gray: #555; // #555
+$gray-light: #777; // #777
+$gray-lighter: #DCDCE2; // #eee
+$gray-lightest: #f1f5f8;
+
+$green-base: #00a489;
+
+$brand-primary: #474968; // #337ab7
+$brand-primary-dark: darken($brand-primary, 10%);
+$brand-success: #00a86b;
+$brand-info: #42a6bf;
+$brand-warning: #f6af6d;
+$brand-danger: #ef5350;
+$brand-secondary: #2172c3;
+
+$border-color: lighten($gray-lighter, 7%);
+$border-color-light: $gray-lighter;
+$border-dark: #becdd9;
+
+$state-secondary-text: $brand-secondary;
+
+$body-bg: #f4f5f9;
+$text-color: $gray-dark;
+
+// Navbar
+$navbar-height: 40px;
+$navbar-inverse-color: lighten($gray-light, 15%);
+$navbar-inverse-bg: #474968;
+$navbar-inverse-border: darken($navbar-inverse-bg, 10%);
+$navbar-inverse-link-active-bg: lighten($navbar-inverse-bg, 5%);
+$navbar-inverse-toggle-hover-bg: $navbar-inverse-link-active-bg;
+$navbar-inverse-toggle-border-color: #555;
+
+$navbar-default-bg: $body-bg;
+$navbar-default-border: $border-color;
+$navbar-default-toggle-hover-bg: lighten($navbar-inverse-bg, 20%);
+$navbar-default-toggle-border-color: lighten($navbar-inverse-bg, 20%);
+$navbar-default-toggle-hover-bg: transparent;
+$navbar-default-brand-color: #fff;
+
+$dropdown-link-active-color: $text-color;
+$dropdown-link-active-bg: $body-bg;
+
+$grid-gutter-width: 10px;
+$container-desktop: (840px + $grid-gutter-width) !default;
+$container-large-desktop: (990px + $grid-gutter-width);
+
+// Well
+$well-padding: 15px;
+$well-bg: #fff;
+
+// Modal
+$modal-content-border-color: transparent;
+
+//Panel
+// $panel-heading-padding: 0 10px;
+$panel-default-border: $border-color;
+
+// Input
+$input-border: $border-color;
+$input-border-focus: darken($border-color, 20%);
+
+// breadcrumb
+$breadcrumb-bg: #fff;
+$breadcrumb-active-color: $gray;
+
+//== Tabs
+$nav-tabs-border-color: $border-color;
+
+$nav-tabs-link-hover-border-color: $gray-lighter;
+
+$nav-tabs-active-link-hover-bg: $gray-lightest;
+$nav-tabs-active-link-hover-color: $gray-dark;
+$nav-tabs-active-link-hover-border-color: $border-color;
+
+$nav-tabs-justified-link-border-color: $border-color;
+$nav-tabs-justified-active-link-border-color: $gray-lightest;
+
+$panel-default-heading-bg: lighten($brand-primary, 60%);
+
+$screen-lg-min: 1300px;
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+
+// Mid-Small breakpoint
+$screen-ms: 480px !default;
+$screen-ms-min: $screen-ms;
+$screen-ms-max: ($screen-sm-min - 1);
+
+// Redefined Extra Small max value
+$screen-xs-max-new: ($screen-ms-min - 1);
+
+$spacing: floor(($grid-gutter-width / 2));
+
+$side-panel-width: 400px;

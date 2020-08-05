@@ -1,0 +1,41 @@
+<nav class="navbar navbar-inverse collapsed">
+    <div class="row-flex">
+        <div class="col-sm hidden-sm hidden-xs">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle"
+                        ng-click="ctrl.isNavCollapsed = !ctrl.isNavCollapsed"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" ui-sref="home">
+                    <span class="brand-full"></span>
+                </a>
+            </div>
+        </div>
+        <div class="col-sm">
+            <h1 class="app-name">
+                IRIS Mining Platform
+            </h1>
+        </div>
+        <div class="col-sm hidden-sm hidden-xs"></div>
+    </div>
+</nav>
+<script type="text/ng-template" id="sidebar-template.html">
+    <ul role="tablist" ng-transclude class="nav" id="side-menu"></ul>
+</script>
+
+<script type="text/ng-template" id="sidebar-dropdown.html">
+    <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading">
+        <span uib-accordion-header ng-class="{'text-muted': isDisabled}">
+            {{heading}}
+        </span>
+        <span class="fas arrow hide-collapsed"></span>
+    </a>
+
+    <div ng-transclude uib-collapse="!isOpen">
+
+    </div>
+</script>

@@ -1,0 +1,32 @@
+<div class="left-content">
+    <ul class="nav nav-tabs nav-justified nav-tabs secondary">
+        <li ui-sref-active="active">
+            <a ui-sref="mineOperation.production.realtime">
+                <h4>Tiempo Real</h4>
+            </a>
+        </li>
+        <li ui-sref-active="active">
+            <a ui-sref="mineOperation.production.ranking">
+                <h4>Análisis de flota</h4>
+            </a>
+        </li>
+        <li ui-sref-active="active">
+            <a ui-sref="mineOperation.production.compliance">
+                <h4>Cumplimiento</h4>
+            </a>
+        </li>
+    </ul>
+
+    <div class="content">
+        <ui-view></ui-view>
+    </div>
+
+</div>
+<div class="side-panel side-panel-right">
+    <div class="panel panel-filter">
+        <div class="panel-heading">Panel</div>
+        <div class="panel-body">
+            <div class="filters-target"></div>
+        </div>
+    </div>
+</div>

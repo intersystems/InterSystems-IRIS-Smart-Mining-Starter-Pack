@@ -1,0 +1,36 @@
+<div class="left-content">
+    <ul class="nav nav-tabs nav-justified nav-tabs secondary">
+        <li ui-sref-active="active">
+            <a ui-sref="mineOperation.oee.overview">
+                <h4>Resumen</h4>
+            </a>
+        </li>
+        <li ui-sref-active="active">
+            <a ui-sref="mineOperation.oee.utilization">
+                <h4>Utilización</h4>
+            </a>
+        </li>
+        <li ui-sref-active="active">
+            <a ui-sref="mineOperation.oee.capacityPerformance">
+                <h4>Performance Capacidad</h4>
+            </a>
+        </li>
+        <li ui-sref-active="active">
+            <a ui-sref="mineOperation.oee.timePerformance">
+                <h4>Performance Tiempo</h4>
+            </a>
+        </li>
+    </ul>
+
+    <div class="content">
+        <ui-view></ui-view>
+    </div>
+</div>
+<div class="side-panel side-panel-right">
+    <div class="panel panel-filter">
+        <div class="panel-heading">Panel</div>
+        <div class="panel-body">
+            <div class="filters-target"></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="panel panel-light">
+    <div class="panel-heading">
+        <div>{{ctrl.types[ctrl.type].title}}</div>
+        <small style="font-size: 70%">{{ctrl.hourString}} Horas</small>
+    </div>
+    <div class="chart chart-sm" ng-class="{transparent: false}"></div>
+
+    <!--<div class="centered-message" ng-show="!ctrl.categories.length">
+        <h4 class="no-margin">No se ha seleccionado una categoría de equipamiento</h4>
+    </div>-->
+    <spinner show="ctrl.loading"></spinner>
+
+    <minute-oee-details-chart date="ctrl.selectedDate"
+                              type="ctrl.type"
+                              color="ctrl.color"></minute-oee-details-chart>
+</div>
