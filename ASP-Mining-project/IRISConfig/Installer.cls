@@ -144,11 +144,11 @@ XData Install [ XMLNamespace = INSTALLER ]
 	<Invoke Class="IRISConfig.Installer" Method="EnableIAM" CheckStatus="true">
 		<Arg name="pPass" Value="sys"/>
 	</Invoke>
-	
+	<!--
 	<Invoke	Class="IRISConfig.Installer" Method="DisableJournalForDatabase"	CheckStatus="true">
 		<Arg name="pDatabaseName"	Value="journal"/>
 	</Invoke>
-	<!--
+	
 	<Log Text="Building cube and enabling cube registry..." Level="0"/>
 	<Invoke Class="IRISConfig.Installer" Method="BuildCubeAndEnableCubeRegistry" CheckStatus="true">
 		<Arg name="pNamespace" Value="${Namespace}"/>
