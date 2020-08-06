@@ -98,6 +98,27 @@ ClassMethod EnableIAM(pPass as %String) As %Status
 	Quit tSC 
 }
 
+ClassMethod DisableJournalForDatabase(pDatabaseName As  %String) As %Status 
+{
+	Set tSC = $$$OK
+	Try {
+		Set tSC = ##class(Config.Databases).Get(pDatabaseName,.v)
+		Quit:$$$ISERR(tSC)
+
+		Set tDatabaseDir = v("/usr/irissys/mgr/journal/")
+
+		Set db=##Class(SYS.Database).%OpenId(tDatabaseDir)
+
+		Set db.GlobalJournalState=2
+
+		Set tSC = db.%Save()
+	} Catch (oException)
+	{
+		Set tSC = oException.AsStatus()
+	} 
+	Quit tSC
+}
+
 /// You can customize this to run code during docker build
 XData Install [ XMLNamespace = INSTALLER ]
 {
@@ -119,6 +140,14 @@ XData Install [ XMLNamespace = INSTALLER ]
 		<Arg name="pNamespace" Value="${Namespace}"/>
 	</Invoke>
 	
+	<Log Text="Enabling IAM..." Level="0"/>
+	<Invoke Class="IRISConfig.Installer" Method="EnableIAM" CheckStatus="true">
+		<Arg name="pPass" Value="sys"/>
+	</Invoke>
+	
+	<Invoke	Class="IRISConfig.Installer" Method="DisableJournalForDatabase"	CheckStatus="true">
+		<Arg name="pDatabaseName"	Value="journal"/>
+	</Invoke>
 	<!--
 	<Log Text="Building cube and enabling cube registry..." Level="0"/>
 	<Invoke Class="IRISConfig.Installer" Method="BuildCubeAndEnableCubeRegistry" CheckStatus="true">
@@ -134,11 +163,6 @@ XData Install [ XMLNamespace = INSTALLER ]
 		<Arg name="pImport" Value="1"/>
 	</Invoke>
 	-->
-	<Log Text="Enabling IAM..." Level="0"/>
-	<Invoke Class="IRISConfig.Installer" Method="EnableIAM" CheckStatus="true">
-		<Arg name="pPass" Value="sys"/>
-	</Invoke>
-	
 	
 </Manifest>
 }
