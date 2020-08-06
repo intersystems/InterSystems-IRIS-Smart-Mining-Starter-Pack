@@ -25,7 +25,7 @@ ClassMethod CreateCredentials(pNamespace As %String) As %Status
 	
 	ZN tNS
 	
-	Quit tSC 
+	Quit tSC
 }
 
 ClassMethod BuildCubeAndEnableCubeRegistry(pNamespace As %String) As %Status
@@ -46,15 +46,15 @@ ClassMethod BuildCubeAndEnableCubeRegistry(pNamespace As %String) As %Status
 	
 	ZN "%SYS"
 	
-	Quit tSC 
+	Quit tSC
 }
 
-ClassMethod InstallMDX2JSON(pNamespace As %String, pSetupDir as %String, pUser as %String, pPass as %String, pImport as %String) As %Status
+ClassMethod InstallMDX2JSON(pNamespace As %String, pSetupDir As %String, pUser As %String, pPass As %String, pImport As %String) As %Status
 {
 	Set tSC = $$$OK
 	Try
 	{
-		ZN pNamespace
+		ZN "APPINT"
 			
 		Set pVars("User")=pUser
 		Set pVars("Password")=pPass
@@ -72,10 +72,10 @@ ClassMethod InstallMDX2JSON(pNamespace As %String, pSetupDir as %String, pUser a
 	
 	ZN "%SYS"
 	
-	Quit tSC 
+	Quit tSC
 }
 
-ClassMethod EnableIAM(pPass as %String) As %Status
+ClassMethod EnableIAM(pPass As %String) As %Status
 {
 	Set tSC = $$$OK
 	Try
@@ -95,10 +95,10 @@ ClassMethod EnableIAM(pPass as %String) As %Status
 	
 	ZN "%SYS"
 	
-	Quit tSC 
+	Quit tSC
 }
 
-ClassMethod DisableJournalForDatabase(pDatabaseName As  %String) As %Status 
+ClassMethod DisableJournalForDatabase(pDatabaseName As %String) As %Status
 {
 	Set tSC = $$$OK
 	Try {
@@ -135,16 +135,44 @@ XData Install [ XMLNamespace = INSTALLER ]
                 
 	</Namespace>
 		
+		
 	<Log Text="Creating credentials..." Level="0"/>
 	<Invoke Class="IRISConfig.Installer" Method="CreateCredentials" CheckStatus="true">
 		<Arg name="pNamespace" Value="${Namespace}"/>
 	</Invoke>
 	
+	<!--
+	<Log Text="Building cube and enabling cube registry..." Level="0"/>
+	<Invoke Class="IRISConfig.Installer" Method="BuildCubeAndEnableCubeRegistry" CheckStatus="true">
+		<Arg name="pNamespace" Value="${Namespace}"/>
+	</Invoke>
+	-->
+	
+	<Log Text="Installing MDX2JSON..." Level="0"/>
+	<Invoke Class="IRISConfig.Installer" Method="InstallMDX2JSON" CheckStatus="true">
+		<Arg name="pNamespace" Value="MDX2JSON"/>
+		<Arg name="pSetupDir" Value="${SourceDir}MDX2JSON"/>
+		<Arg name="pUser" Value="MDXuser"/>
+		<Arg name="pPass" Value="sys"/>
+		<Arg name="pImport" Value="1"/>
+	</Invoke>
+
 	<Log Text="Enabling IAM..." Level="0"/>
 	<Invoke Class="IRISConfig.Installer" Method="EnableIAM" CheckStatus="true">
 		<Arg name="pPass" Value="sys"/>
 	</Invoke>
-	<!--
+
+<!--
+	<Log Text="Building MDX2JSON..." Level="0"/>
+	<Invoke Class="IRISConfig.Installer" Method="InstallMDX2JSON" CheckStatus="true">
+		<Arg name="pNamespace" Value="${Namespace}"/>
+		<Arg name="pSetupDir" Value="${SourceDir}MDX2JSON"/>
+		<Arg name="pUser" Value="MDXuser"/>
+		<Arg name="pPass" Value="sys"/>
+		<Arg name="pImport" Value="1"/>
+	</Invoke>
+
+	
 	<Invoke	Class="IRISConfig.Installer" Method="DisableJournalForDatabase"	CheckStatus="true">
 		<Arg name="pDatabaseName"	Value="journal"/>
 	</Invoke>
@@ -154,16 +182,9 @@ XData Install [ XMLNamespace = INSTALLER ]
 		<Arg name="pNamespace" Value="${Namespace}"/>
 	</Invoke>
 	
-	<Log Text="Building MDX2JSON..." Level="0"/>
-	<Invoke Class="IRISConfig.Installer" Method="InstallMDX2JSON" CheckStatus="true">
-		<Arg name="pNamespace" Value="${Namespace}"/>
-		<Arg name="pSetupDir" Value="${SourceDir}MDX2JSON"/>
-		<Arg name="pUser" Value="MDXuser"/>
-		<Arg name="pPass" Value="sys"/>
-		<Arg name="pImport" Value="1"/>
-	</Invoke>
 	-->
 	
 </Manifest>
 }
+
 }

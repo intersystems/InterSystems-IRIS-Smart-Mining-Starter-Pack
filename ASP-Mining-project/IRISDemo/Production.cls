@@ -37,7 +37,7 @@ XData ProductionDefinition
     <Setting Target="Adapter" Name="ConnectionAttributes">databaseName=MineCare;user=iris;password=oee;</Setting>
     <Setting Target="Adapter" Name="KeyFieldName"></Setting>
   </Item>
-  <Item Name="PowerView SQL Event Service" Category="" ClassName="ASP.Mining.ConnectorModules.PowerView.PowerViewService" PoolSize="1" Enabled="false" Foreground="false" Comment="" LogTraceEvents="true" Schedule="">
+  <Item Name="PowerView SQL Event Service" Category="" ClassName="ASPMining.ConnectorModules.PowerView.PowerViewService" PoolSize="1" Enabled="false" Foreground="false" Comment="" LogTraceEvents="true" Schedule="">
     <Setting Target="Adapter" Name="DSN">jdbc:sqlserver://192.168.0.3:1433</Setting>
     <Setting Target="Adapter" Name="Credentials">PowerViewCredentials</Setting>
     <Setting Target="Adapter" Name="JGService">Java Gateway Service</Setting>

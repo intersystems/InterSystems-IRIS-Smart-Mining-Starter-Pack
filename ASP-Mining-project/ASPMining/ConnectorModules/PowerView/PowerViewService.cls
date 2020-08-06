@@ -1,4 +1,4 @@
-Class ASP.Mining.ConnectorModules.PowerView.PowerViewService Extends Ens.BusinessService
+Class ASPMining.ConnectorModules.PowerView.PowerViewService Extends Ens.BusinessService
 {
 
 /// We are using this custom adapter that is based on EnsLib.SQL.InboundAdapter to hide some properties we don't

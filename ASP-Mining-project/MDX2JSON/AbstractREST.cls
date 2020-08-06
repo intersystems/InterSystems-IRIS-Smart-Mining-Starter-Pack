@@ -14,7 +14,7 @@ ClassMethod DispatchRequest(pUrl As %String, pMethod As %String) As %Status [ In
 	#dim %request As %CSP.Request
 	#dim %session As %CSP.Session
 
-	//Do %response.SetHeader("Access-Control-Allow-Origin",..GetOrigins())
+	Do %response.SetHeader("Access-Control-Allow-Origin",..GetOrigins())
 	Do %response.SetHeader("Access-Control-Allow-Credentials","true")
 	Do %response.SetHeader("Access-Control-Allow-Methods","GET, PUT, POST, DELETE, OPTIONS")
 	Do %response.SetHeader("Access-Control-Max-Age","10000")
@@ -180,8 +180,8 @@ ClassMethod ConvertRequestBody() As %Status
 ClassMethod GetOrigins() As %String
 {
 	set url = %request.GetCgiEnv("HTTP_REFERER")
-	//return $p(url,"/",1,3) // get http(s)://origin.com:port
-	return "http://192.168.0.4:5000"
+	return $p(url,"/",1,3) // get http(s)://origin.com:port
+	//return "http://localhost:5000"
 }
 
 /// Called for a REST page in the event of a login being required
