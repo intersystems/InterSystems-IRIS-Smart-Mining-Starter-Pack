@@ -1,4 +1,4 @@
-window.IRIS_URL = 'http://dev.austekchile.cl:52773/APPINT/MDX?Namespace=APPINT';
+window.IRIS_URL = 'http://dev.austekchile.cl:52773/MDX2JSON/MDX?Namespace=APPINT';
 
 $.extend(true, $.fn.dataTable.defaults, {
   language: {

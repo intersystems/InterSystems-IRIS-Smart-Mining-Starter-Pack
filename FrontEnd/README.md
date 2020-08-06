@@ -1,12 +1,12 @@
 #Intersystem webapp
-## Requirements
-Node.js 14+
 
-## Configure IRIS address
-TODO:
+## Compilar assets
+``npm run compile``
 
-## Install packages
-``npm install``  
+Esto generará un directorio ``dist`` que contiene todos los archivos a ser hosteados.
+
+
+## Servidor de desarrollo
 ``npm run dev-server``
 
-
+Esto ejecutará ``compile`` y además creará un servidor de desarrollo que actualizará automaticamente el navegador al hacer cambios.
