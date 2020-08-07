@@ -4,3 +4,10 @@ starterpack-base-irisint.tar
 **/conf/
 FrontEnd/node_modules
 .vscode
+binaries/*
+!binaries/other/
+ASP-Mining-project/ASPMining/ConnectorModules/*
+!ASP-Mining-project/ASPMining/ConnectorModules/BO/
+!ASP-Mining-project/ASPMining/ConnectorModules/Adapter/
+!ASP-Mining-project/ASPMining/ConnectorModules/MineCare/
+!ASP-Mining-project/ASPMining/ConnectorModules/PowerView/

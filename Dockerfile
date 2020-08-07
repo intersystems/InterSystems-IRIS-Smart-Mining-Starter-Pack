@@ -11,6 +11,8 @@ ADD --chown=irisowner:irisuser ./iris-analytics/*.xml $IRIS_APP_SOURCEDIR
 ADD --chown=irisowner:irisuser ./res/* /tmp/
 ADD --chown=irisowner:irisuser ./res/utils/* /tmp/utils/
 
+COPY --chown=irisowner:irisuser ./binaries/*/* /usr/irissys/bin/
+
 ENV IRIS_GLOBAL_BUFFERS=128
 ENV IRIS_ROUTINE_BUFFERS=64
 

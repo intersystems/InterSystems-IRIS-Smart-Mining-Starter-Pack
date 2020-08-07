@@ -16,6 +16,7 @@ ClassMethod CreateCredentials(pNamespace As %String) As %Status
 		Set tSC = ##class(Ens.Config.Credentials).SetCredential("SampleDispatch", "SuperUser", "sys", 1)
 		Set tSC2 = ##class(Ens.Config.Credentials).SetCredential("MineCareCredentials", "SA", "Minecare1", 1)
 		Set tSC3 = ##class(Ens.Config.Credentials).SetCredential("PowerViewCredentials", "iris", "oee", 1)
+		Set tSC4 = ##class(Ens.Config.Credentials).SetCredential("IrisOpcUaDemo", "SuperUser", "sys", 1)
 		Quit:$System.Status.IsError(tSC)
 	}
 	Catch (oException)
@@ -119,6 +120,29 @@ ClassMethod DisableJournalForDatabase(pDatabaseName As %String) As %Status
 	Quit tSC
 }
 
+ClassMethod LoadConnectorAndDemos(pNamespace As %String) As %Status
+{
+	Set tSC = $$$OK
+	Try
+	{
+		Set tNS=$Namespace
+		ZN pNamespace
+
+		If (##class(%Dictionary.CompiledClass).%ExistsId("OPCUA.Utils")){
+			set tSC = ##class(OPCUA.Utils).Install("/usr/irissys/bin/irisopcua.so")	
+			//Do ##class(Examples.OPCUADS.Utils).LoadOnInstallation()
+		}
+	}
+	Catch (oException)
+	{
+		Set tSC = oException.AsStatus()
+	}
+	
+	ZN tNS
+	
+	Quit tSC
+}
+
 /// You can customize this to run code during docker build
 XData Install [ XMLNamespace = INSTALLER ]
 {
@@ -162,17 +186,12 @@ XData Install [ XMLNamespace = INSTALLER ]
 		<Arg name="pPass" Value="sys"/>
 	</Invoke>
 
-<!--
-	<Log Text="Building MDX2JSON..." Level="0"/>
-	<Invoke Class="IRISConfig.Installer" Method="InstallMDX2JSON" CheckStatus="true">
+	<Log Text="Loading Connectors and Demos (OPCUA)..." Level="0"/>
+	<Invoke Class="IRISConfig.Installer" Method="LoadConnectorAndDemos" CheckStatus="true">
 		<Arg name="pNamespace" Value="${Namespace}"/>
-		<Arg name="pSetupDir" Value="${SourceDir}MDX2JSON"/>
-		<Arg name="pUser" Value="MDXuser"/>
-		<Arg name="pPass" Value="sys"/>
-		<Arg name="pImport" Value="1"/>
 	</Invoke>
 
-	
+	<!--
 	<Invoke	Class="IRISConfig.Installer" Method="DisableJournalForDatabase"	CheckStatus="true">
 		<Arg name="pDatabaseName"	Value="journal"/>
 	</Invoke>
