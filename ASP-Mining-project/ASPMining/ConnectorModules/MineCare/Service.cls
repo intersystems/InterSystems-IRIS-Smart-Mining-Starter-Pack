@@ -1,11 +1,11 @@
-Class ASPMining.ConnectorModules.MineCare.MineCareService Extends Ens.BusinessService
+Class ASPMining.ConnectorModules.MineCare.Service Extends Ens.BusinessService
 {
 
 /// We are using this custom adapter that is based on EnsLib.SQL.InboundAdapter to hide some properties we don't
 /// want people to change.
-Parameter ADAPTER = "ASPMining.ConnectorModules.Adapter.SQL.PeriodicInboundAdapterMC";
+Parameter ADAPTER = "ASPMining.ConnectorModules.Adapter.SQL.PeriodicInboundAdapter";
 
-Property Adapter As ASPMining.ConnectorModules.Adapter.SQL.PeriodicInboundAdapterMC;
+Property Adapter As ASPMining.ConnectorModules.Adapter.SQL.PeriodicInboundAdapter;
 
 Method OnProcessInput(pInput As EnsLib.SQL.Snapshot, Output pOutput As %RegisteredObject) As %Status
 {
@@ -62,7 +62,7 @@ Method ProcessNewModels()
 			
 			Set ..%SessionId=""
 			
-			set sc = ..SendRequestAsync("PowerView Event Operation", oEquipment)
+			set sc = ..SendRequestAsync("MineCare Operation", oEquipment)
 		}else{
 			$$$TRACE("MC - Model already exists "_oRS.Get("Id")_"...")
 		}
@@ -98,7 +98,7 @@ Method ProcessNewCategories()
 			
 			Set ..%SessionId=""
 			
-			set sc = ..SendRequestAsync("PowerView Event Operation", oEquipment)
+			set sc = ..SendRequestAsync("MineCare Operation", oEquipment)
 		}else{
 			$$$TRACE("MC - Category already exists "_oRS.Get("Id")_"...")
 		}
@@ -160,7 +160,7 @@ Method ProcessNewEquipments()
 			
 			Set ..%SessionId=""
 			
-			set sc = ..SendRequestAsync("PowerView Event Operation", oEquipment)
+			set sc = ..SendRequestAsync("MineCare Operation", oEquipment)
 		}else{
 			$$$TRACE("MC - Equipment already exists "_oRS.Get("Id")_"...")
 		}
@@ -207,7 +207,7 @@ Method ProcessOEMEvent()
 
 		Set ..%SessionId=""
 		
-		set sc = ..SendRequestAsync("PowerView Event Operation", oEvent)
+		set sc = ..SendRequestAsync("MineCare Operation", oEvent)
 		
 		Do ..Adapter.SetPersistentValue(..%ConfigName, "LastOEMEventKey", tLastKey)
 	}

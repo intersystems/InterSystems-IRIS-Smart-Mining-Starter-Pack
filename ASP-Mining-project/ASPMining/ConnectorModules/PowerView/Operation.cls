@@ -1,10 +1,9 @@
 Include DEMOMACROS
 
-Class ASPMining.ConnectorModules.BO.Operation Extends Ens.BusinessOperation
+Class ASPMining.ConnectorModules.PowerView.Operation Extends Ens.BusinessOperation
 {
 
 Parameter INVOCATION = "Queue";
-
 
 /// Gets the CompleteEvent object and saves it
 Method NewCompleteEvent(pInput As ASPMining.ConnectorModules.BO.CompleteEvent, Output pOutput As Ens.Response) As %Status

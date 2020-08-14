@@ -1,11 +1,11 @@
-Class ASPMining.ConnectorModules.PowerView.PowerViewService Extends Ens.BusinessService
+Class ASPMining.ConnectorModules.PowerView.Service Extends Ens.BusinessService
 {
 
 /// We are using this custom adapter that is based on EnsLib.SQL.InboundAdapter to hide some properties we don't
 /// want people to change.
-Parameter ADAPTER = "ASPMining.ConnectorModules.Adapter.SQL.PeriodicInboundAdapterMC";
+Parameter ADAPTER = "ASPMining.ConnectorModules.Adapter.SQL.PeriodicInboundAdapter";
 
-Property Adapter As ASPMining.ConnectorModules.Adapter.SQL.PeriodicInboundAdapterMC;
+Property Adapter As ASPMining.ConnectorModules.Adapter.SQL.PeriodicInboundAdapter;
 
 Method OnProcessInput(pInput As EnsLib.SQL.Snapshot, Output pOutput As %RegisteredObject) As %Status
 {
@@ -92,7 +92,7 @@ Method ProcessNewShifts()
 			
 			Set ..%SessionId=""
 			
-			set sc = ..SendRequestAsync("PowerView Event Operation", oEvent)
+			set sc = ..SendRequestAsync("PowerView Operation", oEvent)
 		
 		}else{
 			$$$TRACE("Shiftindex "_tLastKey_" already exists")
@@ -181,7 +181,7 @@ Method ProcessNewCompleteEvents(shiftToQuery As %Integer)
 			
 			$$$TRACE("StatusReasonId "_oEvent.StatusReasonId_"...")
 									
-			set sc = ..SendRequestAsync("PowerView Event Operation", oEvent)
+			set sc = ..SendRequestAsync("PowerView Operation", oEvent)
 			
 			// SLICING OF THE EVENT
 			// Slice the event into fixed length pieces
@@ -213,7 +213,7 @@ Method ProcessNewCompleteEvents(shiftToQuery As %Integer)
 				set oSliceEvent.PartialDuration = firstSliceRemainingTime / SliceDuration //this event is longer than a single slot so is has the whole remaining time of the first slot
 
 				$$$TRACE("MULTI SLICE first PartialDuration: "_oSliceEvent.PartialDuration) //
-				set sc = ..SendRequestAsync("PowerView Event Operation", oSliceEvent) // maybe new operation?
+				set sc = ..SendRequestAsync("PowerView Operation", oSliceEvent) // maybe new operation?
 				
 				For i=1:1:extraSliceCount {
 					//$$$TRACE("EXTRA SLICE i: "_i) //
@@ -241,7 +241,7 @@ Method ProcessNewCompleteEvents(shiftToQuery As %Integer)
 						set oSliceEvent.PartialDuration = 1.0
 					}
 					$$$TRACE("EXTRA SLICE i: "_i_" PartialDuration: "_oSliceEvent.PartialDuration) //
-					set sc = ..SendRequestAsync("PowerView Event Operation", oSliceEvent) // maybe new operation?
+					set sc = ..SendRequestAsync("PowerView Operation", oSliceEvent) // maybe new operation?
 				}
 				
 			}else{
@@ -254,7 +254,7 @@ Method ProcessNewCompleteEvents(shiftToQuery As %Integer)
 				set oSliceEvent.SliceStartDate = $ZDateTime(startday_","_firstSliceSlot)
 				set oSliceEvent.PartialDuration = (firstSliceRemainingTime - lastSliceRemainingTime) / SliceDuration
 				$$$TRACE("SINGLE SLICE ddbkey: "_oSliceEvent.ddbkey_" PartialDuration: "_oSliceEvent.PartialDuration) //
-				set sc = ..SendRequestAsync("PowerView Event Operation", oSliceEvent) // maybe new operation?
+				set sc = ..SendRequestAsync("PowerView Operation", oSliceEvent) // maybe new operation?
 			}
 			
 		}else{
@@ -321,7 +321,7 @@ Method ProcessNewReasons()
 			
 			Set ..%SessionId=""
 			
-			set sc = ..SendRequestAsync("PowerView Event Operation", oReason)
+			set sc = ..SendRequestAsync("PowerView Operation", oReason)
 		}else{
 			$$$TRACE("Reason already exists "_oRS.Get("reason")_"...")
 		}
@@ -377,7 +377,7 @@ Method ProcessNewEquipments()
 			
 			Set ..%SessionId=""
 			
-			set sc = ..SendRequestAsync("PowerView Event Operation", oEquipment)
+			set sc = ..SendRequestAsync("PowerView Operation", oEquipment)
 		}else{
 			$$$TRACE("Equipment already exists "_oRS.Get("eqmtid")_"...")
 		}
@@ -511,7 +511,7 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 					set oDump.Location = ##class(ASPMining.CanonicalModel.Mine.Location).NameIndexOpen(location)
 				}
 				
-				set sc = ..SendRequestAsync("PowerView Event Operation", oDump)
+				set sc = ..SendRequestAsync("PowerView Operation", oDump)
 				
 				// Hasta aqui todo tablas estandard
 				// ************************
@@ -670,12 +670,12 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 				set equipment.LastUnifiedEvent = unifiedEvent3
 				set sc = equipment.%Save()
 
-				set sc = ..SendRequestAsync("PowerView Event Operation", productionEvent1)
-				set sc = ..SendRequestAsync("PowerView Event Operation", productionEvent2)
-				set sc = ..SendRequestAsync("PowerView Event Operation", productionEvent3)
-				set sc = ..SendRequestAsync("PowerView Event Operation", unifiedEvent1)
-				set sc = ..SendRequestAsync("PowerView Event Operation", unifiedEvent2)
-				set sc = ..SendRequestAsync("PowerView Event Operation", unifiedEvent3)		
+				set sc = ..SendRequestAsync("PowerView Operation", productionEvent1)
+				set sc = ..SendRequestAsync("PowerView Operation", productionEvent2)
+				set sc = ..SendRequestAsync("PowerView Operation", productionEvent3)
+				set sc = ..SendRequestAsync("PowerView Operation", unifiedEvent1)
+				set sc = ..SendRequestAsync("PowerView Operation", unifiedEvent2)
+				set sc = ..SendRequestAsync("PowerView Operation", unifiedEvent3)		
 											
 			} else {
 				$$$TRACE("Dump event already exists "_oRS.Get("index2")_"...")
@@ -757,7 +757,7 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 				
 				
 				
-				set sc = ..SendRequestAsync("PowerView Event Operation", oLoad)
+				set sc = ..SendRequestAsync("PowerView Operation", oLoad)
 				// Hasta aqui todo tablas estandard
 				// ************************
 				// Desde Aqui nuevo unified para oee
@@ -909,12 +909,12 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 				set sc = equipment.%Save()
 
 
-				set sc = ..SendRequestAsync("PowerView Event Operation", productionEvent1)
-				set sc = ..SendRequestAsync("PowerView Event Operation", productionEvent2)
-				set sc = ..SendRequestAsync("PowerView Event Operation", productionEvent3)
-				set sc = ..SendRequestAsync("PowerView Event Operation", unifiedEvent1)
-				set sc = ..SendRequestAsync("PowerView Event Operation", unifiedEvent2)
-				set sc = ..SendRequestAsync("PowerView Event Operation", unifiedEvent3)	
+				set sc = ..SendRequestAsync("PowerView Operation", productionEvent1)
+				set sc = ..SendRequestAsync("PowerView Operation", productionEvent2)
+				set sc = ..SendRequestAsync("PowerView Operation", productionEvent3)
+				set sc = ..SendRequestAsync("PowerView Operation", unifiedEvent1)
+				set sc = ..SendRequestAsync("PowerView Operation", unifiedEvent2)
+				set sc = ..SendRequestAsync("PowerView Operation", unifiedEvent3)	
 			} else {
 
 				$$$TRACE("Load event already exists "_oRS.Get("index2")_"...")
@@ -950,7 +950,7 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 			//status events duration comes in same row so dont need to update the previous one also
 			set statusEvent.Duration = duration 
 			
-			set sc = ..SendRequestAsync("PowerView Event Operation", statusEvent)
+			set sc = ..SendRequestAsync("PowerView Operation", statusEvent)
 			
 			$$$TRACE("STATUS: Generating New Unified Events")
 			
@@ -996,7 +996,7 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 			set equipment.LastUnifiedEvent = unifiedEvent1
 			set sc = equipment.%Save()
 
-			set sc = ..SendRequestAsync("PowerView Event Operation", unifiedEvent1)
+			set sc = ..SendRequestAsync("PowerView Operation", unifiedEvent1)
 
 			//
 			// JUST FOR GETTING THE SPLICES
@@ -1060,7 +1060,7 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 							
 				//Set ..%SessionId=""
 				
-				//set sc = ..SendRequestAsync("PowerView Event Operation", oEvent)
+				//set sc = ..SendRequestAsync("PowerView Operation", oEvent)
 				
 				// SLICING OF THE EVENT
 				// Slice the event into fixed length pieces
@@ -1092,7 +1092,7 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 					set oSliceEvent.PartialDuration = firstSliceRemainingTime / SliceDuration //this event is longer than a single slot so is has the whole remaining time of the first slot
 
 					$$$TRACE("MULTI SLICE first PartialDuration: "_oSliceEvent.PartialDuration) //
-					set sc = ..SendRequestAsync("PowerView Event Operation", oSliceEvent) // maybe new operation?
+					set sc = ..SendRequestAsync("PowerView Operation", oSliceEvent) // maybe new operation?
 					
 					For i=1:1:extraSliceCount {
 						//$$$TRACE("EXTRA SLICE i: "_i) //
@@ -1120,7 +1120,7 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 							set oSliceEvent.PartialDuration = 1.0
 						}
 						$$$TRACE("EXTRA SLICE i: "_i_" PartialDuration: "_oSliceEvent.PartialDuration) //
-						set sc = ..SendRequestAsync("PowerView Event Operation", oSliceEvent) // maybe new operation?
+						set sc = ..SendRequestAsync("PowerView Operation", oSliceEvent) // maybe new operation?
 					}
 					
 				} else {
@@ -1133,7 +1133,7 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 					set oSliceEvent.SliceStartDate = $ZDateTime(startday_","_firstSliceSlot)
 					set oSliceEvent.PartialDuration = (firstSliceRemainingTime - lastSliceRemainingTime) / SliceDuration
 					$$$TRACE("SINGLE SLICE ddbkey: "_oSliceEvent.ddbkey_" PartialDuration: "_oSliceEvent.PartialDuration) //
-					set sc = ..SendRequestAsync("PowerView Event Operation", oSliceEvent) // maybe new operation?
+					set sc = ..SendRequestAsync("PowerView Operation", oSliceEvent) // maybe new operation?
 				}
 				
 			} else {

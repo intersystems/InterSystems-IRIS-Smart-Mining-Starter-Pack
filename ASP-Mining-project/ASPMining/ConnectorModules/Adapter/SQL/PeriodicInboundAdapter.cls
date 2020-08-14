@@ -1,4 +1,4 @@
-Class ASPMining.ConnectorModules.Adapter.SQL.PeriodicInboundAdapterMC Extends EnsLib.SQL.InboundAdapter
+Class ASPMining.ConnectorModules.Adapter.SQL.PeriodicInboundAdapter Extends EnsLib.SQL.InboundAdapter
 {
 	/// Hiding parameters
 	//Parameter SETTINGS = "-Query:Data,-Parameters:Data,-DeleteQuery:Data,-KeyFieldName:Data";

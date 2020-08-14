@@ -26,7 +26,7 @@ XData ProductionDefinition
     <Setting Target="Adapter" Name="KeyFieldName"></Setting>
   </Item>
   -->
-    <Item Name="MineCare SQL Event Service" Category="" ClassName="ASPMining.ConnectorModules.MineCare.MineCareService" PoolSize="1" Enabled="false" Foreground="false" Comment="" LogTraceEvents="true" Schedule="">
+    <Item Name="MineCare SQL Event Service" Category="" ClassName="ASPMining.ConnectorModules.MineCare.Service" PoolSize="1" Enabled="false" Foreground="false" Comment="" LogTraceEvents="true" Schedule="">
     <Setting Target="Adapter" Name="DSN">jdbc:sqlserver://192.168.0.3:1433</Setting>
     <Setting Target="Adapter" Name="Credentials">PowerViewCredentials</Setting>
     <Setting Target="Adapter" Name="JGService">Java Gateway Service</Setting>
@@ -37,7 +37,7 @@ XData ProductionDefinition
     <Setting Target="Adapter" Name="ConnectionAttributes">databaseName=MineCare;user=iris;password=oee;</Setting>
     <Setting Target="Adapter" Name="KeyFieldName"></Setting>
   </Item>
-  <Item Name="PowerView SQL Event Service" Category="" ClassName="ASPMining.ConnectorModules.PowerView.PowerViewService" PoolSize="1" Enabled="false" Foreground="false" Comment="" LogTraceEvents="true" Schedule="">
+  <Item Name="PowerView SQL Event Service" Category="" ClassName="ASPMining.ConnectorModules.PowerView.Service" PoolSize="1" Enabled="false" Foreground="false" Comment="" LogTraceEvents="true" Schedule="">
     <Setting Target="Adapter" Name="DSN">jdbc:sqlserver://192.168.0.3:1433</Setting>
     <Setting Target="Adapter" Name="Credentials">PowerViewCredentials</Setting>
     <Setting Target="Adapter" Name="JGService">Java Gateway Service</Setting>
@@ -48,7 +48,9 @@ XData ProductionDefinition
     <Setting Target="Adapter" Name="ConnectionAttributes">databaseName=PowerViewCH;user=iris;password=oee;</Setting>
     <Setting Target="Adapter" Name="KeyFieldName"></Setting>
   </Item>
-  <Item Name="PowerView Event Operation" Category="" ClassName="ASPMining.ConnectorModules.BO.Operation" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="false" Schedule="">
+  <Item Name="PowerView Operation" Category="" ClassName="ASPMining.ConnectorModules.PowerView.Operation" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="false" Schedule="">
+  </Item>
+  <Item Name="MineCare Operation" Category="" ClassName="ASPMining.ConnectorModules.MineCare.Operation" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="false" Schedule="">
   </Item>
 </Production>
 }

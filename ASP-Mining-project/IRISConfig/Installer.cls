@@ -130,7 +130,7 @@ ClassMethod LoadConnectorAndDemos(pNamespace As %String) As %Status
 
 		If (##class(%Dictionary.CompiledClass).%ExistsId("OPCUA.Utils")){
 			set tSC = ##class(OPCUA.Utils).Install("/usr/irissys/bin/irisopcua.so")	
-			//Do ##class(Examples.OPCUADS.Utils).LoadOnInstallation()
+			Do ##class(Examples.OPCUADS.Utils).LoadOnInstallation()
 		}
 	}
 	Catch (oException)
@@ -154,7 +154,8 @@ XData Install [ XMLNamespace = INSTALLER ]
             
 			<Log Text="Creating Task to save IRIS Analytic files to external volume..." Level="0"/>
 			<Invoke Class="IRISAnalytics.Task.SaveFiles" Method="Create" CheckStatus="true"/>
-
+			<Invoke Class="ASPMining.ConnectorModules.MineCare.Tasks" Method="Create" CheckStatus="true"/>
+			<Invoke Class="ASPMining.ConnectorModules.PowerView.Tasks" Method="Create" CheckStatus="true"/>
         </IfDef>
                 
 	</Namespace>
