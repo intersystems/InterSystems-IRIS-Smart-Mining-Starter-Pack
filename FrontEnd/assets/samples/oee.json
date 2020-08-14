@@ -27,7 +27,7 @@
     }
   ], "Data": [0.9721330289193303, 7.733295354307557, 0.04381289810740857, 0.32937624771699264], "Info": {
   "colCount": 1, "colKey": "es2685060317", "cubeClass": "ASPMining.Analytics.UnifiedEventsCube",
-  "cubeKey": "UNIFIEDEVENTSCUBE", "cubeName": "UnifiedEventsCube", "decimalSeparator": ".",
+  "cubeKey": "ASPMining.Analytics.UnifiedEventsCube", "cubeName": "UnifiedEventsCube", "decimalSeparator": ".",
   "numericGroupSeparator": ",", "numericGroupSize": 3, "percentDone": 100, "queryKey": "es1259449688", "rowCount": 4,
   "rowKey": "es1978893916"
 }

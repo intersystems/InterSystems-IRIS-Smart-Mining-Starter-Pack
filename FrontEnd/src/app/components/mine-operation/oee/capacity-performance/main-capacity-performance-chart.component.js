@@ -1,30 +1,25 @@
 (() => {
   const angular = window.angular;
 
-  Controller.$inject = ['$rootScope', '$timeout', '$element', 'DateUtils', '$filter', 'OEE', 'Equipment'];
+  Controller.$inject = ['$rootScope', '$timeout', '$element', 'DateUtils', '$filter', 'OEE', 'LoadDump'];
 
   angular
     .module('app')
-    .component('mainUtilizationChart', {
-      templateUrl: 'main-utilization-chart.template.html',
+    .component('mainCapacityPerformanceChart', {
+      templateUrl: 'main-capacity-performance-chart.template.html',
       controller: Controller,
       controllerAs: 'ctrl',
       bindings: {}
     });
 
-  function Controller($root, $timeout, $element, DateUtils, $filter, OEE, Equipment) {
+  function Controller($root, $timeout, $element, DateUtils, $filter, OEE, LoadDump) {
     const vm = this;
 
     vm.$onInit = function () {
       const container = $element.find('.chart');
-      vm.options = {
-        title: 'Utilización por día',
-        yAxisLabel: '% de tiempo',
-        color: '#a3a1fb'
-      };
 
-      vm.lessProductiveChartClick = lessProductiveChartClick;
-      vm.statusChartClick = statusChartClick;
+      vm.lessPerformanceClick = lessPerformanceClick;
+      vm.dumpEventClick = dumpEventClick;
 
       vm.container = container[0];
 
@@ -44,16 +39,10 @@
         vm.selectedEquipments = null;
         vm.selectedStatus = null;
 
-        const chartData = {};
-        OEE.loadDataAsDays(vm.from, vm.to, 'Utilization', vm.filters.categories, vm.filters.equipments)
+        OEE.capacityPerformance(vm.from, vm.to, 'EventDateTimeDay', vm.filters.equipments)
           .then(result => {
-            chartData.capacityPerformance = result && result[0] ? result[0].data : [];
-            return Equipment.statusData(vm.from, vm.to, vm.filters.categories, vm.filters.equipments, 'day');
-          })
-          .then(result => {
-            chartData.status = result;
             vm.loading = false;
-            plotChart(chartData);
+            plotChart(result);
           })
           .catch(err => {
             vm.loading = false;
@@ -85,36 +74,36 @@
         categories.push($filter('date')(date, 'MMM d yyyy'));
       }
 
-      const defaultSeries = {
-        data: [],
+      const tons = chartData[0];
+      const performance = chartData[1];
+
+      const series = [{
         type: 'bar',
-        stack: 'stack',
         barWidth: '50%',
+        name: 'Total Toneladas [miles]',
+        data: tons.data.map(current => {
+          current[1] = Math.round(current[1] / 1000);
+          return current;
+        }),
+        label: {
+          show: true,
+          fontSize: 11
+        }
+      }, {
+        type: 'line',
+        name: 'Performace de capacidad',
+        data: performance.data,
+        yAxisIndex: 1,
+        color: '#59678c',
         label: {
           show: true,
           fontSize: 11,
           formatter: (params) => params.data[1] + '%'
         }
-      };
-
-      let series = {};
-      ['Operative', 'Delay', 'Standby', 'Downtime'].forEach(current => {
-        series[current] = angular.copy(defaultSeries);
-        series[current].name = current;
-      });
-
-      chartData.status.forEach(current => {
-        const minute = current.category;
-        const total = current.data.reduce((sum, current) => current[1] + sum, 0);
-        for (const pair of current.data) {
-          series[pair[0]].data.push([minute, Math.round(10000 * pair[1] / total) / 100]);
-        }
-      });
-
-      series = Object.values(series);
+      }];
 
       let max = null;
-      for (let pair of chartData.capacityPerformance) {
+      for (let pair of performance.data) {
         let value = Math.round(1000 * pair[1]) / 10;
         if (value === 0) {
           continue;
@@ -124,47 +113,43 @@
         pair[1] = value;
       }
 
-      /*series.push({
-        type: 'line',
-        id: 'utilization',
-        smooth: false,
-        symbolSize: 8,
-        color: '#333',
-        name: vm.options.title,
-        data: chartData.utilization,
-        label: {
-          show: true,
-          position: 'top',
-          formatter: (params) => params.data[1] + '%',
-          color: '#fff'
-        }
-      });*/
-
       max = !max ? 100 : max + 20 - max % 10;
       max = max < 100 ? 100 : max;
+
 
       let option = {
         tooltip: {},
         legend: {},
         grid: {
-          left: 80,
+          left: 100,
           top: 40,
-          right: 20,
+          right: 80,
           bottom: 60
         },
-        yAxis: {
+        yAxis: [{
           type: 'value',
           axisLabel: {fontSize: 11, show: true},
-          name: '% de tiempo',
+          name: 'Toneladas [miles]',
           nameLocation: 'center',
-          nameGap: 50,
+          nameGap: 70,
+          min: 0,
+          nameTextStyle: {
+            color: '#333333',
+            fontSize: 16
+          }
+        }, {
+          type: 'value',
+          axisLabel: {fontSize: 11, show: true},
+          name: '% de capacidad',
+          nameLocation: 'center',
+          nameGap: 40,
           min: 0,
           max: max,
           nameTextStyle: {
             color: '#333333',
             fontSize: 16
           }
-        },
+        }],
         xAxis: {
           type: 'category',
           data: categories,
@@ -211,20 +196,32 @@
       });
     }
 
-    function lessProductiveChartClick(params, from, to) {
+    function lessPerformanceClick(params, from, to) {
       vm.selectedStatus = null;
+      vm.selectedMinute = null;
+      vm.details = null;
       if (params.componentType !== 'series') {
         return;
       }
       const equipmentName = params.data[1];
-      vm.selectedEquipments = equipmentName ? [{name: equipmentName}] : null;
+      vm.truck = equipmentName ? {name: equipmentName} : null;
     }
 
-    function statusChartClick(params) {
+    function dumpEventClick(params) {
       if (params.componentType !== 'series') {
         return;
       }
-      vm.selectedStatus = params.seriesName;
+      const [minute, value] = params.data;
+
+      vm.selectedMinute = new Date(minute);
+      vm.detailsLoading = true;
+      LoadDump
+        .getDumpDetails(vm.truck.name, vm.selectedMinute)
+        .then(data => {
+          vm.detailsLoading = false;
+          vm.details = data;
+          vm.details.accumulated = value;
+        });
     }
   }
 })();

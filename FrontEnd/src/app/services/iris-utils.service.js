@@ -213,6 +213,7 @@
       const data = response.Data;
 
       columns = columns.reduce((array, current) => {
+        current.children = current.children || [];
         current.children.forEach(child => {
           child.parent = current.caption;
           array.push(child);

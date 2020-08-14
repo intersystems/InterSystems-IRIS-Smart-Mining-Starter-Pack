@@ -23,7 +23,7 @@
         vm.filters = angular.copy(filters);
         vm.loading = true;
         Truck
-          .getProduction(vm.filters.trucks, vm.filters.date)
+          .getProductionByHourOfDay(vm.filters.date, vm.filters.trucks)
           .then(production => {
             vm.loading = false;
             plotChart(production);

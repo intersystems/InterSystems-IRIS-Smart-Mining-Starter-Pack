@@ -24,7 +24,6 @@
     const vm = this;
     vm.$onInit = function () {
       const container = $element.find('.chart');
-      vm.containerHeight = container.height();
       vm.container = container[0];
       loadData();
     };
@@ -50,7 +49,6 @@
         }
         return;
       }
-
 
       vm.loading = true;
       if (typeof vm.isLoading !== 'undefined') {

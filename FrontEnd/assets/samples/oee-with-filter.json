@@ -769,7 +769,7 @@
   0.9071, "", 1, ""
 ], "Info": {
   "colCount": 163, "colKey": "es3087148123", "cubeClass": "ASPMining.Analytics.UnifiedEventsCube",
-  "cubeKey": "UNIFIEDEVENTSCUBE", "cubeName": "UnifiedEventsCube", "decimalSeparator": ".",
+  "cubeKey": "ASPMining.Analytics.UnifiedEventsCube", "cubeName": "UnifiedEventsCube", "decimalSeparator": ".",
   "numericGroupSeparator": ",", "numericGroupSize": 3, "percentDone": 100, "queryKey": "es1543641716", "rowCount": 4,
   "rowKey": "es975102870"
 }

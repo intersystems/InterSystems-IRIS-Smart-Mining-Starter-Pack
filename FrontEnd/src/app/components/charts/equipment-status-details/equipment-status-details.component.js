@@ -97,6 +97,8 @@
         });
       });
 
+      series.sort((a, b) => b.value - a.value);
+
       const longestSeriesName = series.reduce((result, current) => {
         result.name = current.name.length > result.name.length ? current.name : result.name;
         return result;
@@ -171,7 +173,7 @@
         current.value = Math.round(10000 * current.value / total) / 100;
       });
 
-      pieSeries.data.sort((a, b) => b.value - a.value);
+      // pieSeries.data.sort((a, b) => b.value - a.value);
       if (pieSeries.data.length >= 15) {
         const data = [];
 
@@ -194,9 +196,9 @@
         color: colors,
         title: {text: 'Estadística', left: 'center'},
         tooltip: {
-          formatter: function (a, b, c) {
-            console.log(a, b, c);
-            return 'test';
+          formatter: (params) => {
+            return `${params.marker} ${params.data.name}
+            <br/>${params.data.value}`;
           }
         },
         legend: {

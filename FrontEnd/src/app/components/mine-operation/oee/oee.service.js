@@ -7,6 +7,8 @@
     .module('app')
     .service('OEE', Service);
 
+  const cube = 'ASPMining.Analytics.UnifiedEventsCube';
+
   function Service(IrisUtils, Utils, $root, $q) {
     const cache = {
       days: {},
@@ -20,7 +22,8 @@
       listenFilters,
       loadDataAsDays,
       loadDataAsHours,
-      loadDataAsMinutes
+      loadDataAsMinutes,
+      capacityPerformance
     };
 
     function listenFilters(type) {
@@ -70,7 +73,7 @@
         values: [dates]
       }];
 
-      let query = IrisUtils.buildQuery('UNIFIEDEVENTSCUBE', null, rows, null, filters);
+      let query = IrisUtils.buildQuery(cube, null, rows, null, filters);
 
       return IrisUtils.executeQuery(query)
         .then(data => {
@@ -107,7 +110,7 @@
         values: categories
       }];
 
-      let query = IrisUtils.buildQuery('UNIFIEDEVENTSCUBE', null, rows, null, filters);
+      let query = IrisUtils.buildQuery(cube, null, rows, null, filters);
 
       return IrisUtils.executeQuery(query)
         .then(data => {
@@ -132,7 +135,6 @@
     }
 
     function loadData(timeInterval, from, to, type, categories, equipments) {
-      const cube = 'UNIFIEDEVENTSCUBE';
       const fromNumber = IrisUtils.getDateNumber(from);
       const toNumber = IrisUtils.getDateNumber(to);
 
@@ -201,6 +203,64 @@
             return data.filter(current => current.category === type);
           }
           return data;
+        })
+        .catch(response => {
+          return Promise.reject(Utils.getHTTPError(response));
+        });
+    }
+
+    function capacityPerformance(from, to, timeInterval, trucks) {
+      const fromNumber = IrisUtils.getDateNumber(from);
+      const toNumber = IrisUtils.getDateNumber(to);
+      let dates = fromNumber;
+      if (fromNumber !== toNumber) {
+        dates = [fromNumber, toNumber];
+      }
+
+      const columns = [
+        {path: `[Measures].[MeasuredTons]`},
+        {path: `[MEMBERDIMENSION].[CapacityPerformance]`}
+      ];
+      const rows = [{path: `[EventDateTime].[H1].[${timeInterval}].Members`}];
+
+      const filters = [];
+      if (trucks && trucks.length) {
+        filters.push({
+          dimension: 'EQUIPMENT',
+          hierarchy: 'H1',
+          hierarchyLevel: 'EQUIPMENTNAME',
+          values: trucks.map(current => current.name)
+        });
+      } else {
+        filters.push({
+          path: '[EQUIPMENT].[H1].[EQUIPMENTCATEGORY].&[Camion]'
+        });
+      }
+
+      filters.push({
+        dimension: 'EventDateTime',
+        hierarchy: 'H1',
+        hierarchyLevel: 'EventDateTimeDay',
+        values: [dates]
+      }, {
+        path: '[ProductionEvent].[H1].[ProductionStatusType].&[Dumping]'
+      });
+
+      if (timeInterval === 'EventDateTimeMinute') {
+        filters.push({
+          dimension: 'EventDateTime',
+          hierarchy: 'H1',
+          hierarchyLevel: 'EventDateTimeHour',
+          values: [from.getHours()]
+        });
+      }
+
+      let query = IrisUtils.buildQuery(cube, columns, rows, null, filters);
+      cache[timeInterval] = cache[timeInterval] || {};
+
+      return IrisUtils.executeQuery(query)
+        .then(result => {
+          return IrisUtils.parseTwoDimensionalResponse(result);
         })
         .catch(response => {
           return Promise.reject(Utils.getHTTPError(response));

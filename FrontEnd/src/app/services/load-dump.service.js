@@ -11,8 +11,87 @@
     return {
       getLoadEvents,
       getDumpEvents,
+      getDumpDetails,
+      getLoadAndDumpEvents,
       getGanttData
     };
+
+    function getDumpDetails(truckName, date) {
+      const dateNumber = IrisUtils.getDateNumber(date);
+      const minutes = date.getHours() * 60 + date.getMinutes();
+      const rows = [
+        {path: '[Truck].[H1].[Name].Members'},
+        {path: '[Excav].[H1].[Name].Members'},
+        {path: '[Measures].[Capacity]'},
+        {path: '[Measures].[MeasuredTons]'},
+        {path: '[Location].[H1].[Name].Members'},
+        {path: '[Location].[H2].[Grade].Members'}
+      ];
+
+      const filters = [
+        {dimension: 'Truck', hierarchy: 'H1', hierarchyLevel: 'Name', values: [truckName]},
+        {dimension: 'TIME', hierarchy: 'H1', hierarchyLevel: 'TIMEARRIVEDAY', values: [dateNumber]},
+        {dimension: 'TIME', hierarchy: 'H2', hierarchyLevel: 'TIMEDUMPMINUTE', values: [minutes]}
+      ];
+
+      console.log(filters);
+      let query = IrisUtils.buildQuery('ASPMINING.ANALYTICS.PRODUCTIONDUMPEVENTSCUBE', null, rows, null, filters);
+
+      return IrisUtils.executeQuery(query)
+        .then(response => {
+          console.log(response);
+          if (!response.Cols || !response.Cols.length) {
+            return null;
+          }
+          const [truck, excavator, capacity, measuredTons, location, grade] = response.Cols[1].tuples;
+
+          return {
+            truck: truck.caption,
+            excavator: excavator.caption,
+            capacity: response.Data[2],
+            measuredTons: response.Data[3],
+            location: location.caption,
+            grade: grade.caption
+          };
+        });
+    }
+
+    function getLoadAndDumpEvents(truckName, date) {
+      const dateNumber = IrisUtils.getDateNumber(date);
+      const cols = [{
+        path: '[Measures].[MeasuredTons]',
+        children: [{
+          dimension: 'ProductionEvent',
+          hierarchy: 'H1',
+          hierarchyLevel: 'ProductionStatusType',
+          members: '&[Dumping]'
+        }, {
+          dimension: 'ProductionEvent',
+          hierarchy: 'H1',
+          hierarchyLevel: 'ProductionStatusType',
+          members: '&[Loading]'
+        }]
+      }];
+
+      const rows = [{
+        dimension: 'EventDateTime',
+        hierarchy: 'H1',
+        hierarchyLevel: 'EventDateTimeMinute',
+        members: 'Members'
+      }];
+
+      const filters = [
+        {dimension: 'Equipment', hierarchy: 'H1', hierarchyLevel: 'EquipmentName', values: [truckName]},
+        {dimension: 'EventDateTime', hierarchy: 'H1', hierarchyLevel: 'EventDateTimeDay', values: [dateNumber]}
+      ];
+
+      let query = IrisUtils.buildQuery('ASPMINING.ANALYTICS.UNIFIEDEVENTSCUBE', cols, rows, null, filters);
+
+      return IrisUtils.executeQuery(query)
+        .then(data => {
+          return IrisUtils.parseTreeDimensionalResponse(data);
+        });
+    }
 
     function loadEvent(eventType, trucks, date) {
       const dateNumber = IrisUtils.getDateNumber(date);
@@ -35,7 +114,7 @@
         {dimension: 'Time', hierarchy: 'H1', hierarchyLevel: 'TIMEARRIVEDAY', values: [dateNumber]}
       ];
 
-      const cubeName = eventType === 'LOAD' ? 'PRODUCTIONLOADEVENTSCUBE' : 'PRODUCTIONDUMPEVENTSCUBE';
+      const cubeName = eventType === 'LOAD' ? 'ASPMining.Analytics.ProductionLoadEventsCube' : 'ASPMining.Analytics.ProductionDumpEventsCube';
       let arriveQuery = IrisUtils.buildQuery(cubeName, cols, rowsArrive, null, filters);
       let endQuery = IrisUtils.buildQuery(cubeName, cols, rowsEnd, null, filters);
 
@@ -71,7 +150,6 @@
           return Promise.reject(err);
         });
     }
-
 
     function getGanttData(trucks, date) {
       const result = {
