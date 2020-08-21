@@ -2,6 +2,8 @@
 Class ASPMining.Analytics.StatusEventSlicedCube Extends %DeepSee.CubeDefinition [ DependsOn = ASPMining.CanonicalModel.Operation.StatusEventSliced, ProcedureBlock ]
 {
 
+Parameter DSTIME = "AUTO";
+
 /// Cube definition from Architect.
 XData Cube [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
 {

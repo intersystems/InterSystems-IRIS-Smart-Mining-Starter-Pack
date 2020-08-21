@@ -1,6 +1,6 @@
 Include %sySystem
 
-Class ASPMining.ConnectorModules.PowerView.Tasks Extends (IRISDemo.Util.BaseTask, %SYS.Task.Definition)
+Class ASPMining.ConnectorModules.PowerView.CubeBuilder Extends (IRISDemo.Util.BaseTask, %SYS.Task.Definition)
 {
 
 Parameter TaskName = "PowerView Connector Cube Builder";
@@ -12,6 +12,11 @@ Method OnTaskExecution() As %Status
 		{
 			//set cubeToBuild = "ASPMining.Analytics.EquipmentCube"
 			Set tSC = ..buildACube("ASPMining.Analytics.EquipmentCube")
+			Set tSC = ..buildACube("ASPMining.Analytics.ProductionDumpEventsCube")
+			Set tSC = ..buildACube("ASPMining.Analytics.ProductionLoadEventsCube")
+			Set tSC = ..buildACube("ASPMining.Analytics.StatusEventCube")
+			Set tSC = ..buildACube("ASPMining.Analytics.StatusEventSlicedCube")
+			Set tSC = ..buildACube("ASPMining.Analytics.UnifiedEventsCube")
 			//Set tSC = ##class(%DeepSee.Utils).%BuildCube(cubeToBuild)
 
             Quit:$$$ISERR(tSC)
@@ -32,7 +37,7 @@ Method OnTaskExecution() As %Status
 Method buildACube(pCubeToBuild As %String) As %Status
 {
 	Do ..Log("Building PowerView Cube: "_pCubeToBuild_"....")
-	Set tSC = ##class(%DeepSee.Utils).%BuildCube(pCubeToBuild)
+	Set tSC = $System.DeepSee.SynchronizeCube(pCubeToBuild)
     Quit tSC
 }
 

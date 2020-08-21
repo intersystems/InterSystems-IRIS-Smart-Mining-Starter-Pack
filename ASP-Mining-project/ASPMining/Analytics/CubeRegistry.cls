@@ -4,6 +4,8 @@
 Class ASPMining.Analytics.CubeRegistry Extends %DeepSee.CubeManager.RegistryDefinitionSuper [ GeneratedBy = %DeepSee.CubeManager.Utils, Not ProcedureBlock ]
 {
 
+Parameter DSTIME = "AUTO";
+
 XData Registry [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
 {
 <RegistryMap Disabled="false" IndependentSync="false" SerialUpdates="true">

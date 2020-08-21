@@ -2,6 +2,8 @@
 Class ASPMining.Analytics.ProductionLoadEventsCube Extends %DeepSee.CubeDefinition [ DependsOn = ASPMining.CanonicalModel.Production.LoadEvent, ProcedureBlock ]
 {
 
+Parameter DSTIME = "AUTO";
+
 /// Cube definition from Architect.
 XData Cube [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
 {

@@ -132,6 +132,8 @@ ClassMethod LoadConnectorAndDemos(pNamespace As %String) As %Status
 			set tSC = ##class(OPCUA.Utils).Install("/usr/irissys/bin/irisopcua.so")	
 			Do ##class(Examples.OPCUADS.Utils).LoadOnInstallation()
 		}
+		Do ##class(ASPMining.ConnectorModules.MineCare.CubeBuilder).Create()	
+		Do ##class(ASPMining.ConnectorModules.PowerView.CubeBuilder).Create()	
 	}
 	Catch (oException)
 	{
@@ -154,13 +156,11 @@ XData Install [ XMLNamespace = INSTALLER ]
             
 			<Log Text="Creating Task to save IRIS Analytic files to external volume..." Level="0"/>
 			<Invoke Class="IRISAnalytics.Task.SaveFiles" Method="Create" CheckStatus="true"/>
-			<Invoke Class="ASPMining.ConnectorModules.MineCare.Tasks" Method="Create" CheckStatus="true"/>
-			<Invoke Class="ASPMining.ConnectorModules.PowerView.Tasks" Method="Create" CheckStatus="true"/>
         </IfDef>
                 
 	</Namespace>
 		
-		
+	
 	<Log Text="Creating credentials..." Level="0"/>
 	<Invoke Class="IRISConfig.Installer" Method="CreateCredentials" CheckStatus="true">
 		<Arg name="pNamespace" Value="${Namespace}"/>
@@ -201,7 +201,6 @@ XData Install [ XMLNamespace = INSTALLER ]
 	<Invoke Class="IRISConfig.Installer" Method="BuildCubeAndEnableCubeRegistry" CheckStatus="true">
 		<Arg name="pNamespace" Value="${Namespace}"/>
 	</Invoke>
-	
 	-->
 	
 </Manifest>

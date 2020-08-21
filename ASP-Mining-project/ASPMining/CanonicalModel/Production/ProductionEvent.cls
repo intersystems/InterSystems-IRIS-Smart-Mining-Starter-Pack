@@ -8,6 +8,21 @@ Class ASPMining.CanonicalModel.Production.ProductionEvent Extends %Persistent
 	
 	/// Equipment asociated, must exist
 	Property Equipment As ASPMining.CanonicalModel.Equipment.Equipment;
+
+	// TODO:
+	/// Equipment Truck, must exist
+	Property EquipmentTruck As ASPMining.CanonicalModel.Equipment.Equipment;
+
+	/// Equipment Excav, must exist
+	Property EquipmentExcav As ASPMining.CanonicalModel.Equipment.Equipment;
+
+	/// Equipment Truck, must exist
+	Property OperatorTruck As ASPMining.CanonicalModel.Personnel.Operator;
+
+	/// Equipment Excav, must exist
+	Property OperatorExcav As ASPMining.CanonicalModel.Personnel.Operator;
+
+	//end todo
 	
 	/// Production Status Type: loading, dump, waiting, etc.
 	Property ProductionStatusType As ProductionStatusType;

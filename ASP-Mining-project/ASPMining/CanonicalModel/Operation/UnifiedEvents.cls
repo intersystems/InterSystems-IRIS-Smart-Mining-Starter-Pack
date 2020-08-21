@@ -7,6 +7,8 @@
 Class ASPMining.CanonicalModel.Operation.UnifiedEvents Extends %Persistent
 {
 
+Parameter DSTIME = "AUTO";
+
 /// Unique Id
 Property Id As %BigInt;
 

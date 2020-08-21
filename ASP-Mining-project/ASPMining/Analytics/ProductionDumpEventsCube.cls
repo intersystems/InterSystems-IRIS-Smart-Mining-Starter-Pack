@@ -48,7 +48,39 @@ XData Cube [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
       </level>
     </hierarchy>
   </dimension>
+  <dimension name="Location" disabled="false" hasAll="false" allCaption="All Location" allDisplayName="Location" type="data" hidden="false" showHierarchies="default">
+    <hierarchy name="H1" disabled="false" hidden="false">
+      <level name="Name" disabled="false" sourceProperty="Location.Name" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
+    </hierarchy>
+    <hierarchy name="H2" disabled="false" hidden="false">
+      <level name="Grade" disabled="false" sourceProperty="Location.Grade" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
+    </hierarchy>
+  </dimension>
+  <dimension name="OperatorExcav" disabled="false" hasAll="false" allCaption="All OperatorExcav" allDisplayName="OperatorExcav" type="data" hidden="false" showHierarchies="default">
+    <hierarchy name="H1" disabled="false" hidden="false">
+      <level name="FirstName" disabled="false" sourceProperty="OperatorExcav.FirstName" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
+    </hierarchy>
+    <hierarchy name="H2" disabled="false" hidden="false">
+      <level name="LastName" disabled="false" sourceProperty="OperatorExcav.LastName" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
+    </hierarchy>
+  </dimension>
+  <dimension name="OperatorTruck" disabled="false" hasAll="false" allCaption="All OperatorTruck" allDisplayName="OperatorTruck" type="data" hidden="false" showHierarchies="default">
+    <hierarchy name="H1" disabled="false" hidden="false">
+      <level name="FirstName" disabled="false" sourceProperty="OperatorTruck.FirstName" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
+    </hierarchy>
+    <hierarchy name="H2" disabled="false" hidden="false">
+      <level name="LastName" disabled="false" sourceProperty="OperatorTruck.LastName" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
+    </hierarchy>
+  </dimension>
   <measure name="MeasuredTons" disabled="false" sourceProperty="MeasuredTons" aggregate="SUM" type="number" hidden="false" searchable="false">
+  </measure>
+  <measure name="Capacity" disabled="false" sourceProperty="EquipmentTruck.Capacity" aggregate="MAX" type="number" hidden="false" searchable="false">
   </measure>
 </cube>
 }

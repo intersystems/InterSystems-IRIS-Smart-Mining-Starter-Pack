@@ -1,30 +1,33 @@
 Class ASPMining.CanonicalModel.Equipment.Equipment Extends %Persistent
 {
-	/// Mine Unique Identifier of Vehicle
-	Property Id As %String;
-	
-	/// Category of Equipment, eg: Truck, Excav.
-	Property EquipmentCategory As EquipmentCategory;
-	
-	/// Model of Equipment: e.g: CAT 770
-	Property EquipmentModel As EquipmentModel;
-	
-	/// Readable Display Name of Vehicle
-	Property Name As %String;
-	
-	/// Capacity of Vehicle ASSIGNED BY USERS
-	Property Capacity As %Float;
-	
-	/// Used to keep track of travel/uknown times in the production cycle, for production slices only
-	Property LastProductionUpdate As ASPMining.CanonicalModel.Production.ProductionEventSliced;
-	
-	/// Used to check Last production DumpEvent
-	Property LastUnifiedEvent As ASPMining.CanonicalModel.Operation.UnifiedEvents;
-	
-	
-	index EquipmentIndex on Id [Unique];
-	index NameIndex on Name [type = bitmap];
-	
+
+Parameter DSTIME = "AUTO";
+
+/// Mine Unique Identifier of Vehicle
+Property Id As %String;
+
+/// Category of Equipment, eg: Truck, Excav.
+Property EquipmentCategory As EquipmentCategory;
+
+/// Model of Equipment: e.g: CAT 770
+Property EquipmentModel As EquipmentModel;
+
+/// Readable Display Name of Vehicle
+Property Name As %String;
+
+/// Capacity of Vehicle ASSIGNED BY USERS
+Property Capacity As %Float;
+
+/// Used to keep track of travel/uknown times in the production cycle, for production slices only
+Property LastProductionUpdate As ASPMining.CanonicalModel.Production.ProductionEventSliced;
+
+/// Used to check Last production DumpEvent
+Property LastUnifiedEvent As ASPMining.CanonicalModel.Operation.UnifiedEvents;
+
+Index EquipmentIndex On Id [ Unique ];
+
+Index NameIndex On Name [ Type = bitmap ];
+
 Storage Default
 {
 <Data name="EquipmentDefaultData">

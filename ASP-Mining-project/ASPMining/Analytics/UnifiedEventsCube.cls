@@ -103,6 +103,26 @@ XData Cube [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
       <level name="TripName" disabled="false" sourceProperty="Trip.Name" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
       </level>
     </hierarchy>
+    <hierarchy name="H2" disabled="false" hidden="false">
+      <level name="Destination" disabled="false" sourceProperty="Trip.DestinationLocation.Name" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
+    </hierarchy>
+    <hierarchy name="H3" disabled="false" hidden="false">
+      <level name="Origin" disabled="false" sourceProperty="Trip.OriginLocation.Name" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
+    </hierarchy>
+    <hierarchy name="H4" disabled="false" hidden="false">
+      <level name="ReferenceTravelTime" disabled="false" sourceProperty="Trip.ReferenceTravelTime" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
+    </hierarchy>
+    <hierarchy name="H5" disabled="false" hidden="false">
+      <level name="TravelCount" disabled="false" sourceProperty="Trip.TravelCount" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
+    </hierarchy>
+    <hierarchy name="H6" disabled="false" hidden="false">
+      <level name="TotalTravelTime" disabled="false" sourceProperty="Trip.TotalTravelTime" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
+    </hierarchy>
   </dimension>
   <measure name="MeasuredTons" disabled="false" sourceProperty="ProductionEvent.MeasuredTons" aggregate="SUM" type="number" hidden="false" searchable="false">
   </measure>
@@ -119,6 +139,8 @@ XData Cube [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
   <measure name="OperativeDuration" disabled="false" sourceProperty="OperativeDuration" aggregate="SUM" type="number" hidden="false" searchable="false">
   </measure>
   <measure name="AvgTravelTime" disabled="false" sourceProperty="Trip.AvgTravelTime" aggregate="SUM" type="number" hidden="false" searchable="false">
+  </measure>
+  <measure name="CapacityMax" disabled="false" sourceProperty="Equipment.Capacity" aggregate="MAX" type="number" hidden="false" searchable="false">
   </measure>
   <calculatedMember name="CapacityPerformance" disabled="false" dimension="memberDimension" valueExpression="[Measures].[MeasuredTons]/ [Measures].[Capacity]" hidden="false">
   </calculatedMember>

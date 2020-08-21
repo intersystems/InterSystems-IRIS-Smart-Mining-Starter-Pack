@@ -5,7 +5,7 @@ Class ASPMining.Analytics.OEMEventsCube Extends %DeepSee.CubeDefinition [ Depend
 /// Cube definition from Architect.
 XData Cube [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
 {
-<cube xmlns="http://www.intersystems.com/deepsee" name="ASPMining.Analytics.OEMEvents" displayName="OEM Events" disabled="false" abstract="false" sourceClass="ASPMining.CanonicalModel.HWMonitoring.OEMEvent" countMeasureName="%COUNT" bucketSize="8" bitmapChunkInMemory="false" precompute="0" disableListingGroups="false" enableSqlRestrict="false">
+<cube xmlns="http://www.intersystems.com/deepsee" name="ASPMining.Analytics.OEMEventsCube" displayName="OEM Events Cube" disabled="false" abstract="false" sourceClass="ASPMining.CanonicalModel.HWMonitoring.OEMEvent" countMeasureName="%COUNT" bucketSize="8" bitmapChunkInMemory="false" precompute="0" disableListingGroups="false" enableSqlRestrict="false">
   <dimension name="Name" disabled="false" hasAll="false" allCaption="All Name" allDisplayName="Name" type="data" hidden="false" showHierarchies="default">
     <hierarchy name="H1" disabled="false" hidden="false">
       <level name="EquipmentName" disabled="false" sourceProperty="Equipment.Name" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">

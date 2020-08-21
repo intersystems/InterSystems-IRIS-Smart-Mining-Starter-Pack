@@ -2,6 +2,8 @@
 Class ASPMining.CanonicalModel.HWMonitoring.OEMEvent Extends %Persistent
 {
 
+Parameter DSTIME = "AUTO";
+
 /// Unique Id of event provided by Mining software
 Property Id As %Integer;
 
