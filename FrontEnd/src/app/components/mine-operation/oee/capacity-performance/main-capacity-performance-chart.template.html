@@ -7,6 +7,7 @@
 
     <div ng-if="ctrl.selectedDate" class="marginLR20">
         <less-capacity-performance-equipments-chart from="ctrl.selectedDate"
+                                                    trucks="ctrl.trucks"
                                                     on-chart-click="ctrl.lessPerformanceClick(params, from, to)"
                                                     to="ctrl.selectedDate"></less-capacity-performance-equipments-chart>
     </div>

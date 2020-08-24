@@ -1,0 +1,41 @@
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+}
+
+::-webkit-scrollbar:vertical {
+  width: 12px;
+}
+
+::-webkit-scrollbar:horizontal {
+  height: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: lighten($gray-light, 10%);
+  background-clip: padding-box;
+  border: solid transparent;
+  min-height: 28px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: $gray-light;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background-color: $gray;
+}
+
+::-webkit-scrollbar-track:hover {
+  background-color: lighten($gray, 60%);
+}
+
+.scrollbox {
+  overflow: auto;
+  visibility: hidden;
+}
+
+.scrollbox-content,
+.scrollbox:hover,
+.scrollbox:focus {
+  visibility: visible;
+}

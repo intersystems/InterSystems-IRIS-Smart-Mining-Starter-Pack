@@ -15,11 +15,9 @@
     const vm = this;
 
     vm.$onInit = function () {
-      vm.filters = OEE.listenFilters();
     };
 
     vm.$onDestroy = function () {
-      vm.filters.offFilters()
     };
   }
 })();

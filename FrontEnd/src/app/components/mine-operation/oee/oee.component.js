@@ -24,11 +24,20 @@
     };
 
     vm.$onDestroy = function () {
-      vm.offSuccess()
-    }
+      vm.offSuccess();
+    };
 
     function displayFilters() {
-      const tagName = 'oee-default-filter';
+      const currentState = $state.current;
+
+      const filtersMap = {
+        'mineOperation.oee.capacityPerformance': 'capacity-performance-filter'
+      };
+
+      const tagName = filtersMap[currentState.name] || 'oee-default-filter';
+      if (vm.currentTagName === tagName) {
+        return;
+      }
       vm.currentTagName = tagName;
 
       if (vm.filterScope) {

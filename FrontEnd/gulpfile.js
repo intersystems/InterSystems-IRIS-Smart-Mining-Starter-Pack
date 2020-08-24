@@ -109,6 +109,8 @@ function vendorsMerge(options) {
         nodeModulesDir + '@uirouter/angularjs/release/angular-ui-router.min.js',
         nodeModulesDir + 'datatables.net/js/jquery.dataTables.js',
         nodeModulesDir + 'datatables.net-bs/js/dataTables.bootstrap.js',
+        nodeModulesDir + 'datatables.net-responsive/js/dataTables.responsive.js',
+        nodeModulesDir + 'datatables.net-responsive-bs/js/responsive.bootstrap.js',
         nodeModulesDir + 'ui-select/dist/select.min.js',
         nodeModulesDir + 'angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
         nodeModulesDir + 'echarts/dist/echarts.min.js',
@@ -130,7 +132,8 @@ function vendorsStyleMerge(options) {
     const task = gulp
       .src([
         nodeModulesDir + 'ui-select/dist/select.min.css',
-        nodeModulesDir + 'datatables.net-bs/css/dataTables.bootstrap.css'
+        nodeModulesDir + 'datatables.net-bs/css/dataTables.bootstrap.css',
+        nodeModulesDir + 'datatables.net-responsive-bs/css/responsive.bootstrap.min.css'
       ])
       .pipe(concat({path: 'vendors.min.css'}))
       .pipe(gulp.dest(distAssetsDir + '/css'));

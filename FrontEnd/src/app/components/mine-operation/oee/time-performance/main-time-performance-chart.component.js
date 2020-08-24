@@ -1,25 +1,25 @@
 (() => {
   const angular = window.angular;
 
-  Controller.$inject = ['$rootScope', '$timeout', '$element', 'DateUtils', '$filter', 'OEE', 'LoadDump'];
+  Controller.$inject = ['$rootScope', '$timeout', '$element', 'DateUtils', '$filter', 'OEE', 'IrisUtils'];
 
   angular
     .module('app')
-    .component('mainCapacityPerformanceChart', {
-      templateUrl: 'main-capacity-performance-chart.template.html',
+    .component('mainTimePerformanceChart', {
+      templateUrl: 'main-time-performance-chart.template.html',
       controller: Controller,
       controllerAs: 'ctrl',
       bindings: {}
     });
 
-  function Controller($root, $timeout, $element, DateUtils, $filter, OEE, LoadDump) {
+  function Controller($root, $timeout, $element, DateUtils, $filter, OEE, IrisUtils) {
     const vm = this;
 
     vm.$onInit = function () {
       const container = $element.find('.chart');
 
       vm.lessPerformanceClick = lessPerformanceClick;
-      vm.dumpEventClick = dumpEventClick;
+      vm.onSelectTrip = onSelectTrip;
 
       vm.container = container[0];
 
@@ -36,8 +36,9 @@
         vm.selectedStatus = null;
         vm.trucks = vm.filters.equipments;
 
-        OEE.capacityPerformance(vm.from, vm.to, 'EventDateTimeDay', vm.trucks)
+        OEE.loadDataAsDays(vm.from, vm.to, 'TimePerformance', [{name: 'Camion'}], vm.trucks)
           .then(result => {
+            console.log(result);
             vm.loading = false;
             plotChart(result);
           })
@@ -65,42 +66,27 @@
     };
 
     function plotChart(chartData) {
-      chartData = angular.copy(chartData);
+      chartData = angular.copy(chartData[0]);
       const categories = [];
       for (let date = new Date(vm.from.getTime()); date <= vm.to; date.setDate(date.getDate() + 1)) {
         categories.push($filter('date')(date, 'MMM d yyyy'));
       }
 
-      const tons = chartData[0];
-      const performance = chartData[1];
+      const data = chartData.data;
 
       const series = [{
         type: 'bar',
         barWidth: '50%',
-        name: 'Total Toneladas [miles]',
-        data: tons.data.map(current => {
-          current[1] = Math.round(current[1] / 1000);
-          return current;
-        }),
+        name: 'Porcentaje de tiempo',
+        data: data,
         label: {
           show: true,
           fontSize: 11
         }
-      }, {
-        type: 'line',
-        name: 'Performace de capacidad',
-        data: performance.data,
-        yAxisIndex: 1,
-        color: '#59678c',
-        label: {
-          show: true,
-          fontSize: 11,
-          formatter: (params) => params.data[1] + '%'
-        }
       }];
 
       let max = null;
-      for (let pair of performance.data) {
+      for (let pair of data) {
         let value = Math.round(1000 * pair[1]) / 10;
         if (value === 0) {
           continue;
@@ -115,7 +101,11 @@
 
 
       let option = {
-        tooltip: {},
+        tooltip: {
+          formatter: (params) => {
+            return `<div>${params.seriesName}</div>${params.marker} ${params.data[0]}: ${params.data[1]}%`;
+          }
+        },
         legend: {},
         grid: {
           left: 100,
@@ -126,22 +116,10 @@
         yAxis: [{
           type: 'value',
           axisLabel: {fontSize: 11, show: true},
-          name: 'Toneladas [miles]',
+          name: 'Porcentaje de tiempo',
           nameLocation: 'center',
           nameGap: 70,
           min: 0,
-          nameTextStyle: {
-            color: '#333333',
-            fontSize: 16
-          }
-        }, {
-          type: 'value',
-          axisLabel: {fontSize: 11, show: true},
-          name: '% de capacidad',
-          nameLocation: 'center',
-          nameGap: 40,
-          min: 0,
-          max: max,
           nameTextStyle: {
             color: '#333333',
             fontSize: 16
@@ -204,20 +182,50 @@
       vm.truck = equipmentName ? {name: equipmentName} : null;
     }
 
-    function dumpEventClick(params) {
-      if (params.componentType !== 'series') {
-        return;
-      }
-      const [minute, value] = params.data;
+    function onSelectTrip(trip) {
+      trip = angular.copy(trip);
+      const time = new Date(trip.time);
+      const minuteNumber = IrisUtils.getMinuteNumber(time);
+      const dateNumber = IrisUtils.getDateNumber(time);
 
-      vm.selectedMinute = new Date(minute);
+      const query = `SELECT 
+        NON EMPTY {
+          [Measures].[TripTime],
+          [Measures].[ReferenceTravelTime],
+          [Measures].[MeasuredTons],
+          [Measures].[CapacityMax]
+        } ON 0,
+        NON EMPTY HEAD(
+          NONEMPTYCROSSJOIN(
+            [ProductionEventStartTime].[H1].[ProductionEventStartTimeMinute].Members,
+            [Trip].[H1].[TripName].Members
+          ),2000,SAMPLE
+        ) ON 1 
+        FROM [ASPMINING.ANALYTICS.UNIFIEDEVENTSCUBE] 
+        %FILTER NONEMPTYCROSSJOIN(
+          [ProductionEventStartTime].[H1].[ProductionEventStartTimeMinute].&[${minuteNumber}],
+          NONEMPTYCROSSJOIN(
+            [Equipment].[H1].[EquipmentName].&[${vm.truck.name}],
+            [EventDateTime].[H1].[EventDateTimeDay].&[${dateNumber}]
+          )
+        )`;
+
+
       vm.detailsLoading = true;
-      LoadDump
-        .getDumpDetails(vm.truck.name, vm.selectedMinute)
+      IrisUtils
+        .executeQuery(query)
         .then(data => {
+          trip.referenceTravelTime = data.Data[1];
+          trip.measuredTons = data.Data[2];
+          trip.truckCapacity = data.Data[3];
+
+          vm.details = trip;
           vm.detailsLoading = false;
-          vm.details = data;
-          vm.details.accumulated = value;
+          console.log(data);
+        })
+        .catch(err => {
+          console.log(err);
+          vm.detailsLoading = false;
         });
     }
   }

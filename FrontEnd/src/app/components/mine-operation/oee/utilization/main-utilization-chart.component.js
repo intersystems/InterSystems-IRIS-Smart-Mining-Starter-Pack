@@ -28,6 +28,7 @@
 
       vm.container = container[0];
 
+      vm.loading = true;
       vm.offFilters = $root.$on('filter:update', (e, filters) => {
         vm.filters = angular.copy(filters);
 

@@ -5,8 +5,8 @@
 
   angular
     .module('app')
-    .component('lessCapacityPerformanceEquipmentsChart', {
-      templateUrl: 'less-capacity-performance-equipments.template.html',
+    .component('lessTimePerformanceEquipmentsChart', {
+      templateUrl: 'less-time-performance-equipments.template.html',
       controller: Controller,
       controllerAs: 'ctrl',
       bindings: {
@@ -18,6 +18,7 @@
         onChartClick: '&'
       }
     });
+
 
   function Controller($root, $timeout, $element, Equipment, Truck, Utils) {
     const vm = this;
@@ -46,7 +47,7 @@
     function loadData() {
       vm.loading = true;
       Truck
-        .getProductionByDay(vm.from, vm.trucks)
+        .getTimePerformanceByDay(vm.from, vm.trucks)
         .then(data => {
           vm.loading = false;
           plotChart(data);
@@ -58,19 +59,13 @@
     }
 
     function plotChart(production) {
-      let performanceMap = {};
-      const performance = production.find(current => current.category === 'CapacityPerformance');
-
-      for (let current of performance.data) {
-        performanceMap[current[0]] = Math.round(current[1] * 100) / 100;
-      }
-
-      const data = production.find(current => current.category === 'MeasuredTons').data;
+      const data = production.find(current => current.category === 'TimePerformance').data;
       data.sort((a, b) => b[1] - a[1]);
 
       let longestName = '';
       data.forEach(current => {
         current.reverse();
+        current[0] = Math.round(1000 * current[0]) / 10;
         longestName = current[1].length > longestName.length ? current[1] : longestName;
       });
 
@@ -84,7 +79,8 @@
           show: true,
           fontSize: 11,
           position: 'right',
-          color: '#333333'
+          color: '#333333',
+          formatter: (params) => `${params.data[0]}%`
         }
       }];
 
@@ -95,10 +91,8 @@
         tooltip: {
           formatter: (params) => {
             const [value, truck] = params.data;
-            const performance = performanceMap[truck];
             return `${params.marker} ${truck}
-            <div>Toneladas: ${value}</div>
-            <div>Performance: ${performance}</div>`;
+            <div>${value}</div>`;
           }
         },
         dataZoom: [{
@@ -121,7 +115,7 @@
         xAxis: {
           type: 'value',
           axisLabel: {fontSize: 11, show: true},
-          name: 'Toneladas',
+          name: 'Porcentaje de tiempo',
           nameLocation: 'center',
           nameGap: 25,
           nameTextStyle: {

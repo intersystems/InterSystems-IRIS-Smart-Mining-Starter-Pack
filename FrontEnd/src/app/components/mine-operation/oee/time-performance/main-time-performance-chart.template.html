@@ -1,0 +1,41 @@
+<div class="panel panel-light paddingB20">
+    <div class="panel-heading">
+        Performace Tiempo por día
+    </div>
+    <div class="chart chart-{{ctrl.size}}" ng-class="{transparent: false}"></div>
+    <spinner show="ctrl.loading"></spinner>
+
+    <div ng-if="ctrl.selectedDate" class="marginLR20">
+        <less-time-performance-equipments-chart from="ctrl.selectedDate"
+                                                trucks="ctrl.trucks"
+                                                on-chart-click="ctrl.lessPerformanceClick(params, from, to)"
+                                                to="ctrl.selectedDate"></less-time-performance-equipments-chart>
+    </div>
+
+    <div ng-if="ctrl.selectedDate && ctrl.truck" class="marginLR20">
+        <div class="panel panel-light">
+            <div class="panel-heading">
+                <div>Análisis diario {{ctrl.truck.name}}</div>
+                <small style="font-size: 70%">{{ctrl.selectedDate | date: 'dd-MM-yyyy'}}</small>
+            </div>
+            <trips-by-truck-chart date="ctrl.selectedDate" truck="ctrl.truck"
+                                  on-chart-click="ctrl.onSelectTrip(params)"
+                                  size="'sm'"></trips-by-truck-chart>
+        </div>
+    </div>
+
+    <div ng-if="ctrl.selectedDate && ctrl.truck && ctrl.selectedMinute" class="marginLR20" style="position: relative">
+        <spinner show="ctrl.detailsLoading"></spinner>
+        <div class="panel panel-default marginLR20 marginB20">
+            <div class="panel-heading">
+                <div>Detalles descarga {{ctrl.selectedMinute | date: 'HH:mm'}}</div>
+            </div>
+            <div ng-class="{transparent: ctrl.detailsLoading}">
+                <table class="table">
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+</div>

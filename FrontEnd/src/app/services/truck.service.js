@@ -13,7 +13,8 @@
       find,
       getCapacity,
       getProductionByHourOfDay,
-      getProductionByDay
+      getProductionByDay,
+      getTimePerformanceByDay
     };
 
     function getCapacity(truckName) {
@@ -76,15 +77,12 @@
       if (trucks) {
         filters.push({
           dimension: 'Equipment',
-          hierarchy: 'H2',
+          hierarchy: 'H1',
           hierarchyLevel: 'EquipmentName',
           values: trucks.map(current => current.name)
         });
       }
-
       let query = IrisUtils.buildQuery('ASPMINING.ANALYTICS.UNIFIEDEVENTSCUBE', cols, rows, null, filters);
-
-      console.log(query);
       return IrisUtils.executeQuery(query)
         .then(result => {
           return IrisUtils.parseTwoDimensionalResponse(result);
@@ -129,6 +127,39 @@
             }
           }
           return result;
+        });
+    }
+
+    function getTimePerformanceByDay(date, trucks) {
+      const dateNumber = IrisUtils.getDateNumber(date);
+      const cols = [
+        {path: '[Measures].[MeasuredTons]'},
+        {path: '[MEMBERDIMENSION].[TimePerformance]'}
+      ];
+      const rows = [
+        {dimension: 'Equipment', hierarchy: 'H1', hierarchyLevel: 'EquipmentName', members: 'Members'}
+      ];
+
+      const filters = [
+        {dimension: 'EventDateTime', hierarchy: 'H1', hierarchyLevel: 'EventDateTimeDay', values: [dateNumber]},
+        {dimension: 'Equipment', hierarchy: 'H1', hierarchyLevel: 'EquipmentCategory', values: ['Camion']}
+      ];
+
+      if (trucks) {
+        filters.push({
+          dimension: 'Equipment',
+          hierarchy: 'H1',
+          hierarchyLevel: 'EquipmentName',
+          values: trucks.map(current => current.name)
+        });
+      }
+      let query = IrisUtils.buildQuery('ASPMINING.ANALYTICS.UNIFIEDEVENTSCUBE', cols, rows, null, filters);
+      return IrisUtils.executeQuery(query)
+        .then(result => {
+          return IrisUtils.parseTwoDimensionalResponse(result);
+        })
+        .catch(err => {
+          console.log(err);
         });
     }
   }

@@ -186,6 +186,7 @@
       }
 
       let query = IrisUtils.buildQuery(cube, columns, rows, null, filters);
+      console.log(query);
       cache[timeInterval] = cache[timeInterval] || {};
       if (cache[timeInterval].data && cache[timeInterval].query === query) {
         if (type) {
@@ -203,6 +204,63 @@
             return data.filter(current => current.category === type);
           }
           return data;
+        })
+        .catch(response => {
+          return Promise.reject(Utils.getHTTPError(response));
+        });
+    }
+
+    function timePerformance(from, to, timeInterval, trucks) {
+      const fromNumber = IrisUtils.getDateNumber(from);
+      const toNumber = IrisUtils.getDateNumber(to);
+      let dates = fromNumber;
+      if (fromNumber !== toNumber) {
+        dates = [fromNumber, toNumber];
+      }
+
+      const columns = [
+        {path: `[Measures].[MeasuredTons]`},
+        {path: `[MEMBERDIMENSION].[TimePerformance]`}
+      ];
+      const rows = [{path: `[EventDateTime].[H1].[${timeInterval}].Members`}];
+
+      const filters = [];
+      if (trucks && trucks.length) {
+        filters.push({
+          dimension: 'EQUIPMENT',
+          hierarchy: 'H1',
+          hierarchyLevel: 'EQUIPMENTNAME',
+          values: trucks.map(current => current.name)
+        });
+      } else {
+        filters.push({
+          path: '[EQUIPMENT].[H1].[EQUIPMENTCATEGORY].&[Camion]'
+        });
+      }
+
+      filters.push({
+        dimension: 'EventDateTime',
+        hierarchy: 'H1',
+        hierarchyLevel: 'EventDateTimeDay',
+        values: [dates]
+      }/*, {
+        path: '[ProductionEvent].[H1].[ProductionStatusType].&[Dumping]'
+      }*/);
+
+      if (timeInterval === 'EventDateTimeMinute') {
+        filters.push({
+          dimension: 'EventDateTime',
+          hierarchy: 'H1',
+          hierarchyLevel: 'EventDateTimeHour',
+          values: [from.getHours()]
+        });
+      }
+
+      let query = IrisUtils.buildQuery(cube, columns, rows, null, filters);
+
+      return IrisUtils.executeQuery(query)
+        .then(result => {
+          return IrisUtils.parseTwoDimensionalResponse(result);
         })
         .catch(response => {
           return Promise.reject(Utils.getHTTPError(response));

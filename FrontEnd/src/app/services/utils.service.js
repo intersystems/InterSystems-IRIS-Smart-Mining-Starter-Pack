@@ -8,7 +8,8 @@
 
     return {
       getHTTPError,
-      getTextWidth
+      getTextWidth,
+      readableTime
     };
 
     function getHTTPError(response) {
@@ -54,6 +55,41 @@
       textTester.className = '';
       textTester.removeAttribute('style');
       return width;
+    }
+
+    function readableTime(seconds) {
+      let day, format, hour, minute, month, week, year;
+      seconds = parseInt(seconds, 10);
+      minute = 60;
+      hour = minute * 60;
+      day = hour * 24;
+      week = day * 7;
+      year = day * 365;
+      month = year / 12;
+      format = function (number, string) {
+        string = number === 1
+          ? string
+          : string === 'mes'
+            ? 'meses'
+            : string + 's';
+        return number + ' ' + string;
+      };
+      switch (false) {
+        case !(seconds < minute):
+          return format(seconds, 'segundo');
+        case !(seconds < hour):
+          return format(Math.round(10 * seconds / minute) / 10, 'minuto');
+        case !(seconds < day):
+          return format(Math.round(10 * seconds / hour) / 10, 'hora');
+        case !(seconds < week):
+          return format(Math.round(10 * seconds / day) / 10, 'día');
+        case !(seconds < month):
+          return format(Math.round(10 * seconds / week) / 10, 'semana');
+        case !(seconds < year):
+          return format(Math.round(10 * seconds / month) / 10, 'mes');
+        default:
+          return format(Math.round(10 * seconds / year) / 10, 'año');
+      }
     }
   }
 })();

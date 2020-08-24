@@ -338,7 +338,6 @@ table.dataTable {
     border-radius: 50%;
   }
 
-
   tbody {
     tr.selected a, th.selected a, td.selected a {
       color: #a2d4ed;
@@ -462,23 +461,4 @@ div.dataTables_wrapper span {
   padding: 5px 10px;
   margin-bottom: 5px;
   border-bottom: 1px solid $border-color;
-}
-
-
-.inbox {
-  table.dataTable {
-    tr {
-      background: $gray-lightest;
-
-
-      &.unread > td {
-        font-weight: bold;
-        background: #fff;
-      }
-
-      &.active > td {
-        background-color: $alert-info-bg;
-      }
-    }
-  }
 }

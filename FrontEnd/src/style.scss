@@ -3,6 +3,7 @@
 @import "../assets/sass/bootstrap/bootstrap";
 @import "../assets/sass/fontawesome";
 
+
 @import "./app/components/**/*.scss";
 
 .side-panel {
@@ -53,4 +54,24 @@
 
 .filters-target {
   min-height: 200px;
+}
+
+.performance-gray {
+  background: #ccc;
+  color: #333;
+}
+
+.performance-green {
+  background: #5fe2a0;
+  color: #333;
+}
+
+.performance-yellow {
+  background: #ffb980;
+  color: #333;
+}
+
+.performance-red {
+  background: #fe9097;
+  color: #333;
 }

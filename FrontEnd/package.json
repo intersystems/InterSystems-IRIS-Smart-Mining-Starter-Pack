@@ -24,6 +24,8 @@
     "connect-history-api-fallback": "^1.6.0",
     "datatables.net": "^1.10.21",
     "datatables.net-bs": "^1.10.21",
+    "datatables.net-responsive": "^2.2.5",
+    "datatables.net-responsive-bs": "^2.2.5",
     "echarts": "^4.8.0",
     "gulp": "^4.0.2",
     "gulp-angular-embed-templates": "^2.3.0",
@@ -40,6 +42,6 @@
     "ui-select": "^0.19.8"
   },
   "devDependencies": {
-    "browser-sync": "^2.26.7"
+    "browser-sync": "^2.26.12"
   }
 }

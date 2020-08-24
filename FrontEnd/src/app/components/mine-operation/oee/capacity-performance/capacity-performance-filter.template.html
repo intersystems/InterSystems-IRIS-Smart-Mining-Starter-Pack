@@ -1,0 +1,38 @@
+<div class="form-group">
+    <label>Desde</label>
+    <input type="text" class="form-control" readonly
+           ng-disabled="ctrl.loading"
+           style="background: #fff"
+           enable-time="false"
+           datetime-picker="dd-MM-yyyy"
+           is-open="ctrl.dates.from.open"
+           datepicker-options="ctrl.dates.options"
+           ng-click="ctrl.dates.from.open = !ctrl.dates.from.open"
+           when-closed="ctrl.dates.onClose(args)"
+           ng-model="ctrl.dates.from.value"/>
+</div>
+<div class="form-group">
+    <label>Hasta</label>
+    <input type="text" class="form-control" readonly
+           ng-disabled="ctrl.loading"
+           style="background: #fff"
+           enable-time="false"
+           datetime-picker="dd-MM-yyyy"
+           is-open="ctrl.dates.to.open"
+           datepicker-options="ctrl.dates.options"
+           ng-click="ctrl.dates.to.open = !ctrl.dates.to.open"
+           when-closed="ctrl.dates.onClose(args)"
+           ng-model="ctrl.dates.to.value"/>
+</div>
+
+<div class="form-group clearfix">
+    <label>Equipos</label>
+    <multi-select-dropdown items="ctrl.equipments" disabled="ctrl.loading"
+                           selected-items="ctrl.selectedEquipements"></multi-select-dropdown>
+</div>
+<hr/>
+<div>
+    <button class="btn btn-primary btn-block" ng-click="ctrl.applyFilters()">
+        Filtrar
+    </button>
+</div>
