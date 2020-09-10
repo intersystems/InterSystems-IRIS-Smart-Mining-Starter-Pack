@@ -39,8 +39,9 @@
         <li class="divider"></li>
 
         <li ng-repeat="item in ctrl.items | filter:search">
-            <label class="checkbox marginLR10 cursor-pointer">
-                <input type="checkbox" ng-model="item.selected"
+            <label class="checkbox no-margin paddingLR10 paddingTB5 cursor-pointer"
+                   ng-class="{disabled: item.disabled}">
+                <input type="checkbox" ng-model="item.selected" ng-disabled="item.disabled"
                        ng-change="ctrl.toggleItem(item)">
                 <i></i>
                 <span>{{item.name}}</span>

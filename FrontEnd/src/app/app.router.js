@@ -32,6 +32,10 @@
         url: '/overview',
         component: 'oeeOverview'
       })
+      .state('mineOperation.oee.details', {
+        url: '/',
+        component: 'oeeDetails'
+      })
       .state('mineOperation.oee.timePerformance', {
         url: '/time-performance',
         component: 'oeeTimePerformance'

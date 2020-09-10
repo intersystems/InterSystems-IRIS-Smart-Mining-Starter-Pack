@@ -112,7 +112,7 @@
         tooltip: {},
         grid: {
           left: 80,
-          top: 50,
+          top: 30,
           right: 20,
           bottom: 60
         },
@@ -143,7 +143,6 @@
         legend: {
           show: true,
           selectedMode: false,
-          padding: [20, 0, 0, 0],
           data: series.map(current => current.name)
         }
       };

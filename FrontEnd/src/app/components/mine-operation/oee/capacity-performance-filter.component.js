@@ -5,7 +5,7 @@
 
   angular
     .module('app')
-    .component('oeeDefaultFilter', {
+    .component('capacityPerformanceFilter', {
       templateUrl: 'default-filter.template.html',
       controller: Controller,
       controllerAs: 'ctrl'
@@ -55,6 +55,12 @@
         .categories(vm.dates.from.value, vm.dates.to.value)
         .then(categories => {
           vm.categories = categories || [];
+
+          for (let category of categories) {
+            if (category.name !== 'Camion'/* && category.name !== 'Carguio'*/) {
+              category.disabled = true;
+            }
+          }
 
           const truckCategory = vm.categories.find(current => current.name === 'Camion');
 

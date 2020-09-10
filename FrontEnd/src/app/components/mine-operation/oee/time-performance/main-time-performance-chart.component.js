@@ -34,9 +34,9 @@
         vm.selectedDate = null;
         vm.selectedEquipments = null;
         vm.selectedStatus = null;
-        vm.trucks = vm.filters.equipments;
+        vm.equipments = vm.filters.equipments;
 
-        OEE.loadDataAsDays(vm.from, vm.to, 'TimePerformance', [{name: 'Camion'}], vm.trucks)
+        OEE.loadDataAsDays(vm.from, vm.to, 'TimePerformance', vm.filters.categories, vm.equipments)
           .then(result => {
             console.log(result);
             vm.loading = false;
@@ -81,7 +81,8 @@
         data: data,
         label: {
           show: true,
-          fontSize: 11
+          fontSize: 11,
+          formatter: (params) => `${params.data[1]}%`
         }
       }];
 
@@ -116,7 +117,7 @@
         yAxis: [{
           type: 'value',
           axisLabel: {fontSize: 11, show: true},
-          name: 'Porcentaje de tiempo',
+          name: 'Porcentaje de tiempo [%]',
           nameLocation: 'center',
           nameGap: 70,
           min: 0,
@@ -179,7 +180,7 @@
         return;
       }
       const equipmentName = params.data[1];
-      vm.truck = equipmentName ? {name: equipmentName} : null;
+      vm.equipment = equipmentName ? {name: equipmentName} : null;
     }
 
     function onSelectTrip(trip) {
@@ -205,7 +206,7 @@
         %FILTER NONEMPTYCROSSJOIN(
           [ProductionEventStartTime].[H1].[ProductionEventStartTimeMinute].&[${minuteNumber}],
           NONEMPTYCROSSJOIN(
-            [Equipment].[H1].[EquipmentName].&[${vm.truck.name}],
+            [Equipment].[H1].[EquipmentName].&[${vm.equipment.name}],
             [EventDateTime].[H1].[EventDateTimeDay].&[${dateNumber}]
           )
         )`;

@@ -25,16 +25,21 @@
 
     vm.$onDestroy = function () {
       vm.offSuccess();
+      if (vm.filterScope) {
+        vm.filterScope.$destroy();
+      }
     };
 
     function displayFilters() {
       const currentState = $state.current;
 
       const filtersMap = {
-        'mineOperation.oee.capacityPerformance': 'capacity-performance-filter'
+        'mineOperation.oee.capacityPerformance': 'capacity-performance-filter',
+        'mineOperation.oee.timePerformance': 'capacity-performance-filter'
       };
 
       const tagName = filtersMap[currentState.name] || 'oee-default-filter';
+      //const tagName = 'oee-default-filter';
       if (vm.currentTagName === tagName) {
         return;
       }

@@ -1,0 +1,10 @@
+multi-select-dropdown {
+  label.disabled {
+    background: #fafafa;
+    color: #999;
+
+    &.checkbox:not(.btn) > i {
+      background: #dfdfdf;
+    }
+  }
+}

@@ -1,32 +1,24 @@
 (() => {
   const angular = window.angular;
 
-  Controller.$inject = ['$rootScope', '$timeout', '$element', 'DateUtils', '$filter', '$uibModal', 'OEE', 'Equipment'];
+  Controller.$inject = ['$rootScope', '$timeout', '$element', 'DateUtils', '$filter', 'OEE', 'Equipment'];
 
   angular
     .module('app')
-    .component('mainUtilizationChart', {
-      templateUrl: 'main-utilization-chart.template.html',
+    .component('mainOeeDetailsChart', {
+      templateUrl: 'main-oee-details-chart.template.html',
       controller: Controller,
       controllerAs: 'ctrl',
       bindings: {}
     });
 
-  function Controller($root, $timeout, $element, DateUtils, $filter, $uibModal, OEE, Equipment) {
+  function Controller($root, $timeout, $element, DateUtils, $filter, OEE, Equipment) {
     const vm = this;
 
     vm.$onInit = function () {
       const container = $element.find('.chart');
-      vm.options = {
-        title: 'Utilización por día',
-        yAxisLabel: '% de tiempo',
-        color: '#a3a1fb'
-      };
-
-      vm.seagullLoading = null;
       vm.lessProductiveChartClick = lessProductiveChartClick;
       vm.statusChartClick = statusChartClick;
-      vm.showEquipmentStatusDetails = showEquipmentStatusDetails;
 
       vm.container = container[0];
 
@@ -47,16 +39,10 @@
         vm.selectedEquipments = null;
         vm.selectedStatus = null;
 
-        const chartData = {};
-        OEE.loadDataAsDays(vm.from, vm.to, 'Utilization', vm.filters.categories, vm.filters.equipments)
+        OEE.loadDataAsDays(vm.from, vm.to, null, vm.filters.categories, vm.filters.equipments)
           .then(result => {
-            chartData.utilization = result && result[0] ? result[0].data : [];
-            return Equipment.statusData(vm.from, vm.to, vm.filters.categories, vm.filters.equipments, 'day');
-          })
-          .then(result => {
-            chartData.status = result;
             vm.loading = false;
-            plotChart(chartData);
+            plotChart(result);
           })
           .catch(err => {
             vm.loading = false;
@@ -90,48 +76,43 @@
 
       const defaultSeries = {
         data: [],
-        type: 'bar',
-        stack: 'stack',
-        barWidth: '50%',
-        label: {
-          show: true,
-          fontSize: 11,
-          formatter: (params) => params.data[1] + '%'
-        }
+        type: 'bar'
       };
 
-      let series = {};
-      ['Operative', 'Delay', 'Standby', 'Downtime'].forEach(current => {
-        series[current] = angular.copy(defaultSeries);
-        series[current].name = current;
-      });
+      let series = [];
+      let oee = chartData.find(current => current.category === 'OEE');
 
-      chartData.status.forEach(current => {
-        const minute = current.category;
-        const total = current.data.reduce((sum, current) => current[1] + sum, 0);
-        for (const pair of current.data) {
-          series[pair[0]].data.push([minute, Math.round(10000 * pair[1] / total) / 100]);
+      series.push({
+        type: 'line',
+        id: 'oee',
+        smooth: false,
+        symbolSize: 8,
+        color: '#333',
+        name: 'OEE',
+        data: oee.data.map(pair => Math.round(1000 * pair[1]) / 10),
+        label: {
+          show: true,
+          position: 'top',
+          formatter: (params) => params.data + '%',
+          color: '#fff'
         }
       });
 
-      series = Object.values(series);
-
-      let max = null;
-      for (let pair of chartData.utilization) {
-        let value = Math.round(1000 * pair[1]) / 10;
-        if (value === 0) {
-          continue;
-        }
-
-        max = max === null || max < value ? value : max;
-        pair[1] = value;
-      }
-
-      max = !max ? 100 : max + 20 - max % 10;
-      max = max < 100 ? 100 : max;
+      ['Utilization', 'CapacityPerformance', 'TimePerformance'].forEach(seriesId => {
+        const current = chartData.find(current => current.category === seriesId);
+        const config = angular.copy(defaultSeries);
+        config.name = current.category;
+        config.data = current.data.map(pair => Math.round(1000 * pair[1]) / 10);
+        series.push(config);
+      });
 
       let option = {
-        tooltip: {},
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow'
+          }
+        },
         legend: {},
         grid: {
           left: 80,
@@ -142,11 +123,11 @@
         yAxis: {
           type: 'value',
           axisLabel: {fontSize: 11, show: true},
-          name: 'Porcentaje de tiempo [%]',
+          name: '[%]',
           nameLocation: 'center',
           nameGap: 50,
           min: 0,
-          max: max,
+          //max: max,
           nameTextStyle: {
             color: '#333333',
             fontSize: 16
@@ -187,7 +168,7 @@
         return;
       }
 
-      const date = moment(params.value[0], 'MMM D YYYY').toDate();
+      const date = moment(params.name, 'MMM D YYYY').toDate();
       if (date === vm.selectedDate) {
         return;
       }
@@ -212,24 +193,6 @@
         return;
       }
       vm.selectedStatus = params.seriesName;
-    }
-
-    function showEquipmentStatusDetails() {
-      $uibModal
-        .open({
-          animation: false,
-          bindToController: true,
-          size: 'lg',
-          component: 'equipmentStatusDetailsModal',
-          resolve: {
-            date: () => vm.selectedDate,
-            categories: () => vm.categories
-          }
-        })
-        .result
-        .catch(function (err) {
-          console.log(err);
-        });
     }
   }
 })();

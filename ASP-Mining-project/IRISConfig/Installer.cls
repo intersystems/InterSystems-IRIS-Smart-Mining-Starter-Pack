@@ -131,9 +131,13 @@ ClassMethod LoadConnectorAndDemos(pNamespace As %String) As %Status
 		If (##class(%Dictionary.CompiledClass).%ExistsId("OPCUA.Utils")){
 			set tSC = ##class(OPCUA.Utils).Install("/usr/irissys/bin/irisopcua.so")	
 			Do ##class(Examples.OPCUADS.Utils).LoadOnInstallation()
+			//Do ##class(Examples.OPCUADS.Production).Stop(120, 1)
 		}
 		Do ##class(ASPMining.ConnectorModules.MineCare.CubeBuilder).Create()	
 		Do ##class(ASPMining.ConnectorModules.PowerView.CubeBuilder).Create()	
+
+		// Control productions
+		//Do ##class(IRISDemo.Production).Start()
 	}
 	Catch (oException)
 	{

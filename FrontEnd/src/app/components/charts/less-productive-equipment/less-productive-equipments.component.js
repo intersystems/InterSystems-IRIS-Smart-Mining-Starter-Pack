@@ -16,7 +16,8 @@
         color: '<',
         maxCategories: '<',
         size: '<',
-        onChartClick: '&'
+        onChartClick: '&',
+        wait: '<'
       }
     });
 
@@ -46,16 +47,18 @@
 
     function loadData() {
       vm.loading = true;
-      Equipment
-        .statusData(vm.from, vm.to, vm.categories, null, 'equipment')
-        .then(data => {
-          vm.loading = false;
-          plotChart(data);
-        })
-        .catch(err => {
-          vm.loading = false;
-          console.log(err);
-        });
+      $timeout(() => {
+        Equipment
+          .statusData(vm.from, vm.to, vm.categories, null, 'equipment')
+          .then(data => {
+            vm.loading = false;
+            plotChart(data);
+          })
+          .catch(err => {
+            vm.loading = false;
+            console.log(err);
+          });
+      }, vm.wait);
     }
 
     function plotChart(data) {

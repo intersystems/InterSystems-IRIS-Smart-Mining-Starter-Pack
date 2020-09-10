@@ -12,6 +12,7 @@
 
     return {
       getDateNumber,
+      getDateFromNumber,
       getMinuteNumber,
       getPath,
       buildQuery,
@@ -34,6 +35,12 @@
     function getDateNumber(date) {
       const momentDate = moment(date);
       return referenceNumber + momentDate.diff(referenceDay, 'days');
+    }
+
+    function getDateFromNumber(number) {
+      const date = referenceDay.toDate();
+      date.setDate(date.getDate() + number - referenceNumber);
+      return date;
     }
 
     function getMinuteNumber(date) {

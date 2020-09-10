@@ -23,6 +23,7 @@
       loadDataAsDays,
       loadDataAsHours,
       loadDataAsMinutes,
+      loadDataByEquipment,
       capacityPerformance
     };
 
@@ -197,6 +198,7 @@
 
       return IrisUtils.executeQuery(query)
         .then(result => {
+          console.log(result);
           cache[timeInterval].query = query;
           const data = IrisUtils.parseTwoDimensionalResponse(result);
           cache[timeInterval].data = data;
@@ -204,9 +206,55 @@
             return data.filter(current => current.category === type);
           }
           return data;
-        })
-        .catch(response => {
-          return Promise.reject(Utils.getHTTPError(response));
+        });
+    }
+
+    function loadDataByEquipment(from, to, type, categories, equipments) {
+      const fromNumber = IrisUtils.getDateNumber(from);
+      const toNumber = IrisUtils.getDateNumber(to);
+
+      const columns = [{path: `[MEMBERDIMENSION].allMembers`}];
+
+      const rows = [{path: '[Equipment].[H1].[EquipmentName].Members'}];
+
+      let dates = fromNumber;
+      if (fromNumber !== toNumber) {
+        dates = [fromNumber, toNumber];
+      }
+
+      const filters = [];
+
+      if (equipments && equipments.length) {
+        filters.push({
+          dimension: 'EQUIPMENT',
+          hierarchy: 'H1',
+          hierarchyLevel: 'EQUIPMENTNAME',
+          values: equipments.map(current => current.name)
+        });
+      } else {
+        filters.push({
+          dimension: 'EQUIPMENT',
+          hierarchy: 'H1',
+          hierarchyLevel: 'EQUIPMENTCATEGORY',
+          values: categories.map(current => current.name)
+        });
+      }
+
+      filters.push({
+        dimension: 'EventDateTime',
+        hierarchy: 'H1',
+        hierarchyLevel: 'EventDateTimeDay',
+        values: [dates]
+      });
+
+      let query = IrisUtils.buildQuery(cube, columns, rows, null, filters);
+      return IrisUtils.executeQuery(query)
+        .then(result => {
+          const data = IrisUtils.parseTwoDimensionalResponse(result, true);
+          if (type) {
+            return data.filter(current => current.category === type);
+          }
+          return data;
         });
     }
 

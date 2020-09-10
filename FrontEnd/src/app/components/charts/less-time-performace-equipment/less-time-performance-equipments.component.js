@@ -60,7 +60,12 @@
 
     function plotChart(production) {
       const data = production.find(current => current.category === 'TimePerformance').data;
-      data.sort((a, b) => b[1] - a[1]);
+      data.sort((a, b) => {
+        if (b[1] === 0 || a[1] === 0) {
+          return a[1] - b[1];
+        }
+        return b[1] - a[1];
+      });
 
       let longestName = '';
       data.forEach(current => {

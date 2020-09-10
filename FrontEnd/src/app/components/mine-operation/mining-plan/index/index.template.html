@@ -1,5 +1,5 @@
-<div>
-    <div class="panel panel-light">
+<div style="position: relative; min-height: 500px">
+    <div class="panel panel-light" ng-class="{transparent: ctrl.loading}">
         <div class="panel-heading">
             Detalles Flota
         </div>
@@ -10,61 +10,21 @@
                     <strong>Total de Equipos</strong>
                 </th>
                 <th>
-                    202
+                    {{ctrl.equipments.length}}
                 </th>
             </tr>
             </thead>
             <tbody>
 
-            <tr>
-                <td>Aljibe</td>
-                <td>7</td>
-            </tr>
-            <tr>
-                <td>Camión</td>
-                <td>111</td>
-            </tr>
-            <tr>
-                <td>Carguio</td>
-                <td>15</td>
-            </tr>
-            <tr>
-                <td>Chancado</td>
-                <td>3</td>
-            </tr>
-            <tr>
-                <td>Combus. y Lub.</td>
-                <td>4</td>
-            </tr>
-            <tr>
-                <td>Moto.Niv.</td>
-                <td>11</td>
-            </tr>
-            <tr>
-                <td>Perforadora</td>
-                <td>12</td>
-            </tr>
-            <tr>
-                <td>Retroexcavadora</td>
-                <td>8</td>
-            </tr>
-            <tr>
-                <td>Tow Haul</td>
-                <td>3</td>
-            </tr>
-            <tr>
-                <td>Tractor Neumaticos</td>
-                <td>13</td>
-            </tr>
-            <tr>
-                <td>Tractor Orugas</td>
-                <td>15</td>
+            <tr ng-repeat="category in ctrl.categories">
+                <td>{{category.name}}</td>
+                <td>{{category.count}}</td>
             </tr>
             </tbody>
         </table>
     </div>
 
-    <div class="panel panel-light marginB0">
+    <div class="panel panel-light marginB0" ng-class="{transparent: ctrl.loading}">
         <div class="panel-heading">
             Listado de equipos
         </div>
@@ -72,5 +32,5 @@
             <table class="table table-hover marginB0" id="equipment-table"></table>
         </div>
     </div>
-
+    <spinner show="ctrl.loading"></spinner>
 </div>

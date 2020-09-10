@@ -1,8 +1,7 @@
 /// Standarized Production Status. These status are 100% related to the production cycle and are independant of the Operation Status.
 Class ASPMining.CanonicalModel.Production.ProductionStatusType Extends %Persistent
 {
-
-	/// Type of the status, e.g: 1,2,3,4, 5,6
+	/// Type of the status, e.g: 1,2,3,4,5,6
 	Property Type As %Integer;
 	/// Description of the status, e.g: TransitToDumpSite, TransitToLoadSite, Loading, Dumping, WaitingForLoad, WaitingForDump. Very important for Production KPIs
 	Property Description As %String;

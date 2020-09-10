@@ -16,7 +16,7 @@
         <div class="panel panel-light">
             <div class="panel-heading">
                 <div>Análisis diario {{ctrl.truck.name}}</div>
-                <small style="font-size: 70%">{{ctrl.selectedDate | date: 'dd-MM-yyyy'}}</small>
+                <small>{{ctrl.selectedDate | date: 'dd-MM-yyyy'}}</small>
             </div>
             <load-dump-by-truck-chart date="ctrl.selectedDate" truck="ctrl.truck"
                                       on-chart-click="ctrl.dumpEventClick(params)"

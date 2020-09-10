@@ -137,7 +137,7 @@
         }, {
           type: 'value',
           axisLabel: {fontSize: 11, show: true},
-          name: '% de capacidad',
+          name: 'Porcentaje de capacidad [%]',
           nameLocation: 'center',
           nameGap: 40,
           min: 0,

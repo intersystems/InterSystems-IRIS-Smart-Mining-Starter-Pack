@@ -14,20 +14,28 @@
       padding: 11px 10px !important;
       font-size: 12px;
       outline: none !important;
+      position: relative;
+      height: 64px;
 
       &:hover {
         background: #fdfdfd;
       }
 
+      h3, h4 {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
       h3 {
         font-size: 24px;
-        margin: 3px 0;
         font-weight: bold;
       }
 
       h4 {
         font-size: 18px;
-        margin: 3px 0;
         font-weight: bold;
       }
     }

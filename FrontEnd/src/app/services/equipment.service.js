@@ -85,8 +85,6 @@
       }
 
       let query = IrisUtils.buildQuery(cube, columns, rows, ['PartialDuration'], filters);
-
-
       return IrisUtils.executeQuery(query)
         .then(data => {
           return IrisUtils.parseTwoDimensionalResponse(data, true);

@@ -52,6 +52,9 @@
     function selectAll() {
       vm.selectedItems.splice(0, vm.selectedItems.length);
       for (let item of vm.items) {
+        if (item.disabled) {
+          continue;
+        }
         item.selected = true;
         vm.selectedItems.push(item);
       }

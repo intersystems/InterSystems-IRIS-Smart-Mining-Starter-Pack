@@ -1,7 +1,7 @@
 (() => {
   const angular = window.angular;
 
-  Controller.$inject = ['$element'];
+  Controller.$inject = ['$element', '$filter', 'IrisUtils'];
 
   angular
     .module('app')
@@ -11,21 +11,87 @@
       controllerAs: 'ctrl'
     });
 
-  function Controller($element) {
+  function Controller($element, $filter, IrisUtils) {
     const vm = this;
 
     vm.$onInit = function () {
-      const equipmentTable = $element.find('#equipment-table');
-
-      createEquipmentTable(equipmentTable, getEquipments());
+      vm.equipmentTable = $element.find('#equipment-table');
+      loadData();
     };
 
     vm.$onDestroy = function () {
-      vm.equipmentTable.destroy();
+      vm.dtInstance.destroy();
     };
 
+    function loadData() {
+      let query = `SELECT NON EMPTY {
+        [Measures].[Capacity],
+        [Measures].[LastActivity]
+      } ON 0,
+      NON EMPTY HEAD(
+        NONEMPTYCROSSJOIN(
+          [Equipment].[H1].[EquipmentName].Members,
+          NONEMPTYCROSSJOIN(
+            [Equipment].[H1].[CategoryName].Members,
+            [Model].[H1].[Model].Members)
+          )
+        ,2000,SAMPLE) ON 1 
+      FROM [ASPMINING.ANALYTICS.EQUIPMENTCUBE]
+      %FILTER (
+        [EQUIPMENT].[H1].[CATEGORYNAME].&[0].%NOT,
+        [EQUIPMENT].[H1].[CATEGORYNAME].&[13].%NOT,
+        [EQUIPMENT].[H1].[CATEGORYNAME].&[47].%NOT,
+        [EQUIPMENT].[H1].[CATEGORYNAME].&[50].%NOT,
+        [EQUIPMENT].[H1].[CATEGORYNAME].&[53].%NOT,
+        [EQUIPMENT].[H1].[CATEGORYNAME].&[62].%NOT,
+        [EQUIPMENT].[H1].[CATEGORYNAME].&[67].%NOT,
+        [EQUIPMENT].[H1].[CATEGORYNAME].&[69].%NOT,
+        [EQUIPMENT].[H1].[CATEGORYNAME].&[70].%NOT
+        )`;
+
+      vm.loading = true;
+      IrisUtils.executeQuery(query)
+        .then(data => {
+          const Cols = data.Cols || [];
+          const cols = Cols[1] && Cols[1].tuples ? Cols[1].tuples : [];
+          const equipments = [];
+          const categories = {};
+          cols.forEach(current => {
+            const equipment = {name: current.caption, model: null, category: null, lastActivity: '', capacity: ''};
+            equipments.push(equipment);
+            const category = current.children ? current.children[0] : null;
+            if (!category) {
+              categories['Indefinida'] = categories['Indefinida'] || {name: 'Indefinida', count: 0};
+              categories['Indefinida'].count++;
+              return;
+            }
+
+            categories[category.caption] = categories[category.caption] || {name: category.caption, count: 0};
+            categories[category.caption].count++;
+
+            equipment.category = category.caption;
+            equipment.model = category.children && category.children[0] ? category.children[0].caption : null;
+          });
+
+          equipments.forEach((equipment, index) => {
+            equipment.capacity = data.Data[index * 2];
+            const lastActivity = data.Data[index * 2 + 1];
+            equipment.lastActivity = !isNaN(parseFloat(lastActivity)) ? IrisUtils.getDateFromNumber(lastActivity) : null;
+          });
+
+          vm.equipments = equipments;
+          vm.categories = Object.values(categories);
+          createEquipmentTable(vm.equipmentTable, equipments);
+          vm.loading = false;
+        })
+        .catch(err => {
+          console.log(err);
+          vm.loading = false;
+        });
+    }
+
     function createEquipmentTable(table, equipments) {
-      vm.equipmentTable = table.DataTable({
+      vm.dtInstance = table.DataTable({
         data: equipments,
         searching: false,
         paging: false,
@@ -37,220 +103,19 @@
           {targets: '_all', searchable: false}
         ],
         columns: [
-          {title: 'Flota'},
-          {title: 'Nombre'},
-          {title: 'Modelo'},
-          {title: 'Tonelaje'},
-          {title: 'Última actividad'}
+          {title: 'Flota', data: 'category'},
+          {title: 'Nombre', data: 'name'},
+          {title: 'Modelo', data: 'model', defaultContent: ''},
+          {title: 'Tonelaje', data: 'capacity', defaultContent: ''},
+          {
+            title: 'Última actividad',
+            data: 'lastActivity',
+            render: (value) => {
+              return value ? $filter('date')(value, 'dd-MM-yyyy') : '';
+            }
+          }
         ]
       });
-    }
-
-    function getEquipments() {
-      return [
-        ['Aljibe', 'CR05', 'Komatsu HD785', '0', '31-12-2018 7:41'],
-        ['Aljibe', 'CR04', 'Komatsu HD785', '0', '30-12-2018 10:23'],
-        ['Aljibe', 'CR07', 'Komatsu HD785', '0', '31-12-2018 7:45'],
-        ['Aljibe', 'CR06', 'Komatsu HD785', '0', '30-12-2018 13:24'],
-        ['Aljibe', 'CR09', 'Komatsu HD785', '0', '31-12-2018 7:41'],
-        ['Aljibe', 'CR10', 'Otros', '0', '28-12-2018 22:02'],
-        ['Aljibe', 'CR08', 'Komatsu HD785', '0', '31-12-2018 7:46'],
-        ['Camion', 'CA122', 'KMS-930 E3', '300', '31-12-2018 7:45'],
-        ['Camion', 'CA100', 'KMS-930 E3', '300', '31-12-2018 7:57'],
-        ['Camion', 'CA77', 'KMS-930 E3', '300', '31-12-2018 5:33'],
-        ['Camion', 'CA55', 'KMS-930 E3', '300', '31-12-2018 7:57'],
-        ['Camion', 'CA83', 'KMS-930 E3', '300', '31-12-2018 7:53'],
-        ['Camion', 'CA148', 'LBH T282C', '373', '31-12-2018 5:35'],
-        ['Camion', 'CA75', 'KMS-930 E3', '300', '31-12-2018 5:25'],
-        ['Camion', 'CA140', 'KMS-930 E3', '300', '31-12-2018 5:31'],
-        ['Camion', 'CA150', 'KMS-930 E3', '300', '31-12-2018 7:45'],
-        ['Camion', 'CA164', 'KMS-930 E3', '300', '31-12-2018 7:42'],
-        ['Camion', 'CA114', 'KMS-930 E3', '300', '31-12-2018 7:56'],
-        ['Camion', 'CA124', 'KMS-930 E3', '300', '31-12-2018 7:54'],
-        ['Camion', 'CA133', 'KMS-930 E3', '300', '31-12-2018 5:47'],
-        ['Camion', 'CA153', 'KMS-930 E3', '300', '31-12-2018 7:58'],
-        ['Camion', 'CA145', 'KMS-930 E3', '300', '30-12-2018 2:02'],
-        ['Camion', 'CA130', 'KMS-930 E3', '300', '31-12-2018 7:11'],
-        ['Camion', 'CA93', 'KMS-930 E3', '300', '31-12-2018 5:35'],
-        ['Camion', 'CA84', 'KMS-930 E3', '300', '31-12-2018 7:54'],
-        ['Camion', 'CA88', 'KMS-930 E3', '300', '31-12-2018 7:54'],
-        ['Camion', 'CA69', 'KMS-930 E3', '300', '31-12-2018 6:37'],
-        ['Camion', 'CA138', 'KMS-930 E3', '300', '31-12-2018 7:48'],
-        ['Camion', 'CA151', 'KMS-930 E3', '300', '31-12-2018 7:57'],
-        ['Camion', 'CA103', 'KMS-930 E3', '300', '31-12-2018 7:56'],
-        ['Camion', 'CA113', 'KMS-930 E3', '300', '31-12-2018 7:49'],
-        ['Camion', 'CA121', 'KMS-930 E3', '300', '30-12-2018 12:31'],
-        ['Camion', 'CA156', 'KMS-930 E3', '300', '31-12-2018 7:56'],
-        ['Camion', 'CA64', 'KMS-930 E3', '300', '30-12-2018 21:39'],
-        ['Camion', 'CA79', 'KMS-930 E3', '300', '31-12-2018 7:59'],
-        ['Camion', 'CA59', 'KMS-930 E3', '300', '31-12-2018 7:51'],
-        ['Camion', 'CA81', 'KMS-930 E3', '300', '31-12-2018 7:59'],
-        ['Camion', 'CA68', 'KMS-930 E3', '300', '31-12-2018 7:44'],
-        ['Camion', 'CA160', 'KMS-980E', '373', '31-12-2018 7:52'],
-        ['Camion', 'CA91', 'KMS-930 E3', '300', '31-12-2018 7:58'],
-        ['Camion', 'CA135', 'KMS-930 E3', '300', '31-12-2018 7:53'],
-        ['Camion', 'CA47', 'KMS-930 E3', '300', '31-12-2018 2:03'],
-        ['Camion', 'CA106', 'LBH T282C', '373', '31-12-2018 4:55'],
-        ['Camion', 'CA111', 'KMS-930 E3', '300', '31-12-2018 2:05'],
-        ['Camion', 'CA61', 'KMS-930 E3', '300', '31-12-2018 4:18'],
-        ['Camion', 'CA74', 'KMS-930 E3', '300', '29-12-2018 2:53'],
-        ['Camion', 'CA78', 'KMS-930 E3', '300', '31-12-2018 7:59'],
-        ['Camion', 'CA86', 'KMS-930 E3', '300', '31-12-2018 7:58'],
-        ['Camion', 'CA157', 'KMS-930 E3', '300', '31-12-2018 5:42'],
-        ['Camion', 'CA109', 'KMS-930 E3', '300', '31-12-2018 7:49'],
-        ['Camion', 'CA149', 'KMS-930 E3', '300', '31-12-2018 3:33'],
-        ['Camion', 'CA98', 'KMS-930 E3', '300', '31-12-2018 5:30'],
-        ['Camion', 'CA17', 'Haulpack-830E', '210', '24-04-2018 8:32'],
-        ['Camion', 'CA161', 'KMS-980E', '373', '31-12-2018 7:44'],
-        ['Camion', 'CA123', 'KMS-930 E3', '300', '31-12-2018 7:53'],
-        ['Camion', 'CA119', 'KMS-930 E3', '300', '31-12-2018 7:48'],
-        ['Camion', 'CA143', 'KMS-930 E3', '300', '31-12-2018 7:58'],
-        ['Camion', 'CA57', 'KMS-930 E3', '300', '30-12-2018 21:37'],
-        ['Camion', 'CA146', 'LBH T282C', '373', '31-12-2018 7:43'],
-        ['Camion', 'CA94', 'KMS-930 E3', '300', '31-12-2018 6:09'],
-        ['Camion', 'CA137', 'KMS-930 E3', '300', '31-12-2018 7:59'],
-        ['Camion', 'CA60', 'KMS-930 E3', '300', '30-12-2018 16:13'],
-        ['Camion', 'CA71', 'KMS-930 E3', '300', '31-12-2018 5:36'],
-        ['Camion', 'CA89', 'KMS-930 E3', '300', '31-12-2018 7:50'],
-        ['Camion', 'CA118', 'KMS-930 E3', '300', '31-12-2018 7:55'],
-        ['Camion', 'CA99', 'KMS-930 E3', '300', '31-12-2018 7:59'],
-        ['Camion', 'CA128', 'KMS-930 E3', '300', '30-12-2018 0:00'],
-        ['Camion', 'CA139', 'KMS-930 E3', '300', '31-12-2018 7:47'],
-        ['Camion', 'CA104', 'LBH T282C', '373', '30-12-2018 5:49'],
-        ['Camion', 'CA112', 'KMS-930 E3', '300', '31-12-2018 7:53'],
-        ['Camion', 'CA126', 'KMS-930 E3', '300', '31-12-2018 7:46'],
-        ['Camion', 'CA63', 'KMS-930 E3', '300', '30-12-2018 10:31'],
-        ['Camion', 'CA132', 'KMS-930 E3', '300', '31-12-2018 6:10'],
-        ['Camion', 'CA163', 'KMS-980E', '373', '31-12-2018 7:54'],
-        ['Camion', 'CA82', 'KMS-930 E3', '300', '30-12-2018 23:33'],
-        ['Camion', 'CA96', 'KMS-930 E3', '300', '31-12-2018 7:52'],
-        ['Camion', 'CA70', 'KMS-930 E3', '300', '31-12-2018 7:50'],
-        ['Camion', 'CA76', 'KMS-930 E3', '300', '31-12-2018 7:51'],
-        ['Camion', 'CA56', 'KMS-930 E3', '300', '29-12-2018 5:08'],
-        ['Camion', 'CA46', 'KMS-930 E3', '300', '28-12-2018 16:34'],
-        ['Camion', 'CA147', 'LBH T282C', '373', '31-12-2018 7:48'],
-        ['Camion', 'CA134', 'KMS-930 E3', '300', '31-12-2018 7:58'],
-        ['Camion', 'CA141', 'KMS-930 E3', '300', '31-12-2018 7:50'],
-        ['Camion', 'CA101', 'KMS-930 E3', '300', '31-12-2018 7:50'],
-        ['Camion', 'CA107', 'LBH T282C', '373', '31-12-2018 7:58'],
-        ['Camion', 'CA125', 'KMS-930 E3', '300', '31-12-2018 7:50'],
-        ['Camion', 'CA29', 'Haulpack-830E', '210', '24-04-2018 13:49'],
-        ['Camion', 'CA117', 'KMS-930 E3', '300', '30-12-2018 22:59'],
-        ['Camion', 'CA131', 'KMS-930 E3', '300', '31-12-2018 7:49'],
-        ['Camion', 'CA62', 'KMS-930 E3', '300', '31-12-2018 4:22'],
-        ['Camion', 'CA144', 'KMS-930 E3', '300', '30-12-2018 18:28'],
-        ['Camion', 'CA85', 'KMS-930 E3', '300', '31-12-2018 7:58'],
-        ['Camion', 'CA73', 'KMS-930 E3', '300', '30-12-2018 17:22'],
-        ['Camion', 'CA87', 'KMS-930 E3', '300', '31-12-2018 7:52'],
-        ['Camion', 'CA97', 'KMS-930 E3', '300', '31-12-2018 7:57'],
-        ['Camion', 'CA158', 'KMS-930 E3', '300', '31-12-2018 6:17'],
-        ['Camion', 'CA142', 'KMS-930 E3', '300', '31-12-2018 7:55'],
-        ['Camion', 'CA152', 'KMS-930 E3', '300', '31-12-2018 7:46'],
-        ['Camion', 'CA162', 'KMS-980E', '373', '31-12-2018 5:25'],
-        ['Camion', 'CA110', 'KMS-930 E3', '300', '31-12-2018 7:52'],
-        ['Camion', 'CA116', 'KMS-930 E3', '300', '31-12-2018 7:58'],
-        ['Camion', 'CA120', 'KMS-930 E3', '300', '31-12-2018 7:51'],
-        ['Camion', 'CA102', 'KMS-930 E3', '300', '31-12-2018 7:59'],
-        ['Camion', 'CA108', 'KMS-930 E3', '300', '31-12-2018 7:56'],
-        ['Camion', 'CA154', 'KMS-930 E3', '300', '31-12-2018 6:49'],
-        ['Camion', 'CA95', 'KMS-930 E3', '300', '31-12-2018 7:57'],
-        ['Camion', 'CA155', 'KMS-930 E3', '300', '31-12-2018 7:55'],
-        ['Camion', 'CA136', 'KMS-930 E3', '300', '31-12-2018 7:58'],
-        ['Camion', 'CA58', 'KMS-930 E3', '300', '31-12-2018 7:48'],
-        ['Camion', 'CA80', 'KMS-930 E3', '300', '31-12-2018 7:58'],
-        ['Camion', 'CA72', 'KMS-930 E3', '300', '31-12-2018 7:56'],
-        ['Camion', 'CA67', 'KMS-930 E3', '300', '30-12-2018 20:24'],
-        ['Camion', 'CA129', 'KMS-930 E3', '300', '31-12-2018 5:34'],
-        ['Camion', 'CA159', 'KMS-980E', '373', '31-12-2018 7:47'],
-        ['Camion', 'CA115', 'KMS-930 E3', '300', '31-12-2018 5:26'],
-        ['Camion', 'CA127', 'KMS-930 E3', '300', '31-12-2018 5:26'],
-        ['Camion', 'CA92', 'KMS-930 E3', '300', '31-12-2018 6:14'],
-        ['Camion', 'CA105', 'LBH T282C', '373', '31-12-2018 7:45'],
-        ['Carguio', 'PA21', 'CAT7495', '79', '31-12-2018 7:03'],
-        ['Carguio', 'PA12', 'P&H 4100XPC', '74', '31-12-2018 6:26'],
-        ['Carguio', 'CF06', 'Le Tourneau L1850', '36', '31-12-2018 5:18'],
-        ['Carguio', 'PA11', 'P&H 4100XPC', '74', '28-11-2018 9:40'],
-        ['Carguio', 'PA20', 'KMS-PC8000', '42', '31-12-2018 3:32'],
-        ['Carguio', 'CF05', 'Le Tourneau L1850', '36', '30-12-2018 5:09'],
-        ['Carguio', 'PA13', 'P&H 4100XPC', '74', '31-12-2018 7:38'],
-        ['Carguio', 'PA14', 'P&H 4100XPC', '74', '31-12-2018 5:25'],
-        ['Carguio', 'PA09', 'Bucyrus 495 HR', '73', '31-12-2018 6:05'],
-        ['Carguio', 'CF04', 'Le Tourneau L1850', '36', '20-06-2018 6:58'],
-        ['Carguio', 'PA15', 'KMS-PC5500', '36', '31-12-2018 7:58'],
-        ['Carguio', 'PA08', 'Bucyrus 495 HR', '73', '31-12-2018 7:42'],
-        ['Carguio', 'PA16', 'KMS-PC5500', '36', '31-12-2018 5:45'],
-        ['Carguio', 'PA06', 'Bucyrus 495 HR', '73', '31-12-2018 7:06'],
-        ['Carguio', 'PA10', 'Bucyrus 495 HR', '73', '28-12-2018 22:43'],
-        ['Chancado', 'CS03', 'Chanc. Sulfuros', '0', '30-12-2018 19:11'],
-        ['Chancado', 'CS01', 'Chanc. Sulfuros', '0', '15-12-2018 0:29'],
-        ['Chancado', 'CO01', 'Chanc. Oxidos', '0', '23-12-2018 20:11'],
-        ['Combus. y Lub.', 'P1 UJI', 'Petroleros', '0', '16-12-2018 7:54'],
-        ['Combus. y Lub.', 'P3 SEMIMOVI', 'Petroleros', '0', '16-12-2018 7:54'],
-        ['Combus. y Lub.', 'P2 SEMIMOVI', 'Petroleros', '0', '16-12-2018 7:54'],
-        ['Combus. y Lub.', 'P4 SEMIMOVI', 'Petroleros', '0', '07-12-2018 5:44'],
-        ['Moto.Niv.', 'MO08', 'CAT-16H', '0', '31-12-2018 1:05'],
-        ['Moto.Niv.', 'MO16', 'CAT-16M', '0', '31-12-2018 5:48'],
-        ['Moto.Niv.', 'MO14', 'CAT-16M', '0', '29-12-2018 9:18'],
-        ['Moto.Niv.', 'MO06', 'CAT-16H', '0', '13-02-2018 0:48'],
-        ['Moto.Niv.', 'MO12', 'CAT-16M', '0', '31-12-2018 4:46'],
-        ['Moto.Niv.', 'MO09', 'CAT-24H', '0', '30-12-2018 14:08'],
-        ['Moto.Niv.', 'MO07', 'CAT-16H', '0', '28-12-2018 11:50'],
-        ['Moto.Niv.', 'MO17', 'CAT-24M', '0', '31-12-2018 3:17'],
-        ['Moto.Niv.', 'MO15', 'CAT-16M', '0', '31-12-2018 5:07'],
-        ['Moto.Niv.', 'MO10', 'CAT-24H', '0', '31-12-2018 6:12'],
-        ['Moto.Niv.', 'MO13', 'CAT-16M', '0', '31-12-2018 7:09'],
-        ['Perforadora', 'PO15', 'Bucyrus 49HR', '0', '20-12-2018 2:39'],
-        ['Perforadora', 'PO05', 'Bucyrus 49RII', '0', ''],
-        ['Perforadora', 'PO22', 'AtlasCop DML', '12', '31-12-2018 7:32'],
-        ['Perforadora', 'PO07', 'Bucyrus 49HR', '0', ''],
-        ['Perforadora', 'PO01', 'Bucyrus 49RII', '0', ''],
-        ['Perforadora', 'PO19', 'Bucyrus 49HR', '0', ''],
-        ['Perforadora', 'PO13', 'SVK D75KS', '0', '09-06-2018 3:04'],
-        ['Perforadora', 'PO20', 'AtlasCop DML', '0', '31-12-2018 7:35'],
-        ['Perforadora', 'PO16', 'SVK D75KS', '0', '19-06-2018 8:55'],
-        ['Perforadora', 'PO17', 'PitViper', '0', '29-10-2018 23:33'],
-        ['Perforadora', 'PO03', 'Bucyrus 49RII', '0', ''],
-        ['Perforadora', 'PO21', 'AtlasCop DML', '0', '30-12-2018 19:31'],
-        ['Retroexcavadora', 'RE01', 'KMS-PC-300', '0', '25-03-2018 17:25'],
-        ['Retroexcavadora', 'RE06', 'KMS-PC600', '21', '30-12-2018 20:20'],
-        ['Retroexcavadora', 'RE03', 'KMS-PC-300', '0', '13-02-2018 8:32'],
-        ['Retroexcavadora', 'RE02', 'KMS-PC-300', '0', '16-01-2018 14:59'],
-        ['Retroexcavadora', 'RE05', 'KMS-PC600', '0', '31-12-2018 3:09'],
-        ['Retroexcavadora', 'RE09', 'KMS-PC-300', '21', '31-12-2018 7:33'],
-        ['Retroexcavadora', 'RE04', 'KMS-PC600', '21', '27-12-2018 19:34'],
-        ['Retroexcavadora', 'RE08', 'KMS-PC-300', '21', '30-12-2018 16:25'],
-        ['Tow Haul', 'TW01', 'TOW HAUL', '0', '28-12-2018 14:20'],
-        ['Tow Haul', 'TW02', 'Desconocido', '0', '30-12-2018 9:31'],
-        ['Tow Haul', 'CB01', 'TOW HAUL', '0', '29-12-2018 12:09'],
-        ['Tractor Neumaticos', 'TN06', 'CAT-854G', '0', '10-02-2018 23:49'],
-        ['Tractor Neumaticos', 'TN18', 'CAT-854K', '0', '31-12-2018 3:43'],
-        ['Tractor Neumaticos', 'TN09', 'CAT-834G', '0', '31-12-2018 3:01'],
-        ['Tractor Neumaticos', 'TN15', 'CAT-854K', '0', '31-12-2018 1:48'],
-        ['Tractor Neumaticos', 'TN07', 'CAT-854G', '0', ''],
-        ['Tractor Neumaticos', 'TN13', 'CAT-854K', '0', '30-12-2018 23:00'],
-        ['Tractor Neumaticos', 'TN16', 'CAT-854K', '0', '31-12-2018 2:34'],
-        ['Tractor Neumaticos', 'TN14', 'CAT-854K', '0', '31-12-2018 7:41'],
-        ['Tractor Neumaticos', 'TN11', 'CAT-854G', '0', '31-12-2018 2:04'],
-        ['Tractor Neumaticos', 'TN08', 'CAT-834G', '0', '12-02-2018 20:14'],
-        ['Tractor Neumaticos', 'TN12', 'CAT-834H', '0', '31-12-2018 4:19'],
-        ['Tractor Neumaticos', 'TN10', 'CAT-854G', '0', '31-12-2018 5:09'],
-        ['Tractor Neumaticos', 'TN17', 'CAT-854K', '0', '31-12-2018 3:10'],
-        ['Tractor Orugas', 'TO22', 'CAT-D11T', '0', '31-12-2018 2:03'],
-        ['Tractor Orugas', 'TO08', 'CAT-D11R', '0', '31-12-2018 5:59'],
-        ['Tractor Orugas', 'TO19', 'CAT-D11T', '0', '30-12-2018 20:09'],
-        ['Tractor Orugas', 'TO16', 'CAT-D11T', '0', '31-12-2018 7:46'],
-        ['Tractor Orugas', 'TO17', 'CAT-D11T', '0', '31-12-2018 7:41'],
-        ['Tractor Orugas', 'TO14', 'CAT-D11R', '13', '31-12-2018 7:37'],
-        ['Tractor Orugas', 'TO13', 'CAT-D10R', '0', '31-12-2018 7:44'],
-        ['Tractor Orugas', 'TO12', 'CAT-D10R', '13', '30-12-2018 19:41'],
-        ['Tractor Orugas', 'TO21', 'CAT-D11T', '0', '31-12-2018 7:43'],
-        ['Tractor Orugas', 'TO09', 'CAT-D11R', '0', '31-12-2018 7:57'],
-        ['Tractor Orugas', 'TO07', 'CAT-D11R', '13', '31-12-2018 7:26'],
-        ['Tractor Orugas', 'TO10', 'CAT-D10R', '0', '31-12-2018 5:46'],
-        ['Tractor Orugas', 'TO11', 'CAT-D10R', '0', '31-12-2018 5:21'],
-        ['Tractor Orugas', 'TO18', 'CAT-D11T', '0', '31-12-2018 5:24'],
-        ['Tractor Orugas', 'TO20', 'CAT-D11T', '0', '31-12-2018 0:08']
-      ];
     }
   }
 })();

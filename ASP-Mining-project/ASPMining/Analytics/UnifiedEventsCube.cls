@@ -124,6 +124,16 @@ XData Cube [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
       </level>
     </hierarchy>
   </dimension>
+  <dimension name="TripTime" disabled="false" hasAll="false" allCaption="All TripTime" allDisplayName="TripTime" type="data" hidden="false" showHierarchies="default">
+    <hierarchy name="H1" disabled="false" hidden="false">
+      <level name="TripTime" disabled="false" sourceProperty="TripTime" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
+    </hierarchy>
+    <hierarchy name="H2" disabled="false" hidden="false">
+      <level name="ReferenceTravelTime" disabled="false" sourceProperty="Trip.ReferenceTravelTime" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
+    </hierarchy>
+  </dimension>
   <measure name="MeasuredTons" disabled="false" sourceProperty="ProductionEvent.MeasuredTons" aggregate="SUM" type="number" hidden="false" searchable="false">
   </measure>
   <measure name="StatusEventDuration" disabled="false" sourceProperty="StatusEvent.Duration" aggregate="SUM" type="number" hidden="false" searchable="false">
