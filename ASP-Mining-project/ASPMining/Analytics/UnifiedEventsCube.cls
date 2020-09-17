@@ -156,7 +156,7 @@ XData Cube [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
   </calculatedMember>
   <calculatedMember name="Utilization" disabled="false" dimension="memberDimension" valueExpression="[Measures].[OperativeDuration] / [Measures].[Duration] " hidden="false">
   </calculatedMember>
-  <calculatedMember name="TimePerformance" disabled="false" dimension="memberDimension" valueExpression="[Measures].[AvgTravelTime]/[Measures].[TripTime]" hidden="false">
+  <calculatedMember name="TimePerformance" disabled="false" dimension="memberDimension" valueExpression="IIF([Measures].[AvgTravelTime]/[Measures].[TripTime] > 1, 1, [Measures].[AvgTravelTime]/[Measures].[TripTime])" hidden="false">
     <additionalDescription>Has to be applied ONLY WHEN statusEvent = Operative</additionalDescription>
   </calculatedMember>
   <calculatedMember name="OEE" disabled="false" dimension="memberDimension" valueExpression="[MEMBERDIMENSION].[Utilization]* [MEMBERDIMENSION].[CapacityPerformance]* [MEMBERDIMENSION].[TimePerformance]" hidden="false">
