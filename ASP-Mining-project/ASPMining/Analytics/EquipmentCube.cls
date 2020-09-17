@@ -8,25 +8,23 @@ XData Cube [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
 <cube xmlns="http://www.intersystems.com/deepsee" name="ASPMining.Analytics.EquipmentCube" displayName="Equipment Cube" disabled="false" abstract="false" sourceClass="ASPMining.CanonicalModel.Equipment.Equipment" countMeasureName="%COUNT" bucketSize="8" bitmapChunkInMemory="false" precompute="0" disableListingGroups="false" enableSqlRestrict="false">
   <dimension name="Equipment" disabled="false" hasAll="false" allCaption="All Name" allDisplayName="Name" type="data" calendar="gregorian" iKnowType="entity" hidden="false" showHierarchies="default">
     <hierarchy name="H1" disabled="false" hidden="false">
-      <level name="CategoryName" displayName="Group Name" disabled="false" sourceProperty="EquipmentCategory.Description" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      <level name="Category" disabled="false" sourceProperty="EquipmentCategory.Description" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
+      <level name="Model" disabled="false" sourceProperty="EquipmentModel.Description" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
       </level>
       <level name="EquipmentName" displayName="Equipment Name" disabled="false" sourceProperty="Name" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
       </level>
     </hierarchy>
   </dimension>
-  <dimension name="Model" disabled="false" hasAll="false" allCaption="All Model" allDisplayName="Model" type="data" hidden="false" showHierarchies="default">
+  <dimension name="EquipmentCategory" disabled="false" hasAll="false" allCaption="All EquipmentCategory" allDisplayName="EquipmentCategory" type="data" hidden="false" showHierarchies="default">
     <hierarchy name="H1" disabled="false" hidden="false">
-      <level name="Model" displayName="Equipment Model" disabled="false" sourceProperty="EquipmentModel.Description" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      <level name="EquipmentCategory" disabled="false" sourceProperty="EquipmentCategory.Name" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
       </level>
     </hierarchy>
   </dimension>
-  <dimension name="LastActivity" disabled="false" hasAll="false" allCaption="All EventDateTime" allDisplayName="EventDateTime" sourceProperty="LastUnifiedEvent.EventDateTime" type="time" calendar="gregorian" iKnowType="entity" hidden="false" showHierarchies="default">
+  <dimension name="EquipmentModel" disabled="false" hasAll="false" allCaption="All EquipmentModel" allDisplayName="EquipmentModel" type="data" hidden="false" showHierarchies="default">
     <hierarchy name="H1" disabled="false" hidden="false">
-      <level name="EventDateDay" disabled="false" timeFunction="DayMonthYear" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
-      </level>
-      <level name="EventDateHour" disabled="false" timeFunction="HourNumber" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
-      </level>
-      <level name="EventDateMinute" disabled="false" timeFunction="MinuteNumber" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      <level name="EquipmentModel" disabled="false" sourceProperty="EquipmentModel.Model" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
       </level>
     </hierarchy>
   </dimension>

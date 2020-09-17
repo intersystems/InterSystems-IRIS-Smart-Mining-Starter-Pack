@@ -1,0 +1,21 @@
+{
+  "truck-operation-chart": {
+    "title": "Status de producción",
+    "noSelection": "No se han seleccionado Camiones"
+  },
+  "default-filter": {
+    "trucks": "Camion",
+    "filter": "Filtrar"
+  },
+  "production": {
+    "panel": "Panel"
+  },
+  "production-status": {
+    "TransitToLoadSite": "En tránsito a sitio de carga",
+    "WaitingForLoad": "Esperando para cargar",
+    "Loading": "Cargando",
+    "TransitToDumpSite": "En tránsito a descarga",
+    "WaitingForDump": "Esperando para descargar",
+    "Dumping": "Descargando"
+  }
+}

@@ -11,73 +11,41 @@
 
   function AppRouter($urlRouterProvider, $stateProvider) {
     $urlRouterProvider
-      .otherwise('');
+      .otherwise('/oee');
 
     $stateProvider
-      .state('home', {
-        url: '/',
-        component: 'home'
-      })
-      .state('mineOperation', {
-        url: '/mine-operation',
-        component: 'mineOperation',
-        redirectTo: 'mineOperation.production'
-      })
-      .state('mineOperation.oee', {
+      .state('oee', {
         url: '/oee',
-        component: 'moOee',
-        redirectTo: 'mineOperation.oee.overview'
+        component: 'oee',
+        redirectTo: 'oee.overview'
       })
-      .state('mineOperation.oee.overview', {
+      .state('oee.overview', {
         url: '/overview',
         component: 'oeeOverview'
       })
-      .state('mineOperation.oee.details', {
+      .state('oee.details', {
         url: '/',
         component: 'oeeDetails'
       })
-      .state('mineOperation.oee.timePerformance', {
+      .state('oee.timePerformance', {
         url: '/time-performance',
         component: 'oeeTimePerformance'
       })
-      .state('mineOperation.oee.utilization', {
+      .state('oee.utilization', {
         url: '/utilization',
         component: 'oeeUtilization'
       })
-      .state('mineOperation.oee.capacityPerformance', {
+      .state('oee.capacityPerformance', {
         url: '/capacity-performance',
         component: 'oeeCapacityPerformance'
       })
-      .state('mineOperation.production', {
+      .state('production', {
         url: '/production',
-        component: 'moProduction',
-        redirectTo: 'mineOperation.production.realtime'
+        component: 'production'
       })
-      .state('mineOperation.production.realtime', {
-        url: '/realtime',
-        component: 'productionRealtime'
-      })
-      .state('mineOperation.production.ranking', {
-        url: '/ranking',
-        component: 'productionRanking'
-      })
-      .state('mineOperation.production.compliance', {
-        url: '/compliance',
-        component: 'productionCompliance'
-      })
-      .state('mineOperation.miningPlan', {
-        url: '/mining-plan',
-        component: 'moMiningPlan',
-        redirectTo: 'mineOperation.miningPlan.index'
-      })
-      .state('mineOperation.miningPlan.index', {
-        url: '/',
-        component: 'miningPlanIndex'
-      })
-      .state('mineOperation.miningPlan.tracing', {
-        url: '/tracing',
-        component: 'miningPlanTracing'
+      .state('fleetInformation', {
+        url: '/fleet',
+        component: 'fleetInformation'
       });
-
   }
 })();

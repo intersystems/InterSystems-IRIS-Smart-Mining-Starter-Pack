@@ -1,0 +1,21 @@
+{
+  "main-capacity-performance-chart": {
+    "title": "Performace Capacidad por día",
+    "dailyAnalysis": "Análisis Diario",
+    "dumpDetails": "Detalles de Descarga",
+    "truck": "Camión",
+    "excav": "Carguío",
+    "material": "Material",
+    "site": "Sitio",
+    "measuredTons": "Toneladas Medidas",
+    "truckCapacity": "Capacidad de Camion",
+    "truckLoad": "Carga de Camion",
+    "accumulatedTons": "Toneladas acumuladas Camión"
+  },
+  "labels":{
+    "totalTons": "Toneladas Totales (miles)",
+    "capacityPerformance": "Performance de Capacidad",
+    "tons": "Toneladas (miles)",
+    "capacityPercent": "Capacidad [%]"
+  }
+}

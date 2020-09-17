@@ -1,0 +1,32 @@
+{
+  "capacity-performance-filter":{
+    "capacityPerformance": "Performance Capacidad",
+    "timePerformance": "Performance Tiempo",
+    "_truckCategoryLabel":"Camion"
+  },
+  "default-filter": {
+    "_truckCategoryLabel":"Camion",
+    "category": "Categoría",
+    "categories": "Categorías",
+    "equipment": "Equipo",
+    "equipments": "Equipos",
+    "name": "Nombre",
+    "model": "Modelo",
+    "fleet": "Flota",
+    "tonnage": "Tonelaje",
+    "lastActivity": "Última Actividad",
+    "filter": "Filtrar",
+    "from": "Desde",
+    "to": "Hasta"
+  },
+  "oee":{
+    "_truckCategoryLabel":"Camion",
+    "capacityPerformance": "Performance Capacidad",
+    "timePerformance": "Performance Tiempo",
+    "summary": "Resumen",
+    "oee": "OEE",
+    "utilization": "Utilización",
+    "time": "Tiempo",
+    "panel": "Panel"
+  }
+}

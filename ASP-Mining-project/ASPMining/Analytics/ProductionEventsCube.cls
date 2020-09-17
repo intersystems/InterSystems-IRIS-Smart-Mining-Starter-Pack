@@ -66,6 +66,54 @@ XData Cube [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
       </level>
     </hierarchy>
   </dimension>
+  <dimension name="EquipmentTruck" disabled="false" hasAll="false" allCaption="All EquipmentTruck" allDisplayName="EquipmentTruck" type="data" hidden="false" showHierarchies="default">
+    <hierarchy name="H1" disabled="false" hidden="false">
+      <level name="Name" disabled="false" sourceProperty="EquipmentTruck.Name" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
+    </hierarchy>
+    <hierarchy name="H2" disabled="false" hidden="false">
+      <level name="Model" disabled="false" sourceProperty="EquipmentTruck.EquipmentModel.Model" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
+    </hierarchy>
+  </dimension>
+  <dimension name="OperatorExcav" disabled="false" hasAll="false" allCaption="All OperatorExcav" allDisplayName="OperatorExcav" type="data" hidden="false" showHierarchies="default">
+    <hierarchy name="H1" disabled="false" hidden="false">
+      <level name="FirstName" disabled="false" sourceProperty="OperatorExcav.FirstName" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
+    </hierarchy>
+    <hierarchy name="H2" disabled="false" hidden="false">
+      <level name="LastName" disabled="false" sourceProperty="OperatorExcav.LastName" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
+    </hierarchy>
+  </dimension>
+  <dimension name="OperatorTruck" disabled="false" hasAll="false" allCaption="All OperatorTruck" allDisplayName="OperatorTruck" type="data" hidden="false" showHierarchies="default">
+    <hierarchy name="H1" disabled="false" hidden="false">
+      <level name="FirstName" disabled="false" sourceProperty="OperatorTruck.FirstName" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
+    </hierarchy>
+    <hierarchy name="H2" disabled="false" hidden="false">
+      <level name="LastName" disabled="false" sourceProperty="OperatorTruck.LastName" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
+    </hierarchy>
+  </dimension>
+  <dimension name="EquipmentExcav" disabled="false" hasAll="false" allCaption="All EquipmentExcav" allDisplayName="EquipmentExcav" type="data" hidden="false" showHierarchies="default">
+    <hierarchy name="H1" disabled="false" hidden="false">
+      <level name="Name" disabled="false" sourceProperty="EquipmentExcav.Name" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
+    </hierarchy>
+    <hierarchy name="H2" disabled="false" hidden="false">
+      <level name="Model" disabled="false" sourceProperty="EquipmentExcav.EquipmentModel.Model" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
+    </hierarchy>
+  </dimension>
+  <dimension name="ShiftDateTime" disabled="false" hasAll="false" allCaption="All DateTime" allDisplayName="DateTime" sourceProperty="Shift.DateTime" type="time" calendar="gregorian" iKnowType="entity" hidden="false" showHierarchies="default">
+    <hierarchy name="H1" disabled="false" hidden="false">
+      <level name="DateTimeDay" disabled="false" timeFunction="DayMonthYear" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
+      <level name="DateTimeHour" disabled="false" timeFunction="HourNumber" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
+      </level>
+    </hierarchy>
+  </dimension>
   <measure name="Duration" disabled="false" sourceProperty="Duration" aggregate="SUM" type="number" hidden="false" searchable="false">
   </measure>
   <measure name="MeasuredTons" disabled="false" sourceProperty="MeasuredTons" aggregate="SUM" type="number" hidden="false" searchable="false">

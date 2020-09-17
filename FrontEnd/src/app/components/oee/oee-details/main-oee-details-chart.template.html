@@ -1,0 +1,13 @@
+<div class="panel panel-light">
+    <div class="panel-heading" translate="">
+        components.oee.oee-details.main-oee-details-chart.title
+    </div>
+    <div class="chart chart-{{ctrl.size}}" ng-class="{transparent: false}"></div>
+    <spinner show="ctrl.loading"></spinner>
+
+    <div ng-if="ctrl.selectedDate" class="marginLR20">
+        <less-oee-equipments-chart from="ctrl.selectedDate"
+                                   to="ctrl.selectedDate"
+                                   categories="ctrl.categories"></less-oee-equipments-chart>
+    </div>
+</div>

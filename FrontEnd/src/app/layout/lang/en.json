@@ -1,0 +1,14 @@
+{
+  "multiselect-dropdown": {
+    "select": "Select",
+    "selected": "Selected",
+    "noElements": "No elements available",
+    "noElementsFound": "No elements found",
+    "selectAll": "Select All",
+    "selectNone": "Select None"
+  },
+  "navbar": {
+    "title": "IRIS Mining Starterpack",
+    "toggleNav": "Toggle Navigation"
+  }
+}

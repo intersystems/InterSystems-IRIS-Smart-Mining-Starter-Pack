@@ -119,11 +119,7 @@
             type: 'shadow'
           }
         },
-        legend: {
-          textStyle: {
-            fontSize: 10
-          }
-        },
+        legend: {},
         dataZoom: [{
           type: 'slider',
           yAxisIndex: 0,
@@ -143,27 +139,17 @@
         },
         xAxis: {
           type: 'value',
-          axisLabel: {fontSize: 11, show: true},
           name: 'Percentaje [%]',
           nameLocation: 'center',
           nameGap: 25,
           min: 0,
-          max: max,
-          nameTextStyle: {
-            color: '#333333',
-            fontSize: 16
-          }
+          max: max
         },
         yAxis: {
           type: 'category',
-          axisLabel: {fontSize: 11, show: true},
           name: 'Equipo',
           nameLocation: 'center',
-          nameGap: paddingLeft,
-          nameTextStyle: {
-            color: '#333333',
-            fontSize: 16
-          }
+          nameGap: paddingLeft
         },
         series: series
       };

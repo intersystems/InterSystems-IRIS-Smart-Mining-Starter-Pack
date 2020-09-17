@@ -118,26 +118,16 @@
         },
         yAxis: {
           type: 'value',
-          axisLabel: {fontSize: 11},
-          name: 'Porcentaje de tiempo',
+          name: 'Porcentaje de tiempo [%]',
           nameLocation: 'center',
-          nameGap: 50,
-          nameTextStyle: {
-            color: '#333333',
-            fontSize: 16
-          }
+          nameGap: 50
         },
         xAxis: {
           type: 'category',
           data: categories,
-          axisLabel: {fontSize: 11},
           name: 'Hora del día',
           nameLocation: 'center',
-          nameGap: 30,
-          nameTextStyle: {
-            color: '#333333',
-            fontSize: 16
-          }
+          nameGap: 30
         },
         series: series,
         legend: {

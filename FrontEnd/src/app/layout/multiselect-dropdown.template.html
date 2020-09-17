@@ -4,31 +4,33 @@
     <button class="btn btn-block btn-white" uib-dropdown-toggle ng-disabled="!ctrl.items.length || ctrl.disabled">
         <span ng-show="ctrl.items.length">
             <span ng-if="ctrl.selectedItems.length">
-            {{ctrl.selectedItems.length}} Seleccionados
+            {{ctrl.selectedItems.length}} <span translate="">layout.multiselect-dropdown.selected</span>
         </span>
-        <span ng-if="!ctrl.selectedItems.length">
-            {{ctrl.label || 'Seleccionar'}}
+        <span ng-if="!ctrl.selectedItems.length" translate>
+            layout.multiselect-dropdown.select
         </span>
         </span>
 
-        <span ng-show="!ctrl.items.length">
-            No hay elementos disponibles
+        <span ng-show="!ctrl.items.length" translate>
+            layout.multiselect-dropdown.noElements
         </span>
         <span class="caret"></span>
     </button>
     <ul class="dropdown-menu" uib-dropdown-menu
-        style="max-height: 300px; overflow-y: auto; width: 100%">
+        style="max-height: 300px; overflow-y: auto; width: 100%; background: #ffffff">
         <li ng-show="!ctrl.items.length" class="marginTB20 text-center">
-            <strong>No se han encontrado elementos</strong>
+            <strong translate="">layout.multiselect-dropdown.noElementsFound</strong>
         </li>
         <li>
             <a ng-click="ctrl.selectAll()" class="cursor-pointer">
-                <i class="fas fa-fw fa-check"></i> Seleccionar Todo
+                <i class="fas fa-fw fa-check"></i>
+                <span translate="">layout.multiselect-dropdown.selectAll</span>
             </a>
         </li>
         <li>
             <a ng-click="ctrl.unSelectAll()" class="cursor-pointer">
-                <i class="fas fa-fw fa-times"></i> Deseleccionar Todo
+                <i class="fas fa-fw fa-times"></i>
+                <span translate="">layout.multiselect-dropdown.selectNone</span>
             </a>
         </li>
         <li class="divider"></li>
@@ -40,8 +42,9 @@
 
         <li ng-repeat="item in ctrl.items | filter:search">
             <label class="checkbox no-margin paddingLR10 paddingTB5 cursor-pointer"
-                   ng-class="{disabled: item.disabled}">
-                <input type="checkbox" ng-model="item.selected" ng-disabled="item.disabled"
+                   ng-class="{disabled: item.disabled || !item.selected && ctrl.maxItems !== null && ctrl.selectedItems.length >= ctrl.maxItems}">
+                <input type="checkbox" ng-model="item.selected"
+                       ng-disabled="item.disabled || !item.selected && ctrl.maxItems !== null && ctrl.selectedItems.length >= ctrl.maxItems"
                        ng-change="ctrl.toggleItem(item)">
                 <i></i>
                 <span>{{item.name}}</span>

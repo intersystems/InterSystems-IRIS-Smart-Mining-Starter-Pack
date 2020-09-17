@@ -41,12 +41,15 @@
     '#7eb00a',
     '#6f5553',
     '#c14089'
-  ]
+  ];
 
   echarts.registerTheme('custom', {
     'color': customColors,
     'backgroundColor': 'rgba(0,0,0,0)',
-    'textStyle': {},
+    'textStyle': {
+      color: '#333333',
+      fontSize: 15
+    },
     'title': {
       'textStyle': {
         'color': '#222222'
@@ -66,9 +69,13 @@
           'width': 2
         }
       },
+      label: {
+        fontSize: 11
+      },
       'symbolSize': 3,
       'symbol': 'emptyCircle',
-      'smooth': true
+      'smooth': true,
+      markPoint: {label: {color: '#ffffff', fontSize: 10}}
     },
     'radar': {
       'itemStyle': {
@@ -80,6 +87,9 @@
         'normal': {
           'width': 2
         }
+      },
+      label: {
+        fontSize: 11
       },
       'symbolSize': 3,
       'symbol': 'emptyCircle',
@@ -95,6 +105,10 @@
           'barBorderWidth': 0,
           'barBorderColor': '#eaf0f4'
         }
+      },
+      label: {
+        fontSize: 11,
+        color: '#ffffff'
       }
     },
     'pie': {
@@ -106,6 +120,9 @@
         'emphasis': {
           'borderWidth': 0,
           'borderColor': '#eaf0f4'
+        },
+        label: {
+          fontSize: 11
         }
       }
     },
@@ -119,6 +136,9 @@
           'borderWidth': 0,
           'borderColor': '#eaf0f4'
         }
+      },
+      label: {
+        fontSize: 11
       }
     },
     'boxplot': {
@@ -131,6 +151,9 @@
           'borderWidth': 0,
           'borderColor': '#eaf0f4'
         }
+      },
+      label: {
+        fontSize: 11
       }
     },
     'parallel': {
@@ -143,6 +166,9 @@
           'borderWidth': 0,
           'borderColor': '#eaf0f4'
         }
+      },
+      label: {
+        fontSize: 11
       }
     },
     'sankey': {
@@ -155,6 +181,9 @@
           'borderWidth': 0,
           'borderColor': '#eaf0f4'
         }
+      },
+      label: {
+        fontSize: 11
       }
     },
     'funnel': {
@@ -167,6 +196,9 @@
           'borderWidth': 0,
           'borderColor': '#eaf0f4'
         }
+      },
+      label: {
+        fontSize: 11
       }
     },
     'gauge': {
@@ -179,6 +211,9 @@
           'borderWidth': 0,
           'borderColor': '#eaf0f4'
         }
+      },
+      label: {
+        fontSize: 11
       }
     },
     'candlestick': {
@@ -190,13 +225,16 @@
           'borderColor0': '#2ec7c9',
           'borderWidth': 1
         }
+      },
+      label: {
+        fontSize: 11
       }
     },
     'graph': {
       'itemStyle': {
         'normal': {
           'borderWidth': 0,
-          'borderColor': '#eaf0f4'
+          'borderColor': '#333333'
         }
       },
       'lineStyle': {
@@ -212,7 +250,8 @@
       'label': {
         'normal': {
           'textStyle': {
-            'color': '#eaf0f4'
+            fontSize: 11,
+            'color': '#333333'
           }
         }
       }
@@ -233,6 +272,7 @@
       'label': {
         'normal': {
           'textStyle': {
+            fontSize: 11,
             'color': '#d87a80'
           }
         },
@@ -259,11 +299,13 @@
       'label': {
         'normal': {
           'textStyle': {
+            fontSize: 11,
             'color': '#d87a80'
           }
         },
         'emphasis': {
           'textStyle': {
+            fontSize: 11,
             'color': 'rgb(100,0,0)'
           }
         }
@@ -283,6 +325,7 @@
         }
       },
       'axisLabel': {
+        fontSize: 11,
         'show': true,
         'textStyle': {
           'color': '#333333'
@@ -320,6 +363,7 @@
         }
       },
       'axisLabel': {
+        fontSize: 11,
         'show': true,
         'textStyle': {
           'color': '#333333'
@@ -357,6 +401,7 @@
         }
       },
       'axisLabel': {
+        fontSize: 11,
         'show': true,
         'textStyle': {
           'color': '#333333'
@@ -394,6 +439,7 @@
         }
       },
       'axisLabel': {
+        fontSize: 11,
         'show': true,
         'textStyle': {
           'color': '#333333'
@@ -429,6 +475,7 @@
     },
     'legend': {
       'textStyle': {
+        fontSize: 10,
         'color': '#333333'
       }
     },
@@ -505,13 +552,19 @@
     },
     'markPoint': {
       'label': {
+        'textStyle': {
+          fontSize: 10,
+          'color': '#eaf0f4'
+        },
         'normal': {
           'textStyle': {
+            fontSize: 10,
             'color': '#eaf0f4'
           }
         },
         'emphasis': {
           'textStyle': {
+            fontSize: 10,
             'color': '#eaf0f4'
           }
         }

@@ -193,29 +193,41 @@
 
 
     function parseTwoDimensionalResponse(response, byRow) {
-      const result = [];
-      let columns = byRow ? response.Cols[1].tuples : response.Cols[0].tuples;
-      let rows = byRow ? response.Cols[0].tuples : response.Cols[1].tuples;
-      const data = response.Data;
-      const columnsLength = byRow ? rows.length : columns.length;
+      try {
+        const result = [];
 
-      for (let i = 0; i < columns.length; i++) {
-        const column = columns[i].caption;
-        const columnData = [];
-        for (let j = 0; j < rows.length; j++) {
-          const row = rows[j].caption;
-
-          const rowIndex = byRow ? i : j;
-          const columnIndex = byRow ? j : i;
-          const value = data[columnsLength * rowIndex + columnIndex] || 0;
-          columnData.push([row, value]);
+        if (!response.Cols) {
+          console.log(response);
+          return result;
         }
 
-        result.push({category: column, data: columnData});
+        let columns = byRow ? response.Cols[1].tuples : response.Cols[0].tuples;
+        let rows = byRow ? response.Cols[0].tuples : response.Cols[1].tuples;
+        const data = response.Data;
+        const columnsLength = byRow ? rows.length : columns.length;
+
+        for (let i = 0; i < columns.length; i++) {
+          const column = columns[i].caption;
+          const columnData = [];
+          for (let j = 0; j < rows.length; j++) {
+            const row = rows[j].caption;
+
+            const rowIndex = byRow ? i : j;
+            const columnIndex = byRow ? j : i;
+            const value = data[columnsLength * rowIndex + columnIndex] || 0;
+            columnData.push([row, value]);
+          }
+
+          result.push({category: column, data: columnData});
+        }
+
+
+        return result;
+      } catch (e) {
+        console.log(response);
+        throw e;
       }
 
-
-      return result;
     }
 
     function parseTreeDimensionalResponse(response, byRow) {

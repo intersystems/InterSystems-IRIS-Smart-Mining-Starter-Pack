@@ -1,0 +1,10 @@
+{
+  "main-time-performance-chart": {
+    "title": "Performace Tiempo por día",
+    "dailyAnalysis": "Análisis diario",
+    "dumpDetails": "Detalles de descarga",
+    "timePerfPerc":"Performance de Tiempo [%]",
+    "timePerc":"Tiempo [%]",
+    "date":"Fecha"
+  }
+}

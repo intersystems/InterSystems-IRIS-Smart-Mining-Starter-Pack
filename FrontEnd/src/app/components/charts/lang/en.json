@@ -1,0 +1,8 @@
+{
+  "all": {
+    "noStatusSelected": "No state selected",
+    "productionPerEquipment": "Production per equipment",
+    "performancePerEquipment": "Performance per equipment",
+    "oeeByEquipment": "OEE per equipment"
+  }
+}

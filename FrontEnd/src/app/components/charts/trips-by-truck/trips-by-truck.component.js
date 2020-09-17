@@ -77,7 +77,6 @@
 
       vm.loading = true;
 
-      console.log(query);
       IrisUtils
         .executeQuery(query)
         .then(data => {

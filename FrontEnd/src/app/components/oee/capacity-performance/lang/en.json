@@ -1,0 +1,21 @@
+{
+  "main-capacity-performance-chart": {
+    "title": "Daily Capacity Performance",
+    "dailyAnalysis": "Daily Analysis",
+    "dumpDetails": "Dump Details",
+    "truck": "Truck",
+    "excav": "Excavator",
+    "material": "Material",
+    "site": "Site",
+    "measuredTons": "Measured Tons",
+    "truckCapacity": "Truck Capacity",
+    "truckLoad": "Truck Load",
+    "accumulatedTons": "Truck Acumulated Tons"
+  },
+  "labels":{
+    "totalTons": "Total Tons (thousands)",
+    "capacityPerformance": "Capacity Performance",
+    "tons": "Tons (thousands)",
+    "capacityPercent": "Capacity [%]"
+  }
+}

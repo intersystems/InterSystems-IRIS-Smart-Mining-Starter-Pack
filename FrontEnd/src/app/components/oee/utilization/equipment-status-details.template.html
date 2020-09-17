@@ -1,0 +1,31 @@
+<div class="panel panel-light">
+    <div class="panel-heading" ng-hide="ctrl.hideTitle" translate>
+        components.oee.utilization.equipment-status-details.title
+    </div>
+
+    <div class="panel-body">
+        <ui-select ng-model="ctrl.selectedStatus" theme="select2" search-enabled="false"
+                   ng-change="ctrl.onSelectStatus()">
+            <ui-select-match placeholder="{{'components.oee.utilization.equipment-status-details.placeholder' | translate}}">
+                {{$select.selected}}
+            </ui-select-match>
+            <ui-select-choices repeat="current in ctrl.status">
+                <div ng-bind-html="current"></div>
+            </ui-select-choices>
+            <ui-select-no-choice transalte>
+                components.oee.utilization.equipment-status-details.noElements
+            </ui-select-no-choice>
+        </ui-select>
+    </div>
+
+    <div style="position: relative">
+        <div ng-class="{transparent: !ctrl.selectedStatus}">
+            <equipment-status-details-chart categories="ctrl.categories" from="ctrl.from" to="ctrl.to"
+                                            status="ctrl.selectedStatus"></equipment-status-details-chart>
+        </div>
+        <div class="centered-message" ng-show="!ctrl.selectedStatus">
+            <h4 class="no-margin" translate>components.oee.utilization.equipment-status-details.noSelectionState</h4>
+        </div>
+    </div>
+    <spinner show="ctrl.loading"></spinner>
+</div>

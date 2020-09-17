@@ -338,33 +338,6 @@ Method NewSlicedEvent(pInput As ASPMining.ConnectorModules.BO.SlicedEvent, Outpu
 	Quit sc
 }
 
-Method NewProductionEventSliced(pInput As ASPMining.CanonicalModel.Production.ProductionEventSliced, Output pOutput As Ens.Response) As %Status
-{
-
-	Set sc=$$$OK
-	
-	Try
-	{		
-		//If '##class(ASPMining.CanonicalModel.Production.ProductionEventSliced).IndexExists(pInput.Id) {
-		
-			// Saves the slice and updates the truck and excav last slice
-			Set sc = pInput.%Save()
-			//set truck = ##class(ASPMining.CanonicalModel.Equipment.Equipment).EquipmentIndexOpen(pInput.EquipmentTruck.Id)
-			//set truck.LastProductionUpdate = pInput
-			//Set sc2 = truck.%Save()
-			//set excav = ##class(ASPMining.CanonicalModel.Equipment.Equipment).EquipmentIndexOpen(pInput.EquipmentExcav.Id)
-			//set excav.LastProductionUpdate = pInput
-			//Set sc3 = excav.%Save()
-		//}
-	}
-	Catch (oException)
-	{
-		Set sc = oException.AsStatus()
-	}
-	
-	Quit sc
-}
-
 Method NewCategory(pInput As ASPMining.CanonicalModel.Equipment.EquipmentCategory, Output pOutput As Ens.Response) As %Status
 {
 
@@ -429,9 +402,6 @@ XData MessageMap
     </MapItem>
     <MapItem MessageType="ASPMining.ConnectorModules.BO.SlicedEvent">
         <Method>NewSlicedEvent</Method>
-    </MapItem>
-    <MapItem MessageType="ASPMining.CanonicalModel.Production.ProductionEventSliced">
-        <Method>NewProductionEventSliced</Method>
     </MapItem>
     <MapItem MessageType="ASPMining.CanonicalModel.Production.ProductionEvent">
         <Method>NewProductionEvent</Method>

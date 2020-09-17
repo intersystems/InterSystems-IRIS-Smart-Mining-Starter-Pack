@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="app">
+<html lang="en" ng-app="app" ng-strict-di="true">
 <head>
     <base href="/">
     <meta charset="UTF-8">
@@ -18,7 +18,29 @@
         <nav-bar></nav-bar>
         <div id="page-wrapper">
             <div class="absolute" style="">
-                <ui-view></ui-view>
+                <div class="marginT20 container-lg">
+                    <ul class="nav nav-tabs nav-justified nav-tabs">
+                        <li ui-sref-active="active">
+                            <a ui-sref="oee">
+                                <h3 translate>oee</h3>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="production">
+                                <h3 translate>production</h3>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="fleetInformation">
+                                <h3 translate>fleetInfo</h3>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="marginT20">
+                        <ui-view></ui-view>
+                    </div>
+                </div>
             </div>
             <spinner show="$root.viewLoading" css-class="'dark'"></spinner>
         </div>

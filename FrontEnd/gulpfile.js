@@ -9,6 +9,8 @@ const embedTemplates = require('gulp-angular-embed-templates');
 const sassGlob = require('gulp-sass-glob');
 const historyApiFallback = require('connect-history-api-fallback');
 
+const mergeLangFiles = require('./gulp/mergeLangFiles');
+
 const srcDir = './src/';
 const assetsDir = './assets';
 const distDir = './dist';
@@ -57,6 +59,7 @@ function compile(browserSync, options, modules) {
 
     // Other Files
     minifyIndex(),
+    langFilesMerge,
     moveFonts,
     moveImages,
     moveSamples,
@@ -83,6 +86,7 @@ function watch(browserSync, options) {
 
     gulp.watch(angularAppWatchSrc(), angularAppMerge(options));
     gulp.watch(sassWatchSrc(), sassCompile(browserSync, options));
+    gulp.watch(langFilesWatchSrc(), langFilesMerge);
     gulp.watch(['./src/index.html'], minifyIndex());
 
     gulp.watch([
@@ -111,6 +115,8 @@ function vendorsMerge(options) {
         nodeModulesDir + 'datatables.net-bs/js/dataTables.bootstrap.js',
         nodeModulesDir + 'datatables.net-responsive/js/dataTables.responsive.js',
         nodeModulesDir + 'datatables.net-responsive-bs/js/responsive.bootstrap.js',
+        nodeModulesDir + 'angular-translate/dist/angular-translate.min.js',
+        nodeModulesDir + 'angular-translate-loader-static-files/angular-translate-loader-static-files.min.js',
         nodeModulesDir + 'ui-select/dist/select.min.js',
         nodeModulesDir + 'angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
         nodeModulesDir + 'echarts/dist/echarts.min.js',
@@ -188,9 +194,7 @@ function angularAppWatchSrc() {
 function sassCompile(browserSync, options) {
   return function sassCompile() {
     const task = gulp
-      .src([
-        srcDir + 'style.scss'
-      ])
+      .src([srcDir + 'style.scss'])
       .pipe(sassGlob())
       .pipe(sourceMaps.init())
       .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
@@ -222,34 +226,37 @@ function minifyIndex() {
   };
 }
 
+function langFilesMerge() {
+  return gulp
+    .src([srcDir + '**/lang/*.json', srcDir + '**/lang/**/*.json'])
+    .pipe(mergeLangFiles())
+    .pipe(gulp.dest(distAssetsDir + '/lang'));
+}
+
+function langFilesWatchSrc() {
+  return [srcDir + '**/lang/*.json', srcDir + '**/lang/**/*.json'];
+}
+
 function moveFonts() {
   return gulp
-    .src([
-      nodeModulesDir + '@fortawesome/fontawesome-free/webfonts/**'
-    ])
+    .src([nodeModulesDir + '@fortawesome/fontawesome-free/webfonts/**'])
     .pipe(gulp.dest(distAssetsDir + '/fonts/'));
 }
 
 function moveImages() {
   return gulp
-    .src([
-      assetsDir + '/images/**'
-    ])
+    .src([assetsDir + '/images/**'])
     .pipe(gulp.dest(distAssetsDir + '/images/'));
 }
 
 function moveSamples() {
   return gulp
-    .src([
-      assetsDir + '/samples/**'
-    ])
+    .src([assetsDir + '/samples/**'])
     .pipe(gulp.dest(distAssetsDir + '/samples/'));
 }
 
 function moveFavicon() {
   return gulp
-    .src([
-      assetsDir + '/favicon/**'
-    ])
+    .src([assetsDir + '/favicon/**'])
     .pipe(gulp.dest(distAssetsDir + '/favicon/'));
 }

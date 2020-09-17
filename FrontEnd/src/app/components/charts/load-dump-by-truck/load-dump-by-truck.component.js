@@ -166,36 +166,21 @@
         },
         xAxis: {
           type: 'time',
-          axisLabel: {fontSize: 11, show: true},
-          name: 'Hora',
+          name: 'Hora del día',
           nameLocation: 'center',
-          nameGap: 40,
-          nameTextStyle: {
-            color: '#333333',
-            fontSize: 16
-          }
+          nameGap: 40
         },
         yAxis: [{
           type: 'value',
-          axisLabel: {fontSize: 11, show: true},
           name: 'Toneladas',
           nameGap: 40,
-          nameLocation: 'center',
-          nameTextStyle: {
-            color: '#333333',
-            fontSize: 16
-          }
+          nameLocation: 'center'
         }, {
           type: 'value',
-          axisLabel: {fontSize: 11, show: true},
           name: 'Toneladas Acumuladas',
           nameLocation: 'center',
           nameGap: 50,
-          min: 0,
-          nameTextStyle: {
-            color: '#333333',
-            fontSize: 16
-          }
+          min: 0
         }],
         series: series
       };

@@ -1,0 +1,8 @@
+<div ng-class="{'panel panel-light': ctrl.options.title.show}">
+    <div class="panel-heading" ng-if="ctrl.options.title.show">
+        {{ctrl.types[ctrl.type].title}}
+    </div>
+    <div class="chart chart-{{ctrl.size}}" ng-class="{transparent: false}"></div>
+
+    <spinner show="ctrl.loading"></spinner>
+</div>

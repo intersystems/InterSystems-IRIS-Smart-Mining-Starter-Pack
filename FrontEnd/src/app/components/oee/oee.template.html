@@ -1,0 +1,41 @@
+<div class="left-content">
+    <ul class="nav nav-tabs nav-justified nav-tabs secondary">
+        <li ui-sref-active="active">
+            <a ui-sref="oee.overview">
+                <h4 translate>components.oee.oee.summary</h4>
+            </a>
+        </li>
+        <li ui-sref-active="active">
+            <a ui-sref="oee.details">
+                <h4 translate>components.oee.oee.oee</h4>
+            </a>
+        </li>
+        <li ui-sref-active="active">
+            <a ui-sref="oee.utilization">
+                <h4 translate>components.oee.oee.utilization</h4>
+            </a>
+        </li>
+        <li ui-sref-active="active">
+            <a ui-sref="oee.capacityPerformance">
+                <h4 translate>components.oee.oee.capacityPerformance</h4>
+            </a>
+        </li>
+        <li ui-sref-active="active">
+            <a ui-sref="oee.timePerformance">
+                <h4 translate>components.oee.oee.timePerformance</h4>
+            </a>
+        </li>
+    </ul>
+
+    <div class="content">
+        <ui-view></ui-view>
+    </div>
+</div>
+<div class="side-panel side-panel-right">
+    <div class="panel panel-filter">
+        <div class="panel-heading" translate>components.oee.panel</div>
+        <div class="panel-body">
+            <div class="filters-target"></div>
+        </div>
+    </div>
+</div>

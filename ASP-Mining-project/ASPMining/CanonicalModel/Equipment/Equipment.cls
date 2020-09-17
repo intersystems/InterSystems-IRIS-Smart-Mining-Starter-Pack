@@ -18,9 +18,6 @@ Property Name As %String;
 /// Capacity of Vehicle ASSIGNED BY USERS
 Property Capacity As %Float;
 
-/// Used to keep track of travel/uknown times in the production cycle, for production slices only
-Property LastProductionUpdate As ASPMining.CanonicalModel.Production.ProductionEventSliced;
-
 /// Used to check Last production DumpEvent
 Property LastUnifiedEvent As ASPMining.CanonicalModel.Operation.UnifiedEvents;
 

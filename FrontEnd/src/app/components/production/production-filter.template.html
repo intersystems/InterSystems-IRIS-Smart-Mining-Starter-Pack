@@ -1,0 +1,28 @@
+<div class="form-group">
+    <label>Fecha</label>
+    <input type="text" class="form-control" readonly
+           ng-disabled="ctrl.loading"
+           style="background: #fff"
+           enable-time="false"
+           datetime-picker="dd-MM-yyyy"
+           is-open="ctrl.day.open"
+           datepicker-options="ctrl.day.options"
+           ng-click="ctrl.day.open = !ctrl.day.open"
+           when-closed="ctrl.day.onClose(args)"
+           ng-model="ctrl.day.value"/>
+</div>
+
+<div class="form-group clearfix">
+    <label translate>components.production.default-filter.trucks</label>
+    <multi-select-dropdown items="ctrl.trucks"
+                           max-items="5"
+                           on-select="ctrl.onSelectTruck()"
+                           selected-items="ctrl.selectedTrucks"></multi-select-dropdown>
+</div>
+
+<hr/>
+<div>
+    <button class="btn btn-primary btn-block" ng-click="ctrl.applyFilters()" translate>
+        components.production.default-filter.filter
+    </button>
+</div>

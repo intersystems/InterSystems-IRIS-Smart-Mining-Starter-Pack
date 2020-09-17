@@ -1,6 +1,5 @@
 (() => {
   const angular = window.angular;
-  const DEFAULT_CUBE = 'ASPMINING.ANALYTICS.STATUSEVENTSLICEDCUBE';
 
   Service.$inject = ['IrisUtils', 'Utils'];
 

@@ -1,0 +1,79 @@
+<div class="panel panel-light paddingB20">
+    <div class="panel-heading" translate>
+        components.oee.capacity-performance.main-capacity-performance-chart.title
+    </div>
+    <div class="chart chart-{{ctrl.size}}" ng-class="{transparent: false}"></div>
+    <spinner show="ctrl.loading"></spinner>
+
+    <div ng-if="ctrl.selectedDate" class="marginLR20">
+        <less-capacity-performance-equipments-chart from="ctrl.selectedDate"
+                                                    trucks="ctrl.trucks"
+                                                    on-chart-click="ctrl.lessPerformanceClick(params, from, to)"
+                                                    to="ctrl.selectedDate"></less-capacity-performance-equipments-chart>
+    </div>
+
+    <div ng-if="ctrl.selectedDate && ctrl.truck" class="marginLR20">
+        <div class="panel panel-light">
+            <div class="panel-heading">
+                <div>
+                    <span translate>components.oee.capacity-performance.main-capacity-performance-chart.dailyAnalysis</span>
+                    {{ctrl.truck.name}}
+                </div>
+                <small>{{ctrl.selectedDate | date: 'dd-MM-yyyy'}}</small>
+            </div>
+            <load-dump-by-truck-chart date="ctrl.selectedDate" truck="ctrl.truck"
+                                      on-chart-click="ctrl.dumpEventClick(params)"
+                                      size="'sm'"></load-dump-by-truck-chart>
+        </div>
+    </div>
+
+    <div ng-if="ctrl.selectedDate && ctrl.truck && ctrl.selectedMinute" class="marginLR20" style="position: relative">
+        <spinner show="ctrl.detailsLoading"></spinner>
+        <div class="panel panel-default marginLR20 marginB20">
+            <div class="panel-heading">
+                <div>
+                    <span translate>components.oee.capacity-performance.main-capacity-performance-chart.dumpDetails</span>
+                    {{ctrl.selectedMinute | date: 'HH:mm'}}
+                </div>
+            </div>
+            <table class="table" ng-class="{transparent: ctrl.detailsLoading}">
+                <tr>
+                    <th style="width: 300px" translate>
+                        components.oee.capacity-performance.main-capacity-performance-chart.truck
+                    </th>
+                    <td>{{ctrl.details.truck}}</td>
+                </tr>
+                <tr>
+                    <th translate>components.oee.capacity-performance.main-capacity-performance-chart.excav</th>
+                    <td>{{ctrl.details.excavator}}</td>
+                </tr>
+                <tr>
+                    <th translate>components.oee.capacity-performance.main-capacity-performance-chart.material</th>
+                    <td>{{ctrl.details.grade}}</td>
+                </tr>
+                <tr>
+                    <th translate>components.oee.capacity-performance.main-capacity-performance-chart.site</th>
+                    <td>{{ctrl.details.location}}</td>
+                </tr>
+                <tr>
+                    <th translate>components.oee.capacity-performance.main-capacity-performance-chart.measuredTons</th>
+                    <td>{{ctrl.details.measuredTons | number: 2}}</td>
+                </tr>
+                <tr>
+                    <th translate>components.oee.capacity-performance.main-capacity-performance-chart.truckCapacity</th>
+                    <td>{{ctrl.details.capacity}}</td>
+                </tr>
+                <tr>
+                    <th translate>components.oee.capacity-performance.main-capacity-performance-chart.truckLoad</th>
+                    <td>{{ctrl.details.measuredTons / ctrl.details.capacity | number: 2}}</td>
+                </tr>
+                <tr>
+                    <th translate>components.oee.capacity-performance.main-capacity-performance-chart.accumulatedTons
+                    </th>
+                    <td>{{ctrl.details.accumulated | number: 2}}</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</div>

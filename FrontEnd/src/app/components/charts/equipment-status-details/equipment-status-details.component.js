@@ -117,26 +117,16 @@
         },
         yAxis: {
           type: 'value',
-          axisLabel: {fontSize: 11},
           name: 'Duración Parcial',
           nameLocation: 'center',
-          nameGap: 50,
-          nameTextStyle: {
-            color: '#333333',
-            fontSize: 16
-          }
+          nameGap: 50
         },
         xAxis: {
           type: 'category',
           data: categories,
-          axisLabel: {fontSize: 11},
           name: 'Hora del día',
           nameLocation: 'center',
-          nameGap: 30,
-          nameTextStyle: {
-            color: '#333333',
-            fontSize: 16
-          }
+          nameGap: 30
         },
         series: series,
         legend: {
@@ -144,9 +134,7 @@
           orient: 'vertical',
           right: 0,
           top: 10,
-          textStyle: {
-            fontSize: 10
-          },
+          textStyle: {fontSize: 9},
           data: series.map(current => current.name)
         }
       };
@@ -205,9 +193,7 @@
           orient: 'vertical',
           left: 10,
           type: 'scroll',
-          textStyle: {
-            fontSize: 10
-          }
+          textStyle: {fontSize: 9}
         },
         series: [pieSeries]
       });

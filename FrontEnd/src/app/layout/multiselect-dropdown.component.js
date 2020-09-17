@@ -11,6 +11,7 @@
       bindings: {
         items: '<',
         selectedItems: '<',
+        maxItems: '<',
         onSelect: '&',
         disabled: '<'
       }
@@ -22,6 +23,7 @@
     vm.$onInit = function () {
       vm.items = vm.items || [];
       vm.selectedItems = vm.selectedItems || [];
+      vm.maxItems = typeof vm.maxItems === 'number' ? vm.maxItems : null;
 
       vm.toggleItem = toggleItem;
       vm.selectAll = selectAll;
@@ -43,7 +45,9 @@
       const index = vm.selectedItems.findIndex(current => current === item);
 
       if (index === -1) {
-        vm.selectedItems.push(item);
+        if (vm.maxItems === null || vm.selectedItems.length < vm.maxItems) {
+          vm.selectedItems.push(item);
+        }
       } else {
         vm.selectedItems.splice(index, 1);
       }
@@ -52,7 +56,7 @@
     function selectAll() {
       vm.selectedItems.splice(0, vm.selectedItems.length);
       for (let item of vm.items) {
-        if (item.disabled) {
+        if (item.disabled || vm.maxItems !== null && vm.selectedItems.length >= vm.maxItems) {
           continue;
         }
         item.selected = true;

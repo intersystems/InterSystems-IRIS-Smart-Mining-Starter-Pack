@@ -122,11 +122,7 @@
 
       let option = {
         tooltip: {},
-        legend: {
-          textStyle: {
-            fontSize: 10
-          }
-        },
+        legend: {},
         dataZoom: [{
           type: 'slider',
           yAxisIndex: 0,
@@ -142,30 +138,20 @@
           left: paddingLeft + 40,
           top: 30,
           right: 40,
-          bottom: 40
+          bottom: 60
         },
         xAxis: {
           type: 'value',
-          axisLabel: {fontSize: 11, show: true},
-          name: '% de tiempo',
+          name: 'Porcentaje de tiempo [%]',
           nameLocation: 'center',
           min: 0,
-          max: 100,
-          nameTextStyle: {
-            color: '#333333',
-            fontSize: 16
-          }
+          max: 100
         },
         yAxis: {
           type: 'category',
-          axisLabel: {fontSize: 11, show: true},
           name: 'Equipo',
           nameLocation: 'center',
-          nameGap: paddingLeft,
-          nameTextStyle: {
-            color: '#333333',
-            fontSize: 16
-          }
+          nameGap: paddingLeft
         },
         series: series
       };

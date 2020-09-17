@@ -1,0 +1,9 @@
+<div class="panel panel-light">
+    <div class="panel-heading" translate>components.production.truck-operation-chart.title</div>
+    <div class="chart" ng-class="{transparent: !ctrl.trucks.length}"></div>
+
+    <div class="centered-message" ng-show="!ctrl.trucks.length">
+        <h4 class="no-margin" translate>components.production.truck-operation-chart.noSelection</h4>
+    </div>
+    <spinner show="ctrl.loading"></spinner>
+</div>

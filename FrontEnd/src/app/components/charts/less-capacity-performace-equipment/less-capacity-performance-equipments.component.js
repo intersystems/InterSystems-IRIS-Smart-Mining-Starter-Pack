@@ -125,25 +125,15 @@
         },
         xAxis: {
           type: 'value',
-          axisLabel: {fontSize: 11, show: true},
           name: 'Toneladas',
           nameLocation: 'center',
-          nameGap: 25,
-          nameTextStyle: {
-            color: '#333333',
-            fontSize: 16
-          }
+          nameGap: 25
         },
         yAxis: {
           type: 'category',
-          axisLabel: {fontSize: 11, show: true},
           name: 'Camión',
           nameLocation: 'center',
-          nameGap: paddingLeft,
-          nameTextStyle: {
-            color: '#333333',
-            fontSize: 16
-          }
+          nameGap: paddingLeft
         },
         series: series
       };
