@@ -1,7 +1,7 @@
 (() => {
   const angular = window.angular;
 
-  Controller.$inject = ['$rootScope', '$timeout', '$element', '$filter', 'LoadDump', 'Truck', 'Utils'];
+  Controller.$inject = ['$rootScope', '$timeout', '$element', '$translate', '$filter', 'LoadDump', 'Truck', 'Utils'];
 
   angular
     .module('app')
@@ -18,7 +18,7 @@
       }
     });
 
-  function Controller($root, $timeout, $element, $filter, LoadDump, Truck, Utils) {
+  function Controller($root, $timeout, $element, $translate, $filter, LoadDump, Truck, Utils) {
     const vm = this;
     vm.$onInit = function () {
       const container = $element.find('.chart');
@@ -70,11 +70,6 @@
     }
 
     function plotChart(data, capacity) {
-      const eventMap = {
-        loading: {label: 'Carga', color: 'rgba(97,109,214,.2)'},
-        dumping: {label: 'Descarga', color: '#616dd6'}
-      };
-
       const date = $filter('date')(vm.date, 'yyyy-MM-dd');
 
       const series = [{
@@ -83,14 +78,14 @@
         step: 'end',
         color: '#c05050',
         id: 'accumulated',
-        name: 'Toneladas Acumuladas',
+        name: $translate.instant('components.charts.all.tons_accum'),
         smooth: false,
         data: [],
         tooltip: {
           formatter: (params) => {
             const [date, value] = params.data;
             return `${params.marker} ${$filter('date')(date, 'HH:mm')}
-              <div>Acumulado: ${value}</div>`;
+              <div>${$translate.instant('components.charts.all.tons_accum')}: ${value}</div>`;
           }
         }
       }];
@@ -123,10 +118,11 @@
 
       mergedData.sort((a, b) => a[0] - b[0]);
 
+
       const capacitySeries = {
         type: 'line',
         step: 'end',
-        name: 'Carga-Descarga',
+        name: $translate.instant('components.charts.all.load_dump'),
         color: 'rgba(97,109,214,.2)',
         smooth: false,
         data: [],
@@ -134,8 +130,8 @@
         tooltip: {
           formatter: (params) => {
             const [date, value] = params.data;
-            return `${$filter('date')(date, 'HH:mm')} - ${!value ? 'Descarga' : 'Carga'} 
-              <div>${value ? value + ' Toneladas' : ''}</div>`;
+            return `${$filter('date')(date, 'HH:mm')} - ${$translate.instant('components.charts.all.' + (!value ? 'dumping' : 'loading'))} 
+              <div>${value ? value + ' ' + $translate.instant('components.charts.all.tons') : ''}</div>`;
           }
         },
         markLine: {
@@ -144,7 +140,7 @@
           symbol: 'none',
           label: {position: 'insideStartTop', formatter: '{b}: {c}'},
           data: [{
-            name: 'Capacidad',
+            name: $translate.instant('components.charts.all.capacity'),
             yAxis: capacity
           }]
         }
@@ -166,18 +162,18 @@
         },
         xAxis: {
           type: 'time',
-          name: 'Hora del día',
+          name: $translate.instant('components.charts.all.hour'),
           nameLocation: 'center',
           nameGap: 40
         },
         yAxis: [{
           type: 'value',
-          name: 'Toneladas',
+          name: $translate.instant('components.charts.all.tons'),
           nameGap: 40,
           nameLocation: 'center'
         }, {
           type: 'value',
-          name: 'Toneladas Acumuladas',
+          name: $translate.instant('components.charts.all.tons_accum'),
           nameLocation: 'center',
           nameGap: 50,
           min: 0

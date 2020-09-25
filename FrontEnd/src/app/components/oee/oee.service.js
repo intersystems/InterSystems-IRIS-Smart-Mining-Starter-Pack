@@ -78,7 +78,7 @@
 
       return IrisUtils.executeQuery(query)
         .then(data => {
-          return data.Cols[1].tuples.map(current => {
+          return data.rows.map(current => {
             return {name: current.caption, path: current.path, id: current.valueID};
           });
         });
@@ -115,7 +115,7 @@
 
       return IrisUtils.executeQuery(query)
         .then(data => {
-          return data.Cols[1].tuples.map(current => {
+          return data.rows.map(current => {
             return {name: current.caption, path: current.path, id: current.valueID};
           });
         });
@@ -187,7 +187,6 @@
       }
 
       let query = IrisUtils.buildQuery(cube, columns, rows, null, filters);
-      console.log(query);
       cache[timeInterval] = cache[timeInterval] || {};
       if (cache[timeInterval].data && cache[timeInterval].query === query) {
         if (type) {
@@ -198,7 +197,6 @@
 
       return IrisUtils.executeQuery(query)
         .then(result => {
-          console.log(result);
           cache[timeInterval].query = query;
           const data = IrisUtils.parseTwoDimensionalResponse(result);
           cache[timeInterval].data = data;

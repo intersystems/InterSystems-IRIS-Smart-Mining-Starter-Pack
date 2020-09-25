@@ -1,7 +1,7 @@
 (() => {
   const angular = window.angular;
 
-  Controller.$inject = ['$rootScope', '$timeout', '$element', 'Equipment', 'Truck', 'Utils'];
+  Controller.$inject = ['$rootScope', '$timeout', '$element', '$translate', 'Equipment', 'Truck', 'Utils'];
 
   angular
     .module('app')
@@ -19,7 +19,7 @@
       }
     });
 
-  function Controller($root, $timeout, $element, Equipment, Truck, Utils) {
+  function Controller($root, $timeout, $element, $translate, Equipment, Truck, Utils) {
     const vm = this;
     vm.$onInit = function () {
       const container = $element.find('.chart');
@@ -125,13 +125,13 @@
         },
         xAxis: {
           type: 'value',
-          name: 'Toneladas',
+          name: $translate.instant('components.charts.all.tons'),
           nameLocation: 'center',
           nameGap: 25
         },
         yAxis: {
           type: 'category',
-          name: 'Camión',
+          name: $translate.instant('components.charts.all.truck'),
           nameLocation: 'center',
           nameGap: paddingLeft
         },

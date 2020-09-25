@@ -3,6 +3,25 @@
   height: 74px;
   padding-left: $grid-gutter-width / 2;
   padding-right: $grid-gutter-width / 2;
+
+  .nav-item {
+    float: right;
+    margin-top: 20px;
+
+    &.dropdown {
+      button {
+        background: transparent;
+        border: none;
+        outline: none;
+        color: #fff;
+        vertical-align: middle;
+      }
+
+      .lang-dropdown {
+        min-width: 80px;
+      }
+    }
+  }
 }
 
 .navbar-brand {

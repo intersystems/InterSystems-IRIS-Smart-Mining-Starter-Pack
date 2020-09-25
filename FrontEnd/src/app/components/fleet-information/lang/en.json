@@ -1,5 +1,10 @@
 {
   "fleetDetails": "Fleet Details",
   "equipmentTotal": "Equipment Total",
-  "equipmentList": "Equipment List"
+  "equipmentList": "Equipment List",
+  "fleet": "Fleet",
+  "name": "Name",
+  "model": "Model",
+  "tonnage": "Tonnage",
+  "lastActivity": "Last Activity"
 }

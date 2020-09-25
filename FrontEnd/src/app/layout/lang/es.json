@@ -8,7 +8,7 @@
     "selectNone": "Deseleccionar Todo"
   },
   "navbar": {
-    "title": "IRIS Mining Starterpack",
-    "toggleNav": "Cambiar Navegacion"
+    "title": "InterSystems IRIS for Mining",
+    "toggleNav": "Cambiar Navegación"
   }
 }

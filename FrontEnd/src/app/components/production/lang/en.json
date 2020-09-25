@@ -3,12 +3,15 @@
     "title": "Production Status",
     "noSelection": "No trucks selected"
   },
-  "default-filter": {
-    "trucks": "Truck",
-    "filter": "Filter"
+  "production-filter": {
+    "trucks": "Trucks",
+    "shift": "Shift",
+    "filter": "Filter",
+    "date": "Date",
+    "noElements": "No elements available"
   },
   "production": {
-    "panel": "Panel"
+    "panel": "Available Filters"
   },
   "production-status": {
     "TransitToLoadSite": "Transit to load site",

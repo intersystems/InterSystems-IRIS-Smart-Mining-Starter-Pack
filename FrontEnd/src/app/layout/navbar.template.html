@@ -20,7 +20,24 @@
                 layout.navbar.title
             </h1>
         </div>
-        <div class="col-sm hidden-sm hidden-xs"></div>
+        <div class="col-sm hidden-sm hidden-xs">
+            <div uib-dropdown class="dropdown nav-item">
+                <button uib-dropdown-toggle class="dropdown-toggle">
+                    <span class="text-uppercase" style="width: 25px; display: inline-block">{{$root.currentLang}}</span>
+                    <span><i style="width: 20px" class="fas fa-caret-down text-right"></i></span>
+                </button>
+
+                <ul class="dropdown-menu dropdown-menu-right lang-dropdown">
+                    <li ng-class="{active: $root.currentLang === lang}" ng-repeat="lang in $root.langs"
+                        class="text-uppercase">
+                        <a href="#" class="paddingLR10" ng-click="ctrl.setLanguage(lang)">
+                            {{lang}}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
     </div>
 </nav>
 <script type="text/ng-template" id="sidebar-template.html">

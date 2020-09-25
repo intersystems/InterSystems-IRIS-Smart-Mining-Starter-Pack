@@ -11,11 +11,5 @@
     "truckCapacity": "Truck Capacity",
     "truckLoad": "Truck Load",
     "accumulatedTons": "Truck Acumulated Tons"
-  },
-  "labels":{
-    "totalTons": "Total Tons (thousands)",
-    "capacityPerformance": "Capacity Performance",
-    "tons": "Tons (thousands)",
-    "capacityPercent": "Capacity [%]"
   }
 }

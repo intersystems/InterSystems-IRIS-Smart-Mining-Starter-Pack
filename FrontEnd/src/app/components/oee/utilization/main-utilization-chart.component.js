@@ -1,7 +1,7 @@
 (() => {
   const angular = window.angular;
 
-  Controller.$inject = ['$rootScope', '$timeout', '$element', 'DateUtils', '$filter', '$uibModal', 'OEE', 'Equipment', '$translate'];
+  Controller.$inject = ['$rootScope', '$timeout', '$element', '$translate', 'DateUtils', '$filter', '$uibModal', 'OEE', 'Equipment'];
 
   angular
     .module('app')
@@ -12,7 +12,7 @@
       bindings: {}
     });
 
-  function Controller($root, $timeout, $element, DateUtils, $filter, $uibModal, OEE, Equipment, $translate) {
+  function Controller($root, $timeout, $element, $translate, DateUtils, $filter, $uibModal, OEE, Equipment) {
     const vm = this;
 
     vm.$onInit = function () {
@@ -82,25 +82,21 @@
         categories.push($filter('date')(date, 'MMM d yyyy'));
       }
 
+      const days = DateUtils.daysBetween(vm.from, vm.to);
       const defaultSeries = {
         data: [],
         type: 'bar',
         stack: 'stack',
-        barWidth: '50%',
+        barWidth: '55%',
         label: {
-          show: true,
-          fontSize: 11,
-          formatter: (params) => params.data[1] + '%'
+          show: days <= 20,
+          fontSize: days <= 15 ? 9 : 8,
+          formatter: (params) => params.data[1] + (days < 15 ? '%' : '')
         }
       };
 
       let series = {};
-      [
-        'Operative', 
-        'Delay', 
-        'Standby', 
-        'Downtime'
-      ].forEach(current => {
+      ['Operative', 'Delay', 'Standby', 'Downtime'].forEach(current => {
         series[current] = angular.copy(defaultSeries);
         series[current].name = current;
       });
@@ -140,7 +136,7 @@
         },
         yAxis: {
           type: 'value',
-          name: $translate.instant('components.oee.utilization.main-utilization-chart.timePercent'),
+          name: $translate.instant('components.oee.overview.timePercent'),
           nameLocation: 'center',
           nameGap: 50,
           min: 0,
@@ -149,7 +145,7 @@
         xAxis: {
           type: 'category',
           data: categories,
-          name: $translate.instant('components.oee.utilization.main-utilization-chart.date'),
+          name: $translate.instant('components.charts.all.date'),
           nameLocation: 'center',
           nameGap: 30
         },

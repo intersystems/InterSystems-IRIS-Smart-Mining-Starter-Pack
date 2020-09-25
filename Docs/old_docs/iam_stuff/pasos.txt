@@ -3,6 +3,7 @@ habilitar aplicacion web IAM
 
 setear variables de entorno: ISC_IRIS_URL, ISC_IAM_IMAGE
 
+Ej: ISC_IAM_IMAGE=intersystems/iam:0.34-1-1 ISC_IRIS_URL=192.168.0.4 docker-compose up
 
 Servicio
 	Ruta

@@ -1,7 +1,7 @@
 (() => {
   const angular = window.angular;
 
-  Controller.$inject = ['$rootScope', '$timeout', '$element', 'OEE', 'Utils'];
+  Controller.$inject = ['$rootScope', '$timeout', '$element', '$translate', 'OEE', 'Utils'];
 
   angular
     .module('app')
@@ -19,7 +19,7 @@
       }
     });
 
-  function Controller($root, $timeout, $element, OEE, Utils) {
+  function Controller($root, $timeout, $element, $translate, OEE, Utils) {
     const vm = this;
     vm.$onInit = function () {
       const container = $element.find('.chart');
@@ -95,9 +95,10 @@
 
       const series = [];
       ['OEE', 'Utilization', 'CapacityPerformance', 'TimePerformance'].forEach(seriesId => {
+        const category = seriesId === 'OEE' ? 'oee' : seriesId.charAt(0).toLowerCase() + seriesId.substring(1);
         const config = {
           id: seriesId,
-          name: seriesId,
+          name: $translate.instant('components.oee._' + category),
           data: seriesData[seriesId],
           type: 'bar',
           barWidth: '15%',
@@ -139,7 +140,7 @@
         },
         xAxis: {
           type: 'value',
-          name: 'Percentaje [%]',
+          name: '[%]',
           nameLocation: 'center',
           nameGap: 25,
           min: 0,
@@ -147,7 +148,7 @@
         },
         yAxis: {
           type: 'category',
-          name: 'Equipo',
+          name: $translate.instant('components.charts.all.equipment'),
           nameLocation: 'center',
           nameGap: paddingLeft
         },

@@ -1,11 +1,19 @@
 {
-  "capacity-performance-filter":{
-    "capacityPerformance": "Performance Capacidad",
-    "timePerformance": "Performance Tiempo",
-    "_truckCategoryLabel":"Camion"
+  "_summary": "Resumen",
+  "_oee": "OEE",
+  "_utilization": "Utilización",
+  "_capacityPerformance": "Performance Capacidad",
+  "_timePerformance": "Performance Tiempo",
+  "time": "Tiempo",
+  "panel": "Filtros Disponibles",
+  "overview": {
+    "utilization": "Utilización por día",
+    "capacityPerformance": "Performance Capacidad por día",
+    "timePerformance": "Performance Tiempo por día",
+    "timePercent": "Tiempo [%]",
+    "capacityPercent": "Capacidad [%]"
   },
   "default-filter": {
-    "_truckCategoryLabel":"Camion",
     "category": "Categoría",
     "categories": "Categorías",
     "equipment": "Equipo",
@@ -18,15 +26,5 @@
     "filter": "Filtrar",
     "from": "Desde",
     "to": "Hasta"
-  },
-  "oee":{
-    "_truckCategoryLabel":"Camion",
-    "capacityPerformance": "Performance Capacidad",
-    "timePerformance": "Performance Tiempo",
-    "summary": "Resumen",
-    "oee": "OEE",
-    "utilization": "Utilización",
-    "time": "Tiempo",
-    "panel": "Panel"
   }
 }

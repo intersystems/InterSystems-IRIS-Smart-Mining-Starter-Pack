@@ -18,9 +18,17 @@
   function NavBarController($rootScope) {
     let vm = this;
     vm.$onInit = function () {
+      vm.setLanguage = setLanguage;
       vm.toggleFullScreen = toggleFullScreen;
     };
 
+    function setLanguage(lang) {
+      if (lang === window.localStorage.getItem('lang')) {
+        return;
+      }
+      window.localStorage.setItem('lang', lang);
+      window.location.reload();
+    }
 
     function toggleFullScreen() {
       let element = window.document.documentElement;

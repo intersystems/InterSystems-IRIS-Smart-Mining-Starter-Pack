@@ -88,7 +88,7 @@
         smooth: false,
         symbolSize: 8,
         color: '#333',
-        name: 'OEE',
+        name: $translate.instant('components.oee._oee'),
         data: oee.data.map(pair => Math.round(1000 * pair[1]) / 10),
         label: {
           show: true,
@@ -100,8 +100,9 @@
 
       ['Utilization', 'CapacityPerformance', 'TimePerformance'].forEach(seriesId => {
         const current = chartData.find(current => current.category === seriesId);
+        const category = current.category.charAt(0).toLowerCase() + current.category.substring(1);
         const config = angular.copy(defaultSeries);
-        config.name = current.category;
+        config.name = $translate.instant('components.oee._' + category);
         config.data = current.data.map(pair => Math.round(1000 * pair[1]) / 10);
         series.push(config);
       });
@@ -131,7 +132,7 @@
         xAxis: {
           type: 'category',
           data: categories,
-          name: $translate.instant('charts._all.date'),
+          name: $translate.instant('components.charts.all.date'),
           nameLocation: 'center',
           nameGap: 30
         },

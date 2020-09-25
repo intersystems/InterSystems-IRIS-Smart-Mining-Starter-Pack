@@ -1,6 +1,6 @@
 <div class="panel panel-default ng-cloak">
     <div class="panel-heading text-center" ng-class="{'cursor-pointer': ctrl.target}" ng-click="ctrl.goToTarget()">
-        {{ctrl.chartTitle}}
+        <span translate>{{ctrl.chartTitle}}</span>
     </div>
     <day-oee-chart type="ctrl.type"
                    data="ctrl.data"

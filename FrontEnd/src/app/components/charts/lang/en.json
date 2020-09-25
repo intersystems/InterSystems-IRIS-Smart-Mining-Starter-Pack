@@ -3,6 +3,28 @@
     "noStatusSelected": "No state selected",
     "productionPerEquipment": "Production per equipment",
     "performancePerEquipment": "Performance per equipment",
-    "oeeByEquipment": "OEE per equipment"
+    "oeeByEquipment": "OEE per equipment",
+    "date": "Date",
+    "hour": "Hour",
+    "currentValue": "Current Value",
+    "tons": "Tons",
+    "tons_thousands": "Tons [thousands]",
+    "tons_total": "Total Tons [thousands]",
+    "tons_accum": "Accumulated Tons",
+    "equipment": "Equipment",
+    "truck": "Truck",
+    "capacity": "Capacity",
+    "load_dump": "Load-Dump",
+    "loading": "Loading",
+    "dumping": "Dumping",
+    "partialDuration": "Partial Duration",
+    "statistics": "Statistics"
+  },
+  "trips-by-truck": {
+    "origin": "Origin",
+    "destination": "Destination",
+    "duration": "Duration",
+    "performance": "Performance",
+    "referenceTime": "Reference Time"
   }
 }

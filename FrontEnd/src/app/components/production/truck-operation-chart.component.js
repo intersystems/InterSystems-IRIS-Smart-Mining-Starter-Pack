@@ -31,6 +31,7 @@
       vm.offFilters = $root.$on('filter:update', (e, filters) => {
         vm.filters = angular.copy(filters);
         vm.trucks = vm.filters.trucks;
+        vm.shift = vm.filters.shift;
 
         if (!vm.trucks || !vm.trucks.length) {
           return;
@@ -39,7 +40,7 @@
         vm.loading = true;
 
         LoadDump
-          .getGanttData(vm.filters.trucks, vm.filters.date)
+          .getGanttData(vm.filters.trucks, vm.filters.date, vm.shift.id, vm.shift.type)
           .then(data => {
             vm.loading = false;
             plotChart(data);

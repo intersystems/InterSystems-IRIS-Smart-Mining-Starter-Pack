@@ -1,28 +1,18 @@
 {
   "equipment-status-details-modal": {
-    "title": "Details by State {{ctrl.date | date: 'dd-MM-yyyy'}}"
+    "title": "Detailed view per Status {{ctrl.date | date: 'dd-MM-yyyy'}}"
   },
   "equipment-status-details": {
-    "title": "Details by State",
+    "title": "Detailed view per Status",
     "noElements": "No elements available",
     "placeholder": "Select a State",
-    "noSelectionState": "No states selected",
-    "operative":"Operative",
-    "delay":"Delay",
-    "standby":"Standby",
-    "downtime":"Downtime"
+    "noSelectionState": "No states selected"
   },
   "main-utilization-chart": {
     "title": "Daily Utilization",
     "fleetStatus": "Fleet Status",
     "details": "Details",
     "statusOf": "Status of",
-    "detailsOf": "Details of",
-    "operative":"Operative",
-    "delay":"Delay",
-    "standby":"Standby",
-    "downtime":"Downtime",
-    "timePercent":"Time [%]",
-    "date":"Date"
+    "detailsOf": "Details of"
   }
 }

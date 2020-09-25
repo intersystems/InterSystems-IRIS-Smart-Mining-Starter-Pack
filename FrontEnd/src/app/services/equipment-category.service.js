@@ -39,7 +39,7 @@
 
       return IrisUtils.executeQuery(query)
         .then(data => {
-          return data.Cols[1].tuples.map(current => {
+          return data.rows.map(current => {
             return {name: current.caption, path: current.path, id: current.valueID};
           });
         });

@@ -1,7 +1,7 @@
 ;(() => {
   const angular = window.angular;
 
-  Controller.$inject = ['$rootScope', '$element', 'Equipment', 'Utils'];
+  Controller.$inject = ['$rootScope', '$element', '$translate', 'Equipment', 'Utils'];
 
   angular
     .module('app')
@@ -18,7 +18,7 @@
       }
     });
 
-  function Controller($root, $element, Equipment, utils) {
+  function Controller($root, $element, $translate, Equipment, utils) {
     const vm = this;
 
     let colors = echarts.customColors ? angular.copy(echarts.customColors) : undefined;
@@ -117,14 +117,14 @@
         },
         yAxis: {
           type: 'value',
-          name: 'Duración Parcial',
+          name: $translate.instant('components.charts.all.partialDuration'),
           nameLocation: 'center',
           nameGap: 50
         },
         xAxis: {
           type: 'category',
           data: categories,
-          name: 'Hora del día',
+          name: $translate.instant('components.charts.all.hour'),
           nameLocation: 'center',
           nameGap: 30
         },
@@ -182,7 +182,7 @@
 
       vm.pieChart = resetChart(vm.pieChart, vm.pieContainer, {
         color: colors,
-        title: {text: 'Estadística', left: 'center'},
+        title: {text: $translate.instant('components.charts.all.statistics'), left: 'center'},
         tooltip: {
           formatter: (params) => {
             return `${params.marker} ${params.data.name}
