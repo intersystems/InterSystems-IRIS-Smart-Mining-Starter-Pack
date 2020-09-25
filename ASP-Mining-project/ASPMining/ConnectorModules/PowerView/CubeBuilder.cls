@@ -12,6 +12,7 @@ Method OnTaskExecution() As %Status
 		{
 			//set cubeToBuild = "ASPMining.Analytics.EquipmentCube"
 			Set tSC = ..buildACube("ASPMining.Analytics.EquipmentCube")
+			Set tSC = ..buildACube("ASPMining.Analytics.ProductionEventsCube")
 			Set tSC = ..buildACube("ASPMining.Analytics.StatusEventCube")
 			Set tSC = ..buildACube("ASPMining.Analytics.StatusEventSlicedCube")
 			Set tSC = ..buildACube("ASPMining.Analytics.UnifiedEventsCube")

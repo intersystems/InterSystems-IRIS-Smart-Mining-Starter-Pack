@@ -55,6 +55,7 @@
       return ProductionEventsShift
         .findByDate(vm.day.value)
         .then(shifts => {
+          console.log(shifts);
           shifts.sort((a, b) => b.id - a.id);
           vm.shifts = shifts;
           vm.shift = vm.shifts[0];
@@ -66,6 +67,12 @@
     }
 
     function loadTrucks() {
+      if (!vm.shift) {
+        vm.trucks = [];
+        vm.selectedTrucks = [];
+        return;
+      }
+
       vm.loading = true;
       return ProductionEventsEquipment
         .findByShift(vm.shift.id)

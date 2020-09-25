@@ -6,14 +6,17 @@
     <div class="panel-body">
         <ui-select ng-model="ctrl.selectedStatus" theme="select2" search-enabled="false"
                    ng-change="ctrl.onSelectStatus()">
-            <ui-select-match placeholder="{{'components.oee.utilization.equipment-status-details.placeholder' | translate}}">
+            <ui-select-match
+                    placeholder="{{'components.oee.utilization.equipment-status-details.placeholder' | translate}}">
                 {{$select.selected}}
             </ui-select-match>
             <ui-select-choices repeat="current in ctrl.status">
                 <div ng-bind-html="current"></div>
             </ui-select-choices>
-            <ui-select-no-choice transalte>
+            <ui-select-no-choice>
+                <span translate>
                 components.oee.utilization.equipment-status-details.noElements
+                </span>
             </ui-select-no-choice>
         </ui-select>
     </div>

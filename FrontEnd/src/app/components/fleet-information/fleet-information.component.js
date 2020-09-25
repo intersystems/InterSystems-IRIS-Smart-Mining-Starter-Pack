@@ -54,6 +54,7 @@
           [EQUIPMENT].[H1].[CATEGORY].&[Tractor Orugas]
         })`;
 
+      console.log(query);
       vm.loading = true;
       IrisUtils.executeQuery(query)
         .then(result => {
