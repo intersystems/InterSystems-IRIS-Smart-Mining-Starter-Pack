@@ -1,12 +1,14 @@
-#Intersystem webapp
+## Compile assets
+```
+npm run compile
+```
 
-## Compilar assets
-``npm run compile``
-
-Esto generará un directorio ``dist`` que contiene todos los archivos a ser hosteados.
+This will create a ``dist`` directory with all hosted files.
 
 
-## Servidor de desarrollo
-``npm run dev-server``
+## Dev Server
+```
+npm run dev-server
+```
 
-Esto ejecutará ``compile`` y además creará un servidor de desarrollo que actualizará automaticamente el navegador al hacer cambios.
+This will compile and also run a dev server which will keep all browsers synced.
