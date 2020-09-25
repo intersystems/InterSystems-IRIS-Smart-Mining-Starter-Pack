@@ -1,5 +1,21 @@
 {
   "oee": "OEE",
   "production": "Producción",
-  "fleetInfo": "Información de flota"
+  "fleetInfo": "Información de flota",
+  "time": {
+    "second": "segundo",
+    "secondPl": "segundos",
+    "minute": "minuto",
+    "minutePl": "minutos",
+    "hour": "hora",
+    "hourPl": "horas",
+    "day": "día",
+    "dayPl": "días",
+    "week": "semana",
+    "weekPl": "semanas",
+    "month": "mes",
+    "months": "meses",
+    "year": "año",
+    "years": "años"
+  }
 }

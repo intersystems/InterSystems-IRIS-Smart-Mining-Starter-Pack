@@ -1,7 +1,7 @@
 (() => {
   const angular = window.angular;
 
-  Controller.$inject = ['$rootScope', '$timeout', '$element', 'DateUtils', '$filter', 'OEE', 'IrisUtils', '$translate'];
+  Controller.$inject = ['$rootScope', '$timeout', '$element', '$translate', 'DateUtils', '$filter', 'OEE', 'IrisUtils'];
 
   angular
     .module('app')
@@ -12,7 +12,7 @@
       bindings: {}
     });
 
-  function Controller($root, $timeout, $element, DateUtils, $filter, OEE, IrisUtils) {
+  function Controller($root, $timeout, $element, $translate, DateUtils, $filter, OEE, IrisUtils) {
     const vm = this;
 
     vm.$onInit = function () {
@@ -77,7 +77,7 @@
       const series = [{
         type: 'bar',
         barWidth: '50%',
-        name: $translate.instant('components.oee.time-performance.main-time-performance-chart.timePerfPerc'),
+        name: $translate.instant('components.oee.overview.timePercent'),
         data: data,
         label: {
           show: true,
@@ -115,7 +115,7 @@
         },
         yAxis: [{
           type: 'value',
-          name: $translate.instant('components.oee.time-performance.main-time-performance-chart.timePerc'),
+          name: $translate.instant('components.oee.overview.timePercent'),
           nameLocation: 'center',
           nameGap: 70,
           min: 0
@@ -123,7 +123,7 @@
         xAxis: {
           type: 'category',
           data: categories,
-          name: $translate.instant('components.oee.time-performance.main-time-performance-chart.date'),
+          name: $translate.instant('components.charts.all.date'),
           nameLocation: 'center',
           nameGap: 30
         },
@@ -204,10 +204,10 @@
       vm.detailsLoading = true;
       IrisUtils
         .executeQuery(query)
-        .then(data => {
-          trip.referenceTravelTime = data.Data[1];
-          trip.measuredTons = data.Data[2];
-          trip.truckCapacity = data.Data[3];
+        .then(result => {
+          trip.referenceTravelTime = result.data[1];
+          trip.measuredTons = result.data[2];
+          trip.truckCapacity = result.data[3];
 
           vm.details = trip;
           vm.detailsLoading = false;

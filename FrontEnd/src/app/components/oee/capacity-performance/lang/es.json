@@ -11,11 +11,5 @@
     "truckCapacity": "Capacidad de Camion",
     "truckLoad": "Carga de Camion",
     "accumulatedTons": "Toneladas acumuladas Camión"
-  },
-  "labels":{
-    "totalTons": "Toneladas Totales (miles)",
-    "capacityPerformance": "Performance de Capacidad",
-    "tons": "Toneladas (miles)",
-    "capacityPercent": "Capacidad [%]"
   }
 }

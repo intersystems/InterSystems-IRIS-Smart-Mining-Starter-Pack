@@ -2,9 +2,6 @@
   "main-time-performance-chart": {
     "title": "Daily Time Performance",
     "dailyAnalysis": "Daily Analysis",
-    "dumpDetails": "Dump Details",    
-    "timePerfPerc":"Time Performance [%]",
-    "timePerc":"Time [%]",
-    "date":"Fecha"
+    "dumpDetails": "Dump Details"
   }
 }

@@ -1,9 +1,11 @@
 (() => {
+  UtilsService.$inject = ['$translate'];
+
   window.angular
     .module('app')
     .service('Utils', UtilsService);
 
-  function UtilsService() {
+  function UtilsService($translate) {
     const textTester = document.getElementById('text-tester');
 
     return {
@@ -66,29 +68,27 @@
       week = day * 7;
       year = day * 365;
       month = year / 12;
-      format = function (number, string) {
-        string = number === 1
-          ? string
-          : string === 'mes'
-            ? 'meses'
-            : string + 's';
+      format = function (number, key) {
+        const string = number === 1
+          ? $translate.instant('time.' + key)
+          : $translate.instant('time.' + key + 'Pl');
         return number + ' ' + string;
       };
       switch (false) {
         case !(seconds < minute):
-          return format(seconds, 'segundo');
+          return format(seconds, 'second');
         case !(seconds < hour):
-          return format(Math.round(10 * seconds / minute) / 10, 'minuto');
+          return format(Math.round(10 * seconds / minute) / 10, 'minute');
         case !(seconds < day):
-          return format(Math.round(10 * seconds / hour) / 10, 'hora');
+          return format(Math.round(10 * seconds / hour) / 10, 'hour');
         case !(seconds < week):
-          return format(Math.round(10 * seconds / day) / 10, 'día');
+          return format(Math.round(10 * seconds / day) / 10, 'day');
         case !(seconds < month):
-          return format(Math.round(10 * seconds / week) / 10, 'semana');
+          return format(Math.round(10 * seconds / week) / 10, 'week');
         case !(seconds < year):
-          return format(Math.round(10 * seconds / month) / 10, 'mes');
+          return format(Math.round(10 * seconds / month) / 10, 'month');
         default:
-          return format(Math.round(10 * seconds / year) / 10, 'año');
+          return format(Math.round(10 * seconds / year) / 10, 'year');
       }
     }
   }

@@ -1,7 +1,7 @@
 (() => {
   const angular = window.angular;
 
-  Controller.$inject = ['$rootScope', '$timeout', '$element', 'Equipment', 'Utils', 'DateUtils', '$filter'];
+  Controller.$inject = ['$rootScope', '$timeout', '$element', '$translate', 'Equipment', 'Utils'];
 
   angular
     .module('app')
@@ -21,7 +21,7 @@
       }
     });
 
-  function Controller($root, $timeout, $element, Equipment, Utils, DateUtils, $filter, OEE) {
+  function Controller($root, $timeout, $element, $translate, Equipment, Utils) {
     const vm = this;
     vm.$onInit = function () {
       const container = $element.find('.chart');
@@ -142,14 +142,15 @@
         },
         xAxis: {
           type: 'value',
-          name: 'Porcentaje de tiempo [%]',
+          name: $translate.instant('components.oee.overview.timePercent'),
           nameLocation: 'center',
           min: 0,
-          max: 100
+          max: 100,
+          nameGap: 30
         },
         yAxis: {
           type: 'category',
-          name: 'Equipo',
+          name: $translate.instant('components.charts.all.equipment'),
           nameLocation: 'center',
           nameGap: paddingLeft
         },

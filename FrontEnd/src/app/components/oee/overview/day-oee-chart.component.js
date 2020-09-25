@@ -1,7 +1,7 @@
 (() => {
   const angular = window.angular;
 
-  Controller.$inject = ['$rootScope', '$timeout', '$element', 'DateUtils', '$filter', 'OEE', '$translate'];
+  Controller.$inject = ['$rootScope', '$timeout', '$element', 'DateUtils', '$filter', '$translate'];
 
   angular
     .module('app')
@@ -21,7 +21,7 @@
       }
     });
 
-  function Controller($root, $timeout, $element, DateUtils, $filter, OEE, $translate) {
+  function Controller($root, $timeout, $element, DateUtils, $filter, $translate) {
     const vm = this;
 
     vm.$onInit = function () {
@@ -29,18 +29,18 @@
 
       vm.types = {
         Utilization: {
-          title: $translate.instant('components.oee.overview.day-oee-chart.dailyUtil'),
-          yAxisLabel: $translate.instant('components.oee.overview.day-oee-chart.timePercent'),
+          title: $translate.instant('oee.overview.utilization'),
+          yAxisLabel: $translate.instant('oee.overview.timePercent'),
           color: '#a3a1fb'
         },
         CapacityPerformance: {
-          title: $translate.instant('components.oee.overview.day-oee-chart.capPerfPerDay'),
-          yAxisLabel: $translate.instant('components.oee.overview.day-oee-chart.capPerfPercent'),
+          title: $translate.instant('oee.overview.capacityPerformance'),
+          yAxisLabel: $translate.instant('oee.overview.capacityPercent'),
           color: '#59678c'
         },
         TimePerformance: {
-          title: $translate.instant('components.oee.overview.day-oee-chart.timePerfPerDay'),
-          yAxisLabel: $translate.instant('components.oee.overview.day-oee-chart.timePerfPercent'),
+          title: $translate.instant('oee.overview.timePerformance'),
+          yAxisLabel: $translate.instant('oee.overview.timePercent'),
           color: '#ffb980'
         },
         OEE: {
@@ -130,7 +130,7 @@
             data: [{
               value: data[data.length - 1][1] + '%',
               coord: [data.length - 1, data[data.length - 1][1]],
-              name: $translate.instant('components.oee.overview.day-oee-chart.currentValue')
+              name: $translate.instant('components.charts.all.currentValue')
             }]
           } : null,
           markLine: {
@@ -161,7 +161,7 @@
         yAxis: {
           type: 'value',
           axisLabel: {show: vm.options.yAxis.labels},
-          name: $translate.instant('components.oee.overview.day-oee-chart.timePerfPercent'),
+          name: $translate.instant('components.oee.overview.timePercent'),
           nameLocation: 'center',
           nameGap: 50,
           min: 0,
@@ -171,7 +171,7 @@
           type: 'category',
           data: categories,
           axisLabel: {show: vm.options.xAxis.labels},
-          name: $translate.instant('components.oee.overview.day-oee-chart.date'),
+          name: $translate.instant('components.charts.all.date'),
           nameLocation: 'center',
           nameGap: 30
         },

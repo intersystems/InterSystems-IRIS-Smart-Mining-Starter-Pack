@@ -1,7 +1,7 @@
 (() => {
   const angular = window.angular;
 
-  Controller.$inject = ['$rootScope', '$timeout', '$element', '$filter', 'IrisUtils', 'Utils'];
+  Controller.$inject = ['$rootScope', '$timeout', '$element', '$translate', '$filter', 'IrisUtils', 'Utils'];
 
   angular
     .module('app')
@@ -18,7 +18,7 @@
       }
     });
 
-  function Controller($root, $timeout, $element, $filter, IrisUtils, Utils) {
+  function Controller($root, $timeout, $element, $translate, $filter, IrisUtils, Utils) {
     const vm = this;
     vm.$onInit = function () {
       vm.table = $element.find('.table');
@@ -79,10 +79,11 @@
 
       IrisUtils
         .executeQuery(query)
-        .then(data => {
-          console.log(data);
-          const rows = data.Cols ? data.Cols[1].tuples : [];
-          const cols = data.Cols ? data.Cols[0].tuples : [];
+        .then(result => {
+          console.log(result);
+          const rows = result.rows;
+          const cols = result.columns;
+          const data = result.data;
 
           const date = $filter('date')(vm.date, 'yyyy-MM-dd');
           let chartData = [];
@@ -92,12 +93,12 @@
             let [origin, destination] = tripName.split(' to ');
             origin = origin || 'Origen desconocido';
             destination = destination || 'Destino desconocido';
-            const tripTime = data.Data[index * cols.length];
-            const referenceTravelTime = data.Data[index * cols.length + 1] || 0;
-            const measuredTons = data.Data[index * cols.length + 2];
-            const truckCapacity = data.Data[index * cols.length + 3];
-            const timePerformance = data.Data[index * cols.length + 4] || 0;
-            const type = data.Data[index * cols.length + 5] ? 'A sitio de descarga' : 'A sitio de carga';
+            const tripTime = data[index * cols.length];
+            const referenceTravelTime = data[index * cols.length + 1] || 0;
+            const measuredTons = data[index * cols.length + 2];
+            const truckCapacity = data[index * cols.length + 3];
+            const timePerformance = data[index * cols.length + 4] || 0;
+            const type = data[index * cols.length + 5] ? 'A sitio de descarga' : 'A sitio de carga';
 
             chartData.push({
               time: minute.getTime(),
@@ -167,30 +168,30 @@
       return {
         columns: [{
           data: 'time',
-          title: 'Hora',
+          title: $translate.instant('components.charts.all.hour'),
           render: (data) => $filter('date')(data, 'HH:mm')
         }, {
           data: 'origin',
-          title: 'Origen'
+          title: $translate.instant('components.charts.trips-by-truck.origin')
         }, {
           data: 'destination',
-          title: 'Destino'
+          title: $translate.instant('components.charts.trips-by-truck.destination')
         }, {
           data: 'readableTripTime',
-          title: 'Duración'
+          title: $translate.instant('components.charts.trips-by-truck.duration')
         }, {
           data: 'timePerformance',
-          title: 'Performance',
+          title: $translate.instant('components.charts.trips-by-truck.performance'),
           render: (value) => (Math.round(value * 1000) / 10) + '%'
         }, {
           data: 'readableReferenceTime',
-          title: 'Tiempo de Referencia'
+          title: $translate.instant('components.charts.trips-by-truck.referenceTime')
         }, {
           data: 'measuredTons',
-          title: 'Toneladas'
+          title: $translate.instant('components.charts.all.tons')
         }, {
           data: 'truckCapacity',
-          title: 'Capacidad'
+          title: $translate.instant('components.charts.all.capacity')
         }, {
           data: null,
           title: '',

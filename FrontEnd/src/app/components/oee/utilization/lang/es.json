@@ -6,24 +6,13 @@
     "title": "Detalles por estado",
     "noElements": "No hay elementos disponibles",
     "placeholder": "Seleccione un estado",
-    "noSelectionState": "No se ha seleccionado un estado",
-    "operative":"Operativo",
-    "delay":"Retraso",
-    "standby":"Espera",
-    "downtime":"Mantencion"
+    "noSelectionState": "No se ha seleccionado un estado"
   },
   "main-utilization-chart": {
     "title": "Utilización por día",
-    "utilization":"Utilización",
     "fleetStatus": "Estado de Flota",
     "details": "Detalles",
     "statusOf": "Estado de",
-    "detailsOf": "Detalles de",
-    "operative":"Operativo",
-    "delay":"Retraso",
-    "standby":"Espera",
-    "downtime":"Mantencion",
-    "timePercent":"Tiempo [%]",
-    "date":"Fecha"
+    "detailsOf": "Detalles de"
   }
 }

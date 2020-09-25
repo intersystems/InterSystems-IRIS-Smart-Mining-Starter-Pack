@@ -25,7 +25,18 @@
       return $http
         .post(window.IRIS_URL, {'MDX': query})
         .then(response => {
-          return response.data;
+          const result = response.data;
+          result.Cols = result.Cols || [];
+          result.Cols[0] = result.Cols[0] || {tuples: []};
+          result.Cols[1] = result.Cols[1] || {tuples: []};
+
+          const [columns, rows] = result.Cols.map(current => {
+            return current.tuples;
+          });
+
+          const data = result.Data || [];
+
+          return {columns, rows, data};
         })
         .catch(response => {
           return Promise.reject(utils.getHTTPError(response));
@@ -196,14 +207,9 @@
       try {
         const result = [];
 
-        if (!response.Cols) {
-          console.log(response);
-          return result;
-        }
-
-        let columns = byRow ? response.Cols[1].tuples : response.Cols[0].tuples;
-        let rows = byRow ? response.Cols[0].tuples : response.Cols[1].tuples;
-        const data = response.Data;
+        let columns = byRow ? response.rows : response.columns;
+        let rows = byRow ? response.columns : response.rows;
+        const data = response.data;
         const columnsLength = byRow ? rows.length : columns.length;
 
         for (let i = 0; i < columns.length; i++) {
@@ -232,9 +238,9 @@
 
     function parseTreeDimensionalResponse(response, byRow) {
       const result = [];
-      let columns = byRow ? response.Cols[1].tuples : response.Cols[0].tuples;
-      let rows = byRow ? response.Cols[0].tuples : response.Cols[1].tuples;
-      const data = response.Data;
+      let columns = byRow ? response.rows : response.columns;
+      let rows = byRow ? response.columns : response.rows;
+      const data = response.data;
 
       columns = columns.reduce((array, current) => {
         current.children = current.children || [];
@@ -261,7 +267,6 @@
 
         result.push({category: column, parent: columns[i].parent, data: columnData});
       }
-
 
       return result;
     }

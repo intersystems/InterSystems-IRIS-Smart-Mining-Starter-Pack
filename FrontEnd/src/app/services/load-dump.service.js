@@ -37,16 +37,16 @@
 
       return IrisUtils.executeQuery(query)
         .then(response => {
-          if (!response.Cols || !response.Cols.length) {
+          if (!response.rows.length) {
             return null;
           }
-          const [truck, excavator, capacity, measuredTons, location, grade] = response.Cols[1].tuples;
+          const [truck, excavator, capacity, measuredTons, location, grade] = response.rows;
 
           return {
             truck: truck.caption,
             excavator: excavator.caption,
-            capacity: response.Data[2],
-            measuredTons: response.Data[3],
+            capacity: response.data[2],
+            measuredTons: response.data[3],
             location: location.caption,
             grade: grade.caption
           };
@@ -90,19 +90,7 @@
         });
     }
 
-    function getGanttData(trucks, date) {
-      const names = {
-        load: 'Carga',
-        transitToDump: 'En transito a Descarga',
-        dump: 'Descarga',
-        transitToLoad: 'En transito a Carga'
-      };
-
-      const rawData = {
-        dump: {name: 'Descarga', data: []},
-        load: {name: 'Carga', data: []}
-      };
-
+    function getGanttData(trucks, date, shiftId, shiftType) {
       trucks = trucks.map(current => current.name);
       const truckFilter = trucks.map(current => `[EQUIPMENT].[H1].[NAME].&[${current}]`);
 
@@ -118,60 +106,83 @@
       NON EMPTY HEAD(
         NONEMPTYCROSSJOIN(
           [StartTime].[H1].[StartTimeMinute].Members,
-          [Equipment].[H1].[Name].Members
+          NONEMPTYCROSSJOIN(
+            [StartTime].[H1].[StartTimeDay].Members,
+            [Equipment].[H1].[Name].Members
+          )
         ),2000,SAMPLE
       ) ON 1 
       FROM [ASPMINING.ANALYTICS.PRODUCTIONEVENTSCUBE]
       %FILTER NONEMPTYCROSSJOIN(
-        [StartTime].[H1].[StartTimeDay].&[${IrisUtils.getDateNumber(date)}],
+        [Shift].[H1].[Id].&[${shiftId}],
         %OR({${truckFilter.join()}})
       )`;
 
+      let shiftEnd = new Date(date.getTime());
+      shiftEnd.setMinutes(0, 0, 0);
+      if (shiftType === 'A') {
+        shiftEnd.setHours(20);
+      } else if (shiftType === 'B') {
+        shiftEnd.setHours(8);
+        shiftEnd.setDate(shiftEnd.getDate() + 1);
+      }
+
       return IrisUtils.executeQuery(query)
         .then(response => {
+
           const result = {
             trucks: trucks,
             data: {}
           };
-          if (!response.Cols || !response.Cols.length) {
-            return result;
-          }
 
-          const columns = response.Cols[0].tuples;
-          const rows = response.Cols[1].tuples;
-          const data = response.Data;
-
-          const dateStr = $filter('date')(date, 'yyyy-MM-dd');
+          const columns = response.columns;
+          const rows = response.rows;
+          const data = response.data;
 
           let rowIndex = 0;
           rows.forEach(row => {
-            const minute = new Date(`${dateStr} ${row.caption}:00`).getTime();
+            const minuteStr = row.caption;
+
             const children = row.children || [];
-            children.forEach(truck => {
-              const truckName = truck.caption;
-              const truckIndex = trucks.findIndex(current => current === truckName);
+            children.forEach(child => {
+              const dateStr = child.caption;
+              const date = new Date(`${dateStr} ${minuteStr}:00`);
+              const minute = date.getTime();
+              child.children.forEach(truck => {
+                const truckName = truck.caption;
+                const truckIndex = trucks.findIndex(current => current === truckName);
 
-              const accumulated = 0;
-              columns.forEach((column, columnIndex) => {
-                const event = column.caption;
-                let value = data[rowIndex * columns.length + columnIndex];
-                if (typeof value !== 'number') {
-                  return;
-                }
-                const start = minute + accumulated * 1000;
-                const finish = start + value * 1000;
+                const accumulated = 0;
+                columns.forEach((column, columnIndex) => {
+                  const event = column.caption;
+                  let value = data[rowIndex * columns.length + columnIndex];
+                  if (typeof value !== 'number') {
+                    return;
+                  }
+                  const start = minute + accumulated * 1000;
+                  let finish = start + value * 1000;
 
-                result.data[event] = result.data[event] || {
-                  name: event,
-                  data: [],
-                  dimensions: ['truckIndex', 'start', 'finish']
-                };
+                  if (finish > shiftEnd.getTime()) {
+                    finish = shiftEnd.getTime();
+                  }
 
-                result.data[event].data.push([truckIndex, start, finish, value]);
+                  result.data[event] = result.data[event] || {
+                    name: event,
+                    data: [],
+                    dimensions: ['truckIndex', 'start', 'finish']
+                  };
+
+                  result.data[event].data.push([truckIndex, start, finish, value, truckName, date.toISOString()]);
+                });
+                rowIndex++;
               });
-              rowIndex++;
             });
           });
+
+          for (let key in result.data) {
+            result.data[key].data.sort((a, b) => a[5] > b[5] ? 1 : -1);
+          }
+
           return result;
         })
         .catch(err => {

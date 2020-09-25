@@ -1,7 +1,7 @@
 ;(() => {
   const angular = window.angular;
 
-  Controller.$inject = ['$translate'];
+  Controller.$inject = [];
 
   angular
     .module('app')
@@ -17,16 +17,11 @@
       }
     });
 
-  function Controller($translate) {
+  function Controller() {
     const vm = this;
 
     vm.$onInit = function () {
-      vm.status = [
-        'Operative', 
-        'Delay', 
-        'Standby', 
-        'Downtime'
-      ];
+      vm.status = ['Operative', 'Delay', 'Standby', 'Downtime'];
       vm.onSelectStatus = onSelectStatus;
       vm.selectedStatus = null;
     };

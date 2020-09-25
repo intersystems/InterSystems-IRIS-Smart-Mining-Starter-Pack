@@ -45,15 +45,9 @@
       ];
 
       let query = IrisUtils.buildQuery('ASPMining.Analytics.ProductionEventsCube', null, rows, null, filters);
-
-      console.log(query);
       return IrisUtils.executeQuery(query)
         .then(data => {
-          if (!data.Cols || !data.Cols[1]) {
-            return [];
-          }
-
-          return data.Cols[1].tuples.map(current => {
+          return data.rows.map(current => {
             return {name: current.caption, path: current.path, id: current.valueID};
           });
         });

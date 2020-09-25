@@ -1,5 +1,5 @@
 <div class="form-group">
-    <label>Fecha</label>
+    <label translate="">components.production.production-filter.date</label>
     <input type="text" class="form-control" readonly
            ng-disabled="ctrl.loading"
            style="background: #fff"
@@ -12,17 +12,34 @@
            ng-model="ctrl.day.value"/>
 </div>
 
+<div class="form-group">
+    <label translate>components.production.production-filter.shift</label>
+    <ui-select ng-model="ctrl.shift" theme="select2" search-enabled="false"
+               ng-disabled="ctrl.loading"
+               ng-change="ctrl.onSelectShift()">
+        <ui-select-match placeholder="{{'components.production.production-filter.shift' | translate}}">
+            {{$select.selected.type}}
+        </ui-select-match>
+        <ui-select-choices repeat="shift in ctrl.shifts">
+            <div>{{shift.type}}</div>
+        </ui-select-choices>
+        <ui-select-no-choice>
+            <span transalte>components.production.production-filter.noElements</span>
+        </ui-select-no-choice>
+    </ui-select>
+</div>
+
 <div class="form-group clearfix">
-    <label translate>components.production.default-filter.trucks</label>
+    <label translate>components.production.production-filter.trucks</label>
     <multi-select-dropdown items="ctrl.trucks"
+                           disabled="ctrl.loading"
                            max-items="5"
-                           on-select="ctrl.onSelectTruck()"
                            selected-items="ctrl.selectedTrucks"></multi-select-dropdown>
 </div>
 
 <hr/>
 <div>
     <button class="btn btn-primary btn-block" ng-click="ctrl.applyFilters()" translate>
-        components.production.default-filter.filter
+        components.production.production-filter.filter
     </button>
 </div>

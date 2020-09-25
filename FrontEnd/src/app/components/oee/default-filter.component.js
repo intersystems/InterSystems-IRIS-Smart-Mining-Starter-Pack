@@ -1,7 +1,7 @@
 (() => {
   const angular = window.angular;
 
-  Controller.$inject = ['$rootScope', 'OEE', '$transitions', '$translate'];
+  Controller.$inject = ['$rootScope', 'OEE', '$transitions'];
 
   angular
     .module('app')
@@ -11,7 +11,7 @@
       controllerAs: 'ctrl'
     });
 
-  function Controller($root, OEE, $transitions, $translate) {
+  function Controller($root, OEE, $transitions) {
     const vm = this;
 
     vm.$onInit = function () {
@@ -19,8 +19,8 @@
       vm.loadEquipments = loadEquipments;
 
       vm.dates = {
-        from: {value: new Date('2017/12/31'), open: false},
-        to: {value: new Date('2018/01/05'), open: false},
+        from: {value: new Date('2018/01/01'), open: false},
+        to: {value: new Date('2018/01/15'), open: false},
         options: {showWeeks: false, showMeridian: false},
         onClose: function (args) {
           loadCategories();
@@ -56,7 +56,7 @@
         .then(categories => {
           vm.categories = categories || [];
 
-          const truckCategory = vm.categories.find(current => current.name === $translate.instant('components.oee.default-filter._truckCategoryLabel'));
+          const truckCategory = vm.categories.find(current => current.name === 'Camion');
 
           if (truckCategory) {
             vm.selectedCategories = [truckCategory];

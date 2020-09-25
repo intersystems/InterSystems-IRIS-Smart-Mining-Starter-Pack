@@ -1,6 +1,6 @@
 (() => {
   const angular = window.angular;
-  Controller.$inject = ['$element', '$filter', 'IrisUtils'];
+  Controller.$inject = ['$element', '$filter', 'IrisUtils', '$translate'];
   angular
     .module('app')
     .component('fleetInformation', {
@@ -9,7 +9,7 @@
       controllerAs: 'ctrl'
     });
 
-  function Controller($element, $filter, IrisUtils) {
+  function Controller($element, $filter, IrisUtils, $translate) {
     const vm = this;
 
     vm.$onInit = function () {
@@ -56,13 +56,11 @@
 
       vm.loading = true;
       IrisUtils.executeQuery(query)
-        .then(data => {
-          console.log(data);
-          const Cols = data.Cols || [];
-          const cols = Cols[1] && Cols[1].tuples ? Cols[1].tuples : [];
+        .then(result => {
+          const rows = result.rows;
           const equipments = [];
           const categories = {};
-          cols.forEach(current => {
+          rows.forEach(current => {
             const equipment = {name: current.caption, model: null, category: null, lastActivity: '', capacity: ''};
             equipments.push(equipment);
             const model = current.children ? current.children[0] : null;
@@ -81,8 +79,8 @@
           });
 
           equipments.forEach((equipment, index) => {
-            equipment.capacity = data.Data[index * 2];
-            const lastActivity = data.Data[index * 2 + 1];
+            equipment.capacity = result.data[index * 2];
+            const lastActivity = result.data[index * 2 + 1];
             equipment.lastActivity = !isNaN(parseFloat(lastActivity)) ? IrisUtils.getDateFromNumber(lastActivity) : null;
           });
 
@@ -110,12 +108,12 @@
           {targets: '_all', searchable: false}
         ],
         columns: [
-          {title: 'Flota', data: 'category'},
-          {title: 'Nombre', data: 'name'},
-          {title: 'Modelo', data: 'model', defaultContent: ''},
-          {title: 'Tonelaje', data: 'capacity', defaultContent: ''},
+          {title: $translate.instant('components.fleet-information.fleet'), data: 'category'},
+          {title: $translate.instant('components.fleet-information.name'), data: 'name'},
+          {title: $translate.instant('components.fleet-information.model'), data: 'model', defaultContent: ''},
+          {title: $translate.instant('components.fleet-information.tonnage'), data: 'capacity', defaultContent: ''},
           {
-            title: 'Última actividad',
+            title: $translate.instant('components.fleet-information.lastActivity'),
             data: 'lastActivity',
             render: (value) => {
               return value ? $filter('date')(value, 'dd-MM-yyyy') : '';

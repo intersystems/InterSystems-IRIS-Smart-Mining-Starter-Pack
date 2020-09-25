@@ -1,7 +1,7 @@
 (() => {
   const angular = window.angular;
 
-  Controller.$inject = ['$rootScope', '$timeout', '$element', 'DateUtils', '$filter', 'OEE', 'LoadDump', '$translate'];
+  Controller.$inject = ['$rootScope', '$timeout', '$element', '$translate', 'DateUtils', '$filter', 'OEE', 'LoadDump'];
 
   angular
     .module('app')
@@ -12,7 +12,7 @@
       bindings: {}
     });
 
-  function Controller($root, $timeout, $element, DateUtils, $filter, OEE, LoadDump, $translate) {
+  function Controller($root, $timeout, $element, $translate, DateUtils, $filter, OEE, LoadDump) {
     const vm = this;
 
     vm.$onInit = function () {
@@ -77,7 +77,7 @@
       const series = [{
         type: 'bar',
         barWidth: '50%',
-        name: $translate.instant('components.oee.labels.totalTons'),
+        name: $translate.instant('components.charts.all.tons_total'),
         data: tons.data.map(current => {
           current[1] = Math.round(current[1] / 1000);
           return current;
@@ -88,7 +88,7 @@
         }
       }, {
         type: 'line',
-        name: $translate.instant('components.oee.labels.capacityPerformance'),
+        name: $translate.instant('components.oee._capacityPerformance'),
         data: performance.data,
         yAxisIndex: 1,
         color: '#59678c',
@@ -125,13 +125,13 @@
         },
         yAxis: [{
           type: 'value',
-          name: $translate.instant('components.oee.labels.tons'),
+          name: $translate.instant('components.charts.all.tons_thousands'),
           nameLocation: 'center',
           nameGap: 70,
           min: 0
         }, {
           type: 'value',
-          name: $translate.instant('components.oee.labels.capacityPercent') ,
+          name: $translate.instant('components.oee.overview.capacityPercent'),
           nameLocation: 'center',
           nameGap: 40,
           min: 0,
@@ -140,7 +140,7 @@
         xAxis: {
           type: 'category',
           data: categories,
-          name: 'Fecha',
+          name: $translate.instant('components.charts.all.date'),
           nameLocation: 'center',
           nameGap: 30
         },
