@@ -5,7 +5,7 @@ This repository holds the initial work we are doing for the mining use cases in 
 ## Option 1: Build and run development version
 
 ### Download Docker base image
-[Docker Image] (https://devxompass-my.sharepoint.com/:u:/g/personal/andres_xompass_com/EfeiI2IE6EBPstctf-VtoWkBi4btpubpF5zUQE0R7EjUQg?e=f6HKvO)
+[Docker Image](https://devxompass-my.sharepoint.com/:u:/g/personal/andres_xompass_com/EfeiI2IE6EBPstctf-VtoWkBi4btpubpF5zUQE0R7EjUQg?e=f6HKvO)
 
 Install with:
 ```bash
@@ -20,8 +20,8 @@ cd asp-mining
 ```
 
 ## Option 2: Download and run a prebuilt docker image
-```
 [ASP-Mining v0.4.2](https://devxompass-my.sharepoint.com/:u:/g/personal/andres_xompass_com/ESvpDvFuLEtJtVt8SlI5NKYBbpR0SJjDhgQApKk0bZ7QfA?e=KP5Lgn)
+```
 gunzip asp-mining_0.4.2.tar.gz
 docker load -i asp-mining_0.4.2.tar
 ```
