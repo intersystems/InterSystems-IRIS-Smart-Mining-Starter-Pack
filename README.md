@@ -20,10 +20,13 @@ cd asp-mining
 ```
 
 ## Option 2: Download and run a prebuilt docker image
-[ASP-Mining v0.4.2](https://devxompass-my.sharepoint.com/:u:/g/personal/andres_xompass_com/ESvpDvFuLEtJtVt8SlI5NKYBbpR0SJjDhgQApKk0bZ7QfA?e=KP5Lgn)
+Download a ready to go image with 1 month of anonymized data on it. (You need at least 50GB of storage available for the uncompressed docker to run properly)
+[ASP-Mining v1.0.0 with data](https://devxompass-my.sharepoint.com/:u:/g/personal/andres_xompass_com/EfE-58ERZb9CuUbo6bJyHXMB_eC2WhDLJ416rBUc-bu9bA?e=RjAgD7)
 ```
-gunzip asp-mining_0.4.2.tar.gz
-docker load -i asp-mining_0.4.2.tar
+# To load the image run:
+gunzip aspmining_1.0.0-data.tar.gz
+docker load -i aspmining_1.0.0-data.tar
+docker run intersystemsdc/mining:1.0.0-data
 ```
 
 ## Setting up mining dataset in SQL Server
