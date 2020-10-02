@@ -1,5 +1,7 @@
 Class ASPMining.CanonicalModel.Personnel.Operator Extends %Persistent
 {	
+	/// Id of operator
+	Property Id As %String;
 	/// Current Crew Link
 	Property Crew As Crew;
 	/// Operator's first name
@@ -9,6 +11,7 @@ Class ASPMining.CanonicalModel.Personnel.Operator Extends %Persistent
 	
 	Index FirstNameIndex On FirstName [type = bitmap];
 	Index LastNameIndex On LastName [type = bitmap];
+	Index IdIndex On Id;
 Storage Default
 {
 <Data name="OperatorDefaultData">

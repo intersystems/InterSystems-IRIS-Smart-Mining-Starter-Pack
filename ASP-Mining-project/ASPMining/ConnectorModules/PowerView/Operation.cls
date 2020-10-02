@@ -145,6 +145,25 @@ Method NewShift(pInput As ASPMining.CanonicalModel.Planning.Shift, Output pOutpu
 	Quit sc
 }
 
+Method NewOperator(pInput As ASPMining.CanonicalModel.Personnel.Operator, Output pOutput As Ens.Response) As %Status
+{
+
+	Set sc=$$$OK
+	
+	Try
+	{		
+		If '##class(ASPMining.CanonicalModel.Personnel.Operator).IdIndexExists(pInput.Id) {
+			Set sc = pInput.%Save()
+		}
+	}
+	Catch (oException)
+	{
+		Set sc = oException.AsStatus()
+	}
+	
+	Quit sc
+}
+
 Method NewDump(pInput As ASPMining.CanonicalModel.Production.DumpEvent, Output pOutput As Ens.Response) As %Status
 {
 
@@ -390,6 +409,9 @@ XData MessageMap
     </MapItem>
     <MapItem MessageType="ASPMining.CanonicalModel.Planning.Shift">
         <Method>NewShift</Method>
+    </MapItem>
+    <MapItem MessageType="ASPMining.CanonicalModel.Personnel.Operator">
+        <Method>NewOperator</Method>
     </MapItem>
     <MapItem MessageType="ASPMining.CanonicalModel.Production.DumpEvent">
         <Method>NewDump</Method>

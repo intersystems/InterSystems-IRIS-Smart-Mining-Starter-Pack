@@ -27,7 +27,7 @@ then
     docker-compose rm -f
     docker-compose up --remove-orphans
 else
-    docker run --rm $1 --init --name aspmining \
+    docker run  $1 --init --name aspmining \
      -v iris-analytics:/tmp/iris-analytics \
      -p 52773:52773 -p 51773:51773 \
      ${DOCKER_REPO}:version-${VERSION}

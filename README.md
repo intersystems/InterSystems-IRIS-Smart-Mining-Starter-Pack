@@ -31,9 +31,6 @@ docker load -i asp-mining_0.4.2.tar
 ###  Clone a Linux Local DB
 Run a Docker SQL Server 2019, using the provided MiningDBsV2.tar file and follow the instructions inside the README file. [Download Here](https://devxompass-my.sharepoint.com/:u:/g/personal/andres_xompass_com/EZEqZkotoS1Hgis7J5skeIYBApzKJoxoZVhGnCr5F-J-Gw?e=OX1zvY)
 
-###  Clone an anonymized SQL DB
-Run a Docker SQL Server 2019, using the provided MiningDBsV2tiny.tar file and follow the instructions inside the README file. [to be uploaded...](uploading...)
-
 ## Testing the Production
 The development production is disabled by default to reduce the time spent when relaunching the docker image, and better controlling the excecution of the Business Services in the Package when doing changes in the code.
 
@@ -49,6 +46,17 @@ The following Cubes are always updated every 1 minute.
 
 ## Check the FrontEnd app
 [Follow the instructions in here](https://github.com/intersystems/asp-mining/tree/master/FrontEnd) 
+
+
+## Creating a Snapshot of the running image
+To create a snapshot of the ASP-Mining, with custom data and settings. You can perform the following steps:
+```
+docker stop aspmining
+docker save aspmining > mysnapshot.tar
+
+#Then you can load this file in a different machine like:
+docker load -i mysnapshot.tar
+```
 
 ## Want to Use IAM?
 [Follow the instructions in here](https://github.com/intersystems/asp-mining/tree/master/Docs/iam) 
