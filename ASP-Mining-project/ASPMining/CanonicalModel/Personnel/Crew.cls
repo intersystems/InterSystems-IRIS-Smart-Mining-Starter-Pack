@@ -1,7 +1,7 @@
 /// A crew is a label used for referencing Operator groups
 Class ASPMining.CanonicalModel.Personnel.Crew Extends %Persistent
 {
-	/// Display Name of the Crew, usually 1 letter, e.g: A,B,C,D,E
+	/// Display Name of the Crew, e.g: Group 1, Group 2.
 	Property Name As %String;
 	
 	Index CrewIndex On Name [unique ];

@@ -19,8 +19,10 @@ Method OnProcessInput(pInput As EnsLib.SQL.Snapshot, Output pOutput As %Register
 		Do ##class(ASPMining.CanonicalModel.Production.ProductionStatusType).CreateTypes()
 		Do ..ProcessNewEquipments()
 		Do ..ProcessNewShifts()
+		Do ..ProcessNewOperators() //
 		Do ..ProcessNewReasons()
-		Do ..ProcessAllEvents(99999)
+		$$$TRACE("Checking Data until Shift: "_..Adapter.MaxShiftId)
+		Do ..ProcessAllEvents(..Adapter.MaxShiftId)
 	}
 	Catch(oException)
 	{
@@ -160,6 +162,55 @@ Method ProcessNewReasons()
 			$$$TRACE("Reason already exists "_oRS.Get("reason")_"...")
 		}
 		
+		//Do ..Adapter.SetPersistentValue(..%ConfigName, "LastReasonKey", tLastKey)
+	}
+}
+
+Method ProcessNewOperators()
+{
+	#Dim oRS As EnsLib.SQL.GatewayResultSet
+	
+	Set tLastKey = ..Adapter.GetPersistentValue(..%ConfigName, "LastOperator")
+	$$$TRACE("Next operatorid "_tLastKey_"...")
+	/// Gets all the new received events where equipment is involved, infer form here which ones are new
+	Set tQueryStatement="SELECT MIN(operid) as operid ,MIN(name) as name, MIN(crew) as crew FROM [PowerViewCH].[dbo].[hist_operlist] WHERE operid<>'' AND operid>? GROUP BY name ORDER BY operid ASC"
+
+	Set sc = ..Adapter.ExecuteQuery(.oRS, tQueryStatement, tLastKey)
+	
+	While oRS.Next()
+	{
+		Set ..%SessionId=""
+		set operatorId = oRS.Get("operid")
+		set operatorName = oRS.Get("name")
+		set operatorCrew = oRS.Get("crew")
+		If '##class(ASPMining.CanonicalModel.Personnel.Operator).IdIndexExists(operatorId){
+			$$$TRACE("Operator does not exists "_operatorId_"...")
+			set oOperator = ##class(ASPMining.CanonicalModel.Personnel.Operator).%New()
+
+			#Dim oOperator As ASPMining.CanonicalModel.Personnel.Operator
+			
+			set oOperator.Id = operatorId
+			// Anonimization of Data
+			If (..Adapter.AnonymizeData = "true" ){
+				set oOperator.FirstName = "Operator"
+				set oOperator.LastName = ""_operatorId
+			} else {
+				set oOperator.FirstName = operatorName
+				set oOperator.LastName = operatorName
+			}
+			
+			If '##class(ASPMining.CanonicalModel.Personnel.Crew).CrewIndexExists(operatorCrew) {
+				set oOperator.Crew = ##class(ASPMining.CanonicalModel.Personnel.Crew).%New()
+				set oOperator.Crew.Name = operatorCrew
+			} else {
+				set oOperator.Crew = ##class(ASPMining.CanonicalModel.Personnel.Crew).CrewIndexOpen(operatorCrew)
+			}
+			
+			set sc = ..SendRequestAsync("PowerView Operation", oOperator)
+		}else{
+			$$$TRACE("Reason already exists "_oRS.Get("reason")_"...")
+		}
+		set tLastKey = operatorId
 		//Do ..Adapter.SetPersistentValue(..%ConfigName, "LastReasonKey", tLastKey)
 	}
 }
@@ -763,7 +814,7 @@ Method ProcessAllEvents(shiftToQuery As %Integer)
 			set statustype = oRS.Get("status")
 			set timearrive = oRS.Get("timearrive") //en relaidad se llamaba starttime pero se rneombro en la query para tener menos columnas
 			set duration = oRS.Get("delta") //en relaidad se llamaba duration pero se renombro en la query para tener menos columnas
-
+			set operid = oRS.Get("operid")
 					
 		
 			set shift = ##class(ASPMining.CanonicalModel.Planning.Shift).ShiftIndexOpen(shiftindex)
@@ -1017,6 +1068,7 @@ Method OnInit() As %Status
    Do ..Adapter.InitializePersistentValue(..%ConfigName, "LastLoadShiftKey", 0)
    Do ..Adapter.InitializePersistentValue(..%ConfigName, "LastLoadKey", 0)
    Do ..Adapter.InitializePersistentValue(..%ConfigName, "LastLoadSliceKey", 0)
+   Do ..Adapter.InitializePersistentValue(..%ConfigName, "LastOperator", 0)
    Do ..Adapter.InitializePersistentValue(..%ConfigName, "LastDumpSliceKey", 0)
    Do ..Adapter.InitializePersistentValue(..%ConfigName, "UnifiedLastDumpKey", 0)
    Do ..Adapter.InitializePersistentValue(..%ConfigName, "UnifiedLastLoadKey", 0)
