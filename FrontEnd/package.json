@@ -11,12 +11,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@babel/core": "^7.10.2",
-    "@babel/preset-env": "^7.10.2",
-    "@fortawesome/fontawesome-free": "^5.13.0",
-    "@uirouter/angularjs": "^1.0.26",
-    "angular": "^1.8.0",
-    "angular-sanitize": "^1.8.0",
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "@fortawesome/fontawesome-free": "^5.15.1",
+    "@uirouter/angularjs": "^1.0.28",
+    "angular": "^1.8.2",
+    "angular-sanitize": "^1.8.2",
     "angular-storage": "0.0.15",
     "angular-translate": "^2.18.3",
     "angular-translate-loader-static-files": "^2.18.3",
@@ -24,11 +24,11 @@
     "bootstrap-sass": "^3.4.1",
     "bootstrap-ui-datetime-picker": "^2.6.4",
     "connect-history-api-fallback": "^1.6.0",
-    "datatables.net": "^1.10.21",
-    "datatables.net-bs": "^1.10.21",
-    "datatables.net-responsive": "^2.2.5",
-    "datatables.net-responsive-bs": "^2.2.5",
-    "echarts": "^4.8.0",
+    "datatables.net": "^1.10.22",
+    "datatables.net-bs": "^1.10.22",
+    "datatables.net-responsive": "^2.2.6",
+    "datatables.net-responsive-bs": "^2.2.6",
+    "echarts": "^4.9.0",
     "gulp": "^4.0.2",
     "gulp-angular-embed-templates": "^2.3.0",
     "gulp-babel": "^8.0.0",
@@ -39,12 +39,14 @@
     "gulp-sourcemaps": "^2.6.5",
     "gulp-uglify": "^3.0.2",
     "jquery": "^3.5.1",
-    "moment": "^2.26.0",
+    "lodash.template": "^4.5.0",
+    "moment": "^2.29.1",
     "node-sass": "^4.14.1",
     "object-path": "^0.11.5",
-    "ui-select": "^0.19.8"
+    "ui-select": "^0.19.8",
+    "yargs-parser": "^20.2.3"
   },
   "devDependencies": {
-    "browser-sync": "^2.26.12"
+    "browser-sync": "^2.26.13"
   }
 }
