@@ -1,4 +1,4 @@
-# ASP - Mining Started Pack
+# Smart Mining Starter Pack
 
 This repository holds the initial work we are doing for the mining use cases in Chile including OEE and base model for mining interoperability.
 
