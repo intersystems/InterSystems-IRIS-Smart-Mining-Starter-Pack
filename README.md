@@ -2,7 +2,7 @@
 
 This repository holds the initial work we are doing for the mining use cases in Chile including OEE and base model for mining interoperability.
 
-NOTE:  This application is not supported by InterSystems Corporation. Use it at your own risk.
+NOTE: ⚠️ This application is not supported by InterSystems Corporation. Use it at your own risk.
 
 ## Option 1: Build and run development version
 
