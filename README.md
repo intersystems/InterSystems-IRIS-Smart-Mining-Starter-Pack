@@ -7,7 +7,7 @@ NOTE: ⚠️ This application is not supported by InterSystems Corporation. Use 
 ## Option 1: Build and run development version
 
 ### Download Docker base image
-[Docker Image](https://devxompass-my.sharepoint.com/:u:/g/personal/andres_xompass_com/EfeiI2IE6EBPstctf-VtoWkBi4btpubpF5zUQE0R7EjUQg?e=f6HKvO)
+[Docker Image](ftp://ftppublic.intersystems.com/pub/starterpack/starterpack-base-irisint.tar)
 
 Install with:
 ```bash
@@ -23,7 +23,7 @@ cd asp-mining
 
 ## Option 2: Download and run a prebuilt docker image
 Download a ready to go image with 1 month of anonymized data on it. (You need at least 50GB of storage available for the uncompressed docker to run properly)
-[ASP-Mining v1.0.0 with data](https://devxompass-my.sharepoint.com/:u:/g/personal/andres_xompass_com/EfE-58ERZb9CuUbo6bJyHXMB_eC2WhDLJ416rBUc-bu9bA?e=RjAgD7)
+[ASP-Mining v1.0.0 with data](ftp://ftppublic.intersystems.com/pub/starterpack/aspmining_1.0.0-data.tar.gz)
 ```
 # To load the image run:
 gunzip aspmining_1.0.0-data.tar.gz
@@ -34,7 +34,7 @@ docker run intersystemsdc/mining:1.0.0-data
 ## Setting up mining dataset in SQL Server
 
 ###  Clone a Linux Local DB
-Run a Docker SQL Server 2019, using the provided MiningDBsV2.tar file and follow the instructions inside the README file. [Download Here](https://devxompass-my.sharepoint.com/:u:/g/personal/andres_xompass_com/EZEqZkotoS1Hgis7J5skeIYBApzKJoxoZVhGnCr5F-J-Gw?e=OX1zvY)
+Run a Docker SQL Server 2019, using the provided MiningDBsV2.tar file and follow the instructions inside the README file. [Download Here](ftp://ftppublic.intersystems.com/pub/starterpack/MiningDBsV2.tar)
 
 ## Testing the Production
 The development production is disabled by default to reduce the time spent when relaunching the docker image, and better controlling the excecution of the Business Services in the Package when doing changes in the code.
