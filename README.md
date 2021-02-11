@@ -9,6 +9,8 @@ NOTE: ⚠️ This application is not supported by InterSystems Corporation. Use 
 ### Download Docker base image
 [Docker Image](ftp://ftppublic.intersystems.com/pub/starterpack/starterpack-base-irisint.tar)
 
+<a href="ftp://ftppublic.intersystems.com/pub/starterpack/starterpack-base-irisint.tar">Docker Image</a>
+
 Install with:
 ```bash
 docker load -i starterpack-base-irisint.tar
