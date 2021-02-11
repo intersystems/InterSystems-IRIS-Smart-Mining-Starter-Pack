@@ -1,4 +1,4 @@
-# Smart Mining Starter Pack
+# IRIS Smart Mining Starter Pack
 
 This repository holds the initial work we are doing for the mining use cases in Chile including OEE and base model for mining interoperability.
 
@@ -6,10 +6,9 @@ NOTE: ⚠️ This application is not supported by InterSystems Corporation. Use 
 
 ## Option 1: Build and run development version
 
-### Download Docker base image
-[Docker Image](ftp://ftppublic.intersystems.com/pub/starterpack/starterpack-base-irisint.tar)
+### Download Docker base image from this link:
+ftp://ftppublic.intersystems.com/pub/starterpack/starterpack-base-irisint.tar
 
-<a href="ftp://ftppublic.intersystems.com/pub/starterpack/starterpack-base-irisint.tar">Docker Image</a>
 
 Install with:
 ```bash
