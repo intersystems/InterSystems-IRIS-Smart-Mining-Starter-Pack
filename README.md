@@ -23,8 +23,11 @@ cd asp-mining
 ```
 
 ## Option 2: Download and run a prebuilt docker image
-Download a ready to go image with 1 month of anonymized data on it. (You need at least 50GB of storage available for the uncompressed docker to run properly)
-[ASP-Mining v1.0.0 with data](ftp://ftppublic.intersystems.com/pub/starterpack/aspmining_1.0.0-data.tar.gz)
+Download a ready to go image with 1 month of anonymized data on it from this link: 
+
+ftp://ftppublic.intersystems.com/pub/starterpack/aspmining_1.0.0-data.tar.gz
+
+You will need at least 50GB of storage available for the uncompressed docker to run properly.
 ```
 # To load the image run:
 gunzip aspmining_1.0.0-data.tar.gz
@@ -35,7 +38,9 @@ docker run intersystemsdc/mining:1.0.0-data
 ## Setting up mining dataset in SQL Server
 
 ###  Clone a Linux Local DB
-Run a Docker SQL Server 2019, using the provided MiningDBsV2.tar file and follow the instructions inside the README file. [Download Here](ftp://ftppublic.intersystems.com/pub/starterpack/MiningDBsV2.tar)
+Run a Docker SQL Server 2019, using the provided MiningDBsV2.tar file and follow the instructions inside the README file. Download it from here:
+
+ftp://ftppublic.intersystems.com/pub/starterpack/MiningDBsV2.tar
 
 ## Testing the Production
 The development production is disabled by default to reduce the time spent when relaunching the docker image, and better controlling the excecution of the Business Services in the Package when doing changes in the code.
