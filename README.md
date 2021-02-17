@@ -46,13 +46,13 @@ ftp://ftppublic.intersystems.com/pub/starterpack/MiningDBsV2.tar
 The development production is disabled by default to reduce the time spent when relaunching the docker image, and better controlling the excecution of the Business Services in the Package when doing changes in the code.
 
 ### 1. Open the Default Production and enable one of the service.
-![](https://github.com/intersystems/asp-mining/blob/master/res/img/i1.png)
+![](https://raw.githubusercontent.com/intersystems-community/intersystems/asp-mining/master/res/img/i1.png)
 ### 2. Run the production for at least 5 minutes to import a couple days worth of data.
-![](https://github.com/intersystems/asp-mining/blob/master/res/img/i2.png)
+![](https://raw.githubusercontent.com/intersystems-community/intersystems/asp-mining/master/res/img/i2.png)
 
 ## Building Cubes
 The following Cubes are always updated every 1 minute.
-![](https://github.com/intersystems/asp-mining/blob/master/res/img/i3.png)
+![](https://raw.githubusercontent.com/intersystems-community/intersystems/asp-mining/master/res/img/i3.png)
 
 
 ## Check the FrontEnd app
