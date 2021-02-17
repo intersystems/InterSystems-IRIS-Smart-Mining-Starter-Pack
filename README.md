@@ -48,11 +48,11 @@ The development production is disabled by default to reduce the time spent when 
 ### 1. Open the Default Production and enable one of the service.
 ![](https://raw.githubusercontent.com/intersystems/IRIS-Smart-Mining-Starter-Pack/master/res/img/i1.png)
 ### 2. Run the production for at least 5 minutes to import a couple days worth of data.
-![](https://raw.githubusercontent.com/intersystems-community/intersystems/IRIS-Smart-Mining-Starter-Pack/master/res/img/i2.png)
+![](https://raw.githubusercontent.com/intersystems/intersystems/IRIS-Smart-Mining-Starter-Pack/master/res/img/i2.png)
 
 ## Building Cubes
 The following Cubes are always updated every 1 minute.
-![](https://raw.githubusercontent.com/intersystems-community/intersystems/IRIS-Smart-Mining-Starter-Pack/master/res/img/i3.png)
+![](https://raw.githubusercontent.com/intersystems/intersystems/IRIS-Smart-Mining-Starter-Pack/master/res/img/i3.png)
 
 
 ## Check the FrontEnd app
