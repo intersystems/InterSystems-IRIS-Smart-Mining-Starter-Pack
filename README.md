@@ -1,8 +1,8 @@
-# IRIS Smart Mining Starter Pack
+# InterSystems IRIS Smart Mining Starter Pack
 
-This repository holds the initial work we are doing for the mining use cases in Chile including OEE and base model for mining interoperability.
+This repository contains the code base and associated information and materials for the InterSystems IRIS Smart Mining Starter Pack.  This starter pack allows mining operators to integrate, monitor, and analyze signals and data from mining equipment and software applications. For more information, please refer to the solution sheet.
 
-NOTE: ⚠️ This application is not supported by InterSystems Corporation. Use it at your own risk.
+NOTE: ⚠️ This application is licensed as open source under the MIT License and is not supported by InterSystems Corporation. Use it at your own risk.
 
 ## Option 1: Build and run development version
 
